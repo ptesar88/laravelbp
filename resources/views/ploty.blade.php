@@ -71,34 +71,61 @@
     </section>
     <section class="free-post">
       <h2 class="mx-auto items-center text-center text-2xl mb-8 font-extrabold dark:text-white">Betonové sloupky</h2>
-      <div class="mx-auto items-center grid mb-2 max-w-6xl md:mb-8 md:grid-cols-3 md:gap-3">
-      @foreach($products_sloupek as $sloup)
+      <div class="mx-auto items-center max-w-6xl md:mb-8">
+
+<div class="relative overflow-x-auto">
+  <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+      <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+          <tr>
+              <th scope="col" class="px-6 py-3">
+                  Název
+              </th>
+              <th scope="col" class="px-6 py-3">
+                  Výška (cm)
+              </th>
+              <th scope="col" class="px-6 py-3">
+                  Váha (kg)
+              </th>
+              <th scope="col" class="px-6 py-3">
+                  Cena (bez DPH)
+              </th>
+              <th scope="col" class="px-6 py-3">
+                Kategorie
+            </th>
+            <th scope="col" class="px-6 py-3">
+              Typ
+          </th>
+          </tr>
+      </thead>
+      <tbody>
+        @foreach($products_sloupek as $sloup)
                   <div key={{ $sloup->id }}>
-                    <figure class="flex h-48 flex-col items-center justify-center  rounded-md text-center shadow-md bg-gray-50 border border-gray-300">
-                     
-                      <div class="h-6">
-                      <h3 class="text-lg font-semibold text-gray-900 dark:text-white">{{ $sloup->name }}</h3>
-                      </div>
-                      <div class="h-6">
-                      <span class="text-sm">{{ $sloup->width }}x{{ $sloup->height }}x{{ $sloup->depth }}cm</span>
-                      </div>
-                      <div class="h-24">
-                      <img class="" src="{{ $sloup->thumbnail_url }}" alt="" />
-                      </div>
-                      <div>
-                        @if ($sloup->label == 'Ano')
-                        <span class="inline-flex items-center bg-green-100 text-green-800 text-xs font-medium px-2.5 py-0.5 rounded-full dark:bg-green-900 dark:text-green-300">
-                          <span class="w-2 h-2 me-1 bg-green-500 rounded-full"></span>
-                          OTISK
-                      </span>
-                        @endif
-                        <button class="text-center text-sm m-2 p-2 mt-4 shadow-md rounded-md text-white bg-pink-950 border border-pink-950">Konfigurátor</button>
-                        <span class="text-sm font-semibold ml-4">cena od: {{ $sloup->price }} Kč</span>
-                      </div>
-                    </figure>
-                  </div>    
-          @endforeach
-        </div>   
+          <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+              <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                {{ $sloup->name }}
+              </th>
+              <td class="px-6 py-4">
+                {{ $sloup->height }}
+              </td>
+              <td class="px-6 py-4">
+                {{ $sloup->weight }}
+              </td>
+              <td class="px-6 py-4">
+                {{ $sloup->price }}
+              </td>
+              <td class="px-6 py-4">
+                {{ $sloup->category }}
+              </td>
+              <td class="px-6 py-4">
+                {{ $sloup->category_type }}
+              </td>
+          </tr>
+        </div>    
+        @endforeach
+      </tbody>
+  </table>
+</div>
+        </div>
     </section>
     <section class="free-post">
       <h2 class="mx-auto items-center text-center text-2xl mb-8 font-extrabold dark:text-white">Otisky na ploty KLASIK</h2>

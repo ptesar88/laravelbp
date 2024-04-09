@@ -35,13 +35,14 @@
       </div>
       <div class="mx-auto items-center grid mb-2 max-w-6xl md:mb-8 md:grid-cols-3 md:gap-3">
         <div>
-      <h3 class="mx-auto items-center text-center text-lg mb-8 font-bold dark:text-white">{{ $products_detail->name }}</h3>
+      <h3 class="mx-auto items-center text-center text-lg font-bold dark:text-white">{{ $products_detail->name }}</h3>
         </div>
         <div>
           <img class="mx-auto items-center" src="{{ $products_detail->thumbnail_url }}" alt="" />
         </div>  
         <div>
-          <div class="mx-auto items-center text-center text-lg mb-8 font-bold dark:text-white">Rozměry: {{ $products_detail->width }}x{{ $products_detail->height }}x{{ $products_detail->depth }}cm</div>
+          <div class="mx-auto items-center text-center text-lg font-bold dark:text-white">Rozměry: {{ $products_detail->width }}x{{ $products_detail->height }}x{{ $products_detail->depth }}cm</div>
+          <div class="mx-auto items-center text-center text-lg font-bold dark:text-white">Cena: {{ $products_detail->price }} Kč</div>
         </div>  
       </div>
       <div class="relative z-20 mx-auto max-w-6xl items-center p-2 mb-8 text-base text-amber-800 rounded-lg bg-amber-50 border border-amber-200" role="alert">
@@ -57,9 +58,13 @@
     <script type="text/babel">
         const { useState, useEffect, useRef } = React;
 
+        let width = {{ $products_detail->width }}; 
+        let height = {{ $products_detail->height }}; 
+        let priceValue = {{ $products_detail->price }};  
+
         // Dummy product catalog
         const productCatalog = [
-            { name: 'Fence Panel', price: 50 },
+            { name: 'Fence Panel', price: priceValue },
             { name: 'Fence Post', price: 10 },
         ];
 
@@ -98,13 +103,15 @@
             const calculatePrice = () => {
                 let totalPrice = 0;
                 let itemCount = 0;
+                let panelCountTotal = 0;
+                let totalPostCount = 0;
 
                 if (fenceLength > 0 && fenceWidth > 0) {
                     let horizontalPanelCount;
                     let verticalPanelCount;
                     let postCount;
 
-                    horizontalPanelCount = Math.ceil(fenceLength / 6); // Assuming each panel is 6 feet long
+                    horizontalPanelCount = Math.ceil(fenceLength / (width/100)); // Assuming each panel width in m
                     postCount = horizontalPanelCount + 1; // Assuming one post for each end of the panel
 
 
@@ -112,29 +119,32 @@
                     const postPrice = postCount * productCatalog[1].price;
 
                     totalPrice = panelPrice + postPrice;
+                    panelCountTotal = horizontalPanelCount + (verticalPanelCount || 0);
                     itemCount = horizontalPanelCount + (verticalPanelCount || 0) + postCount;
+                    totalPostCount = postCount;
                 }
 
-                return { totalPrice, itemCount };
+                return { totalPrice, itemCount, panelCountTotal, totalPostCount };
             };
 
-            const { totalPrice, itemCount } = calculatePrice();
+            const { totalPrice, itemCount, panelCountTotal, totalPostCount } = calculatePrice();
 
             return (
                 <div>
-                    <h2>Fence I Calculator</h2>
                     <form>
-                        <div>
-                            <label htmlFor="lengthInput">Enter the length of the fence (in feet):</label>
+                        <div className="mx-auto items-center text-center">
+                            <label htmlFor="lengthInput" className="text-lg font-medium mr-4">Zadejte délku strany (v cm):</label>
                             <input
-                                type="number"
+                                className="text-lg font-medium mr-8"
+                                type="text"
                                 id="lengthInput"
                                 value={fenceLength}
                                 onChange={handleLengthChange}
                             />
-                            <label htmlFor="widthInput">Enter the width of the fence (in feet):</label>
+                            <label htmlFor="widthInput" className="text-lg font-medium mr-4">Zadejte výšku plotu (v cm):</label>
                             <input
-                                type="number"
+                                className="text-lg font-medium"
+                                type="text"
                                 id="widthInput"
                                 value={fenceWidth}
                                 onChange={handleWidthChange}
@@ -144,8 +154,10 @@
                     <canvas ref={canvasRef} width={(fenceLength + 2) * 10} height={(fenceWidth + 2) * 10 + 20}></canvas>
                     {totalPrice > 0 && (
                         <div>
-                            <p>Total Price: ${totalPrice}</p>
-                            <p>Total Count of Items: {itemCount}</p>
+                            <p>Cena celkem: {totalPrice} Kč</p>
+                            <p>Panelů celkem: {panelCountTotal}</p>
+                            <p>Sloupků celkem: {totalPostCount}</p>
+                            <p>Položek celkem: {itemCount}</p>
                         </div>
                     )}
                 </div>

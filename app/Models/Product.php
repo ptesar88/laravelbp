@@ -35,7 +35,7 @@ class Product extends Model
      *
      * @var array<int, string>
      */
-    protected $appends = ['thumbnail_url'];
+    protected $appends = ['thumbnail_url', 'thumbnail_file'];
 
     /**
      * Get the URL of the thumbnail.
@@ -51,4 +51,49 @@ class Product extends Model
         return null;
     }
 
+    /**
+     * Get the file of the thumbnail.
+     *
+     * @return array|null
+     */
+    public function getThumbnailFileAttribute() {
+        if ($this->thumbnail) {
+            return [
+                "file" => $this->thumbnail,
+            ];
+        }
+
+        return null;
+    }
+
+    public function Type()
+    {
+        return $this->belongsTo(Type::class, 'type', 'id');
+    }
+    public function getTableNameAttribute()
+    {
+        return $this->type->name;
+    }
+    public function Category()
+    {
+        return $this->belongsTo(Category::class, 'category', 'id');
+    }
+    public function getCategoryNameAttribute()
+    {
+        return $this->type->name;
+    }
+    public function CategoryType()
+    {
+        return $this->belongsTo(CategoryType::class, 'category_type', 'id');
+    }
+    public function getCategoryTypeNameAttribute()
+    {
+        return $this->type->name;
+    }
+
 }
+
+class Type extends Model
+{
+ 
+ }

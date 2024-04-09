@@ -18,26 +18,10 @@ type ProductParams = {
     weight: string;
     price: string;
     label: string;
-    type: {
-        id: number;
-        short: string;
-        name: string;
-    };
-    top:  {
-        id: number;
-        short: string;
-        name: string;
-    };
-    category: {
-        id: number;
-        short: string;
-        name: string;
-    };
-    category_type: {
-        id: number;
-        short: string;
-        name: string;
-    };
+    type: string;
+    top: string;
+    category: string;
+    category_type: string;
 };
 type AdvantageParams = {
     id: number; // Add the 'id' property to satisfy the 'RaRecord<Identifier>' constraint
@@ -63,16 +47,6 @@ const createProductsFormData = (
 
     params.data.thumbnail?.rawFile && formData.append("thumbnail", params.data.thumbnail.rawFile);
     params.data.name && formData.append("name", params.data.name);
-    //arams.data.width && formData.append("width", params.data.width);
-    //params.data.height && formData.append("height", params.data.height);
-    //params.data.depth && formData.append("depth", params.data.depth);
-    //params.data.weight && formData.append("weight", params.data.weight);
-    //params.data.price && formData.append("price", params.data.price);
-    //params.data.label && formData.append("label", params.data.label);
-    //params.data.type?.short  && formData.append("type", params.data.type.short);
-    //params.data.top?.short && formData.append("top", params.data.top.short);
-    //params.data.category?.short && formData.append("category", params.data.category.short);
-    //params.data.category_type?.short  && formData.append("category_type", params.data.category_type.short);    
 
     return formData;
 };
@@ -90,10 +64,10 @@ const updateProductsFormData = (
     params.data.weight && formData.append("weight", params.data.weight);
     params.data.price && formData.append("price", params.data.price);
     params.data.label && formData.append("label", params.data.label);
-    params.data.type?.short  && formData.append("type", params.data.type.short);
-    params.data.top?.short && formData.append("top", params.data.top.short);
-    params.data.category?.short && formData.append("category", params.data.category.short);
-    params.data.category_type?.short  && formData.append("category_type", params.data.category_type.short);  
+    params.data.type  && formData.append("type", params.data.type);
+    params.data.top && formData.append("top", params.data.top);
+    params.data.category && formData.append("category", params.data.category);
+    params.data.category_type  && formData.append("category_type", params.data.category_type);  
 
     return formData;
 };

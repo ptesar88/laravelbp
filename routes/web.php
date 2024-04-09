@@ -4,15 +4,143 @@ use App\Models\Product;
 use App\Models\Advantage;
 use App\Models\Specification;
 use App\Models\Assembly;
-//use App\Http\Controllers\KonfiguratorController;
+use App\Models\Type;
+use App\Models\Category;
+use App\Models\CategoryType;
 use Illuminate\Support\Facades\Route;
 
 // list
+Route::any('/api/category_types', function () {
+    header("Access-Control-Expose-Headers: Content-Range");
+    header("Content-Range: " . CategoryType::count());
+
+    return CategoryType::all();
+});
+
+// get
+Route::get('/api/category_types/{id}', function ($id) {
+    return CategoryType::find($id);
+});
+
+// delete
+Route::delete('/api/category_types/{id}', function ($id) {
+    return CategoryType::find($id)->delete();
+});
+
+// update
+Route::post('/api/category_types/{id}', function ($id) {
+    $request = request();
+
+    $category_type = CategoryType::find($id);
+    $category_type->update($request->all());
+    $category_type->save();
+
+    return CategoryType::find($id);
+});
+
+// create
+Route::post('/api/category_types', function () {
+    $request = request();
+    
+    $category_type = CategoryType::create($request->all());
+    $category_type->save();
+
+    return $category_type;
+});
+
+// list
+Route::any('/api/categories', function () {
+    header("Access-Control-Expose-Headers: Content-Range");
+    header("Content-Range: " . Category::count());
+
+    return Category::all();
+});
+
+// get
+Route::get('/api/categories/{id}', function ($id) {
+    return Category::find($id);
+});
+
+// delete
+Route::delete('/api/categories/{id}', function ($id) {
+    return Category::find($id)->delete();
+});
+
+// update
+Route::post('/api/categories/{id}', function ($id) {
+    $request = request();
+
+    $category = Category::find($id);
+    $category->update($request->all());
+    $category->save();
+
+    return Category::find($id);
+});
+
+// create
+Route::post('/api/categories', function () {
+    $request = request();
+    
+    $category = Category::create($request->all());
+    $category->save();
+
+    return $category;
+});
+
+// list
+Route::any('/api/types', function () {
+    header("Access-Control-Expose-Headers: Content-Range");
+    header("Content-Range: " . Type::count());
+
+    return Type::all();
+});
+
+// get
+Route::get('/api/types/{id}', function ($id) {
+    return Type::find($id);
+});
+
+// delete
+Route::delete('/api/types/{id}', function ($id) {
+    return Type::find($id)->delete();
+});
+
+// update
+Route::post('/api/types/{id}', function ($id) {
+    $request = request();
+
+    $product = Type::find($id);
+    foreach($request->all() as $key => $value) {
+        if ($value) {
+            $product->$key = $value;
+        }
+    }
+    $product->save();
+
+    $product = Type::find($id);
+});
+
+// create
+Route::post('/api/types', function () {
+    $request = request();
+    
+    $type = Type::create($request->all());
+   
+    $type->save();
+
+    return $type;
+});
+
+// list
+
 Route::any('/api/products', function () {
+
+    
     header("Access-Control-Expose-Headers: Content-Range");
     header("Content-Range: " . Product::count());
 
-    return Product::orderBy('id', 'desc')->get();
+    return Product::with('Type', 'Category', 'CategoryType')->orderBy('id', 'desc')->get();
+
 });
 
 // get
@@ -41,7 +169,11 @@ Route::post('/api/products/{id}', function ($id) {
         $request->file('thumbnail')->move(public_path('attachments'), $product->thumbnail);
     }
 
-    return Product::find($id);
+    $product = Product::find($id);
+
+    return $product;
+    return Type::all();
+    return Category::all();
 });
 
 // create
@@ -49,12 +181,14 @@ Route::post('/api/products', function () {
     $request = request();
     
     $product = Product::create($request->all());
-    $product->thumbnail = $product->id . '-thumbnail.jpg';
-    $product->save();
-
+    $product->thumbnail = null;
+    
     if ($request->file('thumbnail')) {
+        $product->thumbnail = $product->id . '-thumbnail.jpg';
         $request->file('thumbnail')->move(public_path('attachments'), $product->thumbnail);
     }
+
+    $product->save();
 
     return $product;
 });
@@ -157,9 +291,9 @@ Route::get('/', function () {
 });
 
 Route::get('kompletni-nabidka-plotu', function () {
-    $products_plot = Product::where('type', 'plot')->get();
-    $products_sloupek = Product::where('type', 'sloupek')->get();
-    $products_otisk = Product::where('type', 'otisk')->get();
+    $products_plot = Product::where('type', 1)->get();
+    $products_sloupek = Product::where('type', 2)->get();
+    $products_otisk = Product::where('type', 3)->get();
 
     return view('ploty', compact('products_plot','products_sloupek','products_otisk'));
 });
