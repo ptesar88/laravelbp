@@ -7,6 +7,10 @@ use Illuminate\Database\Eloquent\Model;
 class Type extends Model
 {
 
+    const TYPE_PLOT = 1;
+    const TYPE_SLOUPEK = 2;
+    const TYPE_OTISK = 3;
+
     const CREATED_AT = null;
     const UPDATED_AT = null;
 

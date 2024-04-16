@@ -76,49 +76,147 @@
 <div class="relative overflow-x-auto">
   <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
       <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+        <tr>
+          <th scope="col" class="px-6 py-3">
+           
+        </th>
+          @foreach($products_sloupek_cat_types as $typ)
+            <th scope="col" colspan="2" class="px-6 py-3 items-center text-center">
+             {{ App\Models\CategoryType::getNameById($typ) }}
+            </th>
+            @endforeach
+        </tr>
           <tr>
-              <th scope="col" class="px-6 py-3">
-                  Název
-              </th>
-              <th scope="col" class="px-6 py-3">
-                  Výška (cm)
-              </th>
+            <th scope="col" class="px-6 py-3">
+              Výška (cm)
+          </th>
               <th scope="col" class="px-6 py-3">
                   Váha (kg)
               </th>
               <th scope="col" class="px-6 py-3">
                   Cena (bez DPH)
               </th>
-              <th scope="col" class="px-6 py-3">
-                Kategorie
+            <th scope="col" class="px-6 py-3">
+                Váha (kg)
             </th>
             <th scope="col" class="px-6 py-3">
-              Typ
+                Cena (bez DPH)
+            </th>
+            <th scope="col" class="px-6 py-3">
+              Váha (kg)
+          </th>
+          <th scope="col" class="px-6 py-3">
+              Cena (bez DPH)
           </th>
           </tr>
       </thead>
       <tbody>
-        @foreach($products_sloupek as $sloup)
-                  <div key={{ $sloup->id }}>
-          <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-              <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                {{ $sloup->name }}
+
+        @foreach($products_sloupek_hladke as $vyska => $skupiny)
+          <div>
+            <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+              <th class="px-6 py-4">
+                {{ $vyska }}
               </th>
+              @foreach($products_sloupek_cat_types as $typ)
+                @php($sloup = $skupiny[$typ] ?? null)
+          
               <td class="px-6 py-4">
-                {{ $sloup->height }}
+                {{ $sloup ? $sloup->weight : "-" }}
               </td>
+              <td class="px-6 py-4">
+                {{ $sloup ? $sloup->price : "-" }}
+              </td>
+              @endforeach
+          </tr>
+        </div>    
+        @endforeach
+      </tbody>
+  </table>
+</div>
+
+<div class="relative overflow-x-auto mt-8">
+  <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+      <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+          <tr>
+            <th scope="col" class="px-6 py-3">
+              Výška (cm)
+          </th>
+              <th scope="col" class="px-6 py-3">
+                  Váha (kg)
+              </th>
+              <th scope="col" class="px-6 py-3">
+                  Cena (bez DPH)
+              </th>
+            <th scope="col" class="px-6 py-3">
+                Váha (kg)
+            </th>
+            <th scope="col" class="px-6 py-3">
+                Cena (bez DPH)
+            </th>
+          </tr>
+      </thead>
+      <tbody>
+        
+        @foreach($products_sloupek_cihlicka as $vyska => $skupiny)
+          <div>
+            <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+              <th class="px-6 py-4">
+                {{ $vyska }}
+              </th>
+          @foreach($skupiny as $type => $sloup)
+          
               <td class="px-6 py-4">
                 {{ $sloup->weight }}
               </td>
               <td class="px-6 py-4">
                 {{ $sloup->price }}
               </td>
+              @endforeach
+          </tr>
+        </div>    
+        @endforeach
+      </tbody>
+  </table>
+</div>
+<div class="relative overflow-x-auto mt-8">
+  <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+      <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+          <tr>
+            <th scope="col" class="px-6 py-3">
+              Výška (cm)
+          </th>
+              <th scope="col" class="px-6 py-3">
+                  Váha (kg)
+              </th>
+              <th scope="col" class="px-6 py-3">
+                  Cena (bez DPH)
+              </th>
+            <th scope="col" class="px-6 py-3">
+                Váha (kg)
+            </th>
+            <th scope="col" class="px-6 py-3">
+                Cena (bez DPH)
+            </th>
+          </tr>
+      </thead>
+      <tbody>
+
+        @foreach($products_sloupek_stip_kamen as $vyska => $skupiny)
+          <div>
+            <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+              <th class="px-6 py-4">
+                {{ $vyska }}
+              </th>
+          @foreach($skupiny as $type => $sloup)
+          
               <td class="px-6 py-4">
-                {{ $sloup->category }}
+                {{ $sloup->weight }}
               </td>
               <td class="px-6 py-4">
-                {{ $sloup->category_type }}
+                {{ $sloup->price }}
               </td>
+              @endforeach
           </tr>
         </div>    
         @endforeach

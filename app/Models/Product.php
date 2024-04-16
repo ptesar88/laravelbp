@@ -92,8 +92,3 @@ class Product extends Model
     }
 
 }
-
-class Type extends Model
-{
- 
- }

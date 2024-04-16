@@ -35,20 +35,85 @@
       </div>
       <div class="mx-auto items-center grid mb-2 max-w-6xl md:mb-8 md:grid-cols-3 md:gap-3">
         <div>
-      <h3 class="mx-auto items-center text-center text-lg font-bold dark:text-white">{{ $products_detail->name }}</h3>
+      <h3 class="mx-auto items-center text-center font-bold dark:text-white">{{ $products_detail->name }}</h3>
         </div>
         <div>
           <img class="mx-auto items-center" src="{{ $products_detail->thumbnail_url }}" alt="" />
         </div>  
         <div>
-          <div class="mx-auto items-center text-center text-lg font-bold dark:text-white">Rozměry: {{ $products_detail->width }}x{{ $products_detail->height }}x{{ $products_detail->depth }}cm</div>
-          <div class="mx-auto items-center text-center text-lg font-bold dark:text-white">Cena: {{ $products_detail->price }} Kč</div>
+          <div class="mx-auto items-center text-center font-bold dark:text-white">Rozměry: {{ $products_detail->width }}x{{ $products_detail->height }}x{{ $products_detail->depth }}cm</div>
+          <div class="mx-auto items-center text-center font-bold dark:text-white">Cena: {{ $products_detail->price }} Kč</div>
         </div>  
       </div>
+      @if($products_detail->label == 'Ano')
+      <div class="mx-auto items-center grid mb-2 max-w-6xl md:mb-8 md:grid-cols-1 md:gap-1"> 
+        <div>
+                <div class="flex">
+                    <div class="flex items-center me-4 font-bold">
+                        Chcete použít otisk?
+                    </div>
+                    <div class="flex items-center me-4">
+                        <input id="inline-radio" type="radio" value="ano" name="inline-radio-group" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300">
+                        <label for="inline-radio" class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Ano</label>
+                    </div>
+                    <div class="flex items-center me-4">
+                        <input id="inline-2-radio" type="radio" value="ne" name="inline-radio-group" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300">
+                        <label for="inline-2-radio" class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Ne</label>
+                    </div>
+                </div>
+      
+        </div>
+      </div>  
+      @endif
+      <div id="otiskKonfig" class="mx-auto items-center grid mb-2 max-w-6xl md:mb-8 md:grid-cols-4 md:gap-3">
+        @foreach($products_otisk as $otisk)
+                    <div key={{ $otisk->id }}>
+                        <figure class="flex h-48 flex-col rounded-md shadow-md bg-gray-50 border border-gray-300">
+                        <div class="flex items-center ps-4 ">
+                            <input id="bordered-radio-1" type="radio" value="{{ $otisk->id }}" onChange={handleTypeChange} name="radioSel" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300"/>
+                            <label for="bordered-radio-1" class="w-full py-4 ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">{{ $otisk->name }}</label>
+                         </div>
+                         <div class="h-24">
+                        <img class="mx-auto max-h-[85px]" src="{{ $otisk->thumbnail_url }}" alt="" />
+                        </div>
+                        <div class="h-12 items-center justify-center text-center bg-gray-200 right-0">
+                        @if ($otisk->top == 'Ano')
+                          <span class="inline-flex items-center bg-blue-100 text-blue-800 text-xs font-medium px-2.5 py-0.5 rounded-full">
+                            <span class="w-2 h-2 me-1 bg-blue-500 rounded-full"></span>
+                            TOP
+                          </span>
+                        @endif
+                        
+                        @if ($otisk->label == 'Ano')
+                          <span class="inline-flex items-center bg-green-100 text-green-800 text-xs font-medium px-2.5 py-0.5 rounded-full dark:bg-green-900 dark:text-green-300">
+                            <span class="w-2 h-2 me-1 bg-green-500 rounded-full"></span>
+                            OTISK
+                          </span>
+                        @endif
+                          <span class="text-sm font-semibold ml-2">cena od: {{ $otisk->price }} Kč</span>
+                                                  
+                        </div>
+                      </figure>
+                    </div>    
+            @endforeach
+          </div>   
+
+      <div class="relative z-20 mx-auto max-w-6xl items-center p-2 mb-8 text-base text-amber-800 rounded-lg bg-amber-50 border border-amber-200" role="alert">
+        <span class="font-medium">Vyberte typ sloupku</span>
+      </div>
+
+      <div class="mx-auto items-center grid mb-2 max-w-6xl md:mb-8 md:grid-cols-4 md:gap-3">
+        @foreach($products_sloupek as $sloupek) 
+      <div class="flex items-center ps-4 border border-gray-200 rounded dark:border-gray-700">
+        <input id="bordered-radio-1" type="radio" value="{{ $sloupek->id }}" name="bordered-radio" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300">
+        <label for="bordered-radio-1" class="w-full py-4 ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">{{ $sloupek->name }}</label>
+    </div>
+    @endforeach 
+    </div>
       <div class="relative z-20 mx-auto max-w-6xl items-center p-2 mb-8 text-base text-amber-800 rounded-lg bg-amber-50 border border-amber-200" role="alert">
         <span class="font-medium">Vyberte tvar plotu</span>
       </div> 
-    </section>
+    
     
     <div id="root" class="mx-auto items-center mb-2 max-w-6xl"></div>
     <script src="https://unpkg.com/react@17/umd/react.development.js"></script>
@@ -58,14 +123,19 @@
     <script type="text/babel">
         const { useState, useEffect, useRef } = React;
 
+        const meter = 100;
+        
         let width = {{ $products_detail->width }}; 
-        let height = {{ $products_detail->height }}; 
-        let priceValue = {{ $products_detail->price }};  
+        let heightValue = {{ $products_detail->height }}; 
+        let priceValue = {{ $products_detail->price }}; 
+        let postPriceValue = {{ $products_detail->price }}; 
+
 
         // Dummy product catalog
         const productCatalog = [
             { name: 'Fence Panel', price: priceValue },
-            { name: 'Fence Post', price: 10 },
+            { name: 'Fence Post', price: postPriceValue },
+            { name: 'Fence Panel Height', height: heightValue},
         ];
 
         const FenceICalculator = () => {
@@ -80,12 +150,12 @@
                     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
                     // Draw fence panels
-                    ctx.fillStyle = 'brown';
+                    ctx.fillStyle = 'black';
                     ctx.fillRect(20, 20, fenceLength * 10, 20); // Draw horizontal part of the I
 
                     // Draw fence posts
                     ctx.fillStyle = 'gray';
-                    ctx.fillRect(10, 10, 10, 10); // Starting post
+                    ctx.fillRect(10 + 10, 10, 10, 10); // Starting post
                     ctx.fillRect(10 + fenceLength * 10, 10, 10, 10); // Ending post
                 }
             }, [fenceLength, fenceWidth]);
@@ -105,15 +175,17 @@
                 let itemCount = 0;
                 let panelCountTotal = 0;
                 let totalPostCount = 0;
-
+                
                 if (fenceLength > 0 && fenceWidth > 0) {
                     let horizontalPanelCount;
                     let verticalPanelCount;
                     let postCount;
 
-                    horizontalPanelCount = Math.ceil(fenceLength / (width/100)); // Assuming each panel width in m
-                    postCount = horizontalPanelCount + 1; // Assuming one post for each end of the panel
+                    const heightFence = productCatalog[1].height;
 
+                    horizontalPanelCount = Math.ceil((fenceLength / (width/meter))*fenceWidth); // Assuming each panel width in m
+                    postCount = Math.ceil((fenceLength / (width/meter)) + 1); // Assuming one post for each end of the panel
+                    verticalPanelCount = horizontalPanelCount * heightFence; 
 
                     const panelPrice = (horizontalPanelCount + (verticalPanelCount || 0)) * productCatalog[0].price;
                     const postPrice = postCount * productCatalog[1].price;
@@ -128,36 +200,58 @@
             };
 
             const { totalPrice, itemCount, panelCountTotal, totalPostCount } = calculatePrice();
-
+            // jedna strana
             return (
                 <div>
                     <form>
-                        <div className="mx-auto items-center text-center">
-                            <label htmlFor="lengthInput" className="text-lg font-medium mr-4">Zadejte délku strany (v cm):</label>
+                        <div className="relative z-20 mx-auto max-w-6xl items-center p-2 mb-8 text-base text-amber-800 rounded-lg bg-amber-50 border border-amber-200" role="alert">
+                        <span className="font-medium">Zadejte rozměry plotu</span>
+                        </div>
+                            <div className="grid gap-6 mb-6 md:grid-cols-4">
+                            <div>
+                            <label htmlFor="lengthInput" className="font-bold mr-4">Zadejte délku strany (v m):</label>
                             <input
-                                className="text-lg font-medium mr-8"
-                                type="text"
+                                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full md:w-1/3 p-2.5"
+                                type="number"
                                 id="lengthInput"
                                 value={fenceLength}
                                 onChange={handleLengthChange}
+                                default=""
                             />
-                            <label htmlFor="widthInput" className="text-lg font-medium mr-4">Zadejte výšku plotu (v cm):</label>
+                            </div>
+                            <div>
+                            <label htmlFor="widthInput" className="font-bold mr-4">Zadejte výšku plotu (v m):</label>
                             <input
-                                className="text-lg font-medium"
-                                type="text"
+                                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full md:w-1/3 p-2.5"
+                                type="number"
                                 id="widthInput"
                                 value={fenceWidth}
                                 onChange={handleWidthChange}
+                                default=""
                             />
+                            </div>
                         </div>
                     </form>
                     <canvas ref={canvasRef} width={(fenceLength + 2) * 10} height={(fenceWidth + 2) * 10 + 20}></canvas>
                     {totalPrice > 0 && (
                         <div>
-                            <p>Cena celkem: {totalPrice} Kč</p>
-                            <p>Panelů celkem: {panelCountTotal}</p>
-                            <p>Sloupků celkem: {totalPostCount}</p>
-                            <p>Položek celkem: {itemCount}</p>
+                            <ul class="max-w-md space-y-1 text-gray-500 list-disc list-inside dark:text-gray-400">
+                                <li>
+                                    <span className="font-bold">Cena celkem: </span> {totalPrice} Kč
+                                </li>
+                                <li>
+                                    <span className="font-bold">Panelů celkem: </span> {panelCountTotal} ks
+                                </li>
+                                <li>
+                                    <span className="font-bold">Sloupků celkem: </span> {totalPostCount} ks
+                                </li>
+                                <li>
+                                    <span className="font-bold">Položek celkem: </span> {itemCount} ks
+                                </li>
+                                <li>
+                                    <span className="font-bold">Výška sloupku: </span> {fenceWidth} m
+                                </li>
+                            </ul>
                         </div>
                     )}
                 </div>
@@ -364,26 +458,27 @@
 
             return (
               <form>
-                <div className="mx-auto items-center grid mb-2 max-w-6xl md:mb-8 md:grid-cols-3 md:gap-3">
+                <div className="mx-auto items-center grid mb-2 max-w-6xl md:mb-8 md:grid-cols-4 md:gap-3">
                   <div>
-                    <div className="mx-auto items-center text-center mb-4">
-                      <input id="radio-1" type="radio" value="I" onChange={handleTypeChange} name="radioSel" className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300"/>
-                      <label htmlFor="radio-1" className="ms-2 text-lg font-bold text-gray-900 dark:text-gray-300">Tvar I (jedna strana)</label>
-                  </div>
-                  </div>
-                  <div>
-                    <div className="mx-auto items-center text-center mb-4">
-                      <input id="radio-2" type="radio" value="L" onChange={handleTypeChange} name="radioSel" className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300"/>
-                      <label htmlFor="radio-2" className="ms-2 text-lg font-bold text-gray-900 dark:text-gray-300">Tvar L (dvě strany)</label>
-                  </div>
+                    <div className="flex items-center ps-4 border border-gray-200 rounded dark:border-gray-700">
+                        <input id="bordered-radio-1" type="radio" value="I" onChange={handleTypeChange} name="radioSel" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300"/>
+                        <label for="bordered-radio-1" class="w-full py-4 ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Tvar I (jedna strana)</label>
+                    </div>
                   </div>
                   <div>
-                    <div className="mx-auto items-center text-center mb-4">
-                      <input id="radio-3" type="radio" value="U" onChange={handleTypeChange} name="radioSel" className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300"/>
-                      <label htmlFor="radio-3" className="ms-2 text-lg font-bold text-gray-900 dark:text-gray-300">Tvar U (tři strany)</label>
+                    <div className="flex items-center ps-4 border border-gray-200 rounded dark:border-gray-700">
+                        <input id="bordered-radio-2" type="radio" value="L" onChange={handleTypeChange} name="radioSel" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300"/>
+                        <label for="bordered-radio-2" class="w-full py-4 ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Tvar L (dvě strany)</label>
+                    </div>
                   </div>
+                  <div>
+                    <div className="flex items-center ps-4 border border-gray-200 rounded dark:border-gray-700">
+                        <input id="bordered-radio-3" type="radio" value="U" onChange={handleTypeChange} name="radioSel" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300"/>
+                        <label for="bordered-radio-3" class="w-full py-4 ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Tvar U (tři strany)</label>
+                    </div>
                   </div>
                 </div> 
+                
               {fenceType === "I" && <FenceICalculator />}
               {fenceType === "L" && <FenceLCalculator />}
               {fenceType === "U" && <FenceUCalculator />}
@@ -393,4 +488,49 @@
 
         ReactDOM.render(<FenceCalculator />, document.getElementById('root'));
     </script>
-@endsection
+
+<div class="relative z-20 mx-auto max-w-6xl items-center p-2 mb-8 text-base text-amber-800 rounded-lg bg-amber-50 border border-amber-200" role="alert">
+    <span class="font-medium">Poptávka</span>
+  </div>
+<form class="max-w-6xl mx-auto">
+    <div class="relative z-0 w-full mb-5 group">
+        <input type="text" name="floating_company" id="floating_company" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " />
+        <label for="floating_company" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Firma</label>
+    </div>
+    <div class="grid md:grid-cols-2 md:gap-6">
+      <div class="relative z-0 w-full mb-5 group">
+          <input type="text" name="floating_first_name" id="floating_first_name" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
+          <label for="floating_first_name" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Jméno</label>
+      </div>
+      <div class="relative z-0 w-full mb-5 group">
+          <input type="text" name="floating_last_name" id="floating_last_name" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
+          <label for="floating_last_name" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Příjmení</label>
+      </div>
+    </div>
+    <div class="grid md:grid-cols-2 md:gap-6">
+      <div class="relative z-0 w-full mb-5 group">
+          <input type="tel" name="floating_phone" id="floating_phone" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder="" required />
+          <label for="floating_phone" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Telefon</label>
+      </div>
+      <div class="relative z-0 w-full mb-5 group">
+      <input type="email" name="floating_email" id="floating_email" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
+      <label for="floating_email" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Email</label>
+    </div>
+
+    </div>
+
+    
+
+<fieldset>
+    <div class="flex items-center mb-4">
+        <input id="checkbox-1" type="checkbox" value="" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" >
+        <label for="checkbox-1" class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Souhlasím se zpracováním <a href="#" class="text-blue-600 hover:underline dark:text-blue-500">osobních údajů</a>.</label>
+    </div>
+  </fieldset>
+
+  
+    <button type="submit" class="text-white mt-8 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Odeslat poptávku</button>
+  </form>
+  
+    </section>
+    @endsection

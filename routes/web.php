@@ -291,16 +291,64 @@ Route::get('/', function () {
 });
 
 Route::get('kompletni-nabidka-plotu', function () {
-    $products_plot = Product::where('type', 1)->get();
-    $products_sloupek = Product::where('type', 2)->get();
-    $products_otisk = Product::where('type', 3)->get();
+    $products_plot = Product::where('type', Type::TYPE_PLOT)->get();
+    $products_sloupek = Product::where('type', Type::TYPE_SLOUPEK)->get();
+    $products_otisk = Product::where('type', Type::TYPE_OTISK)->get();
 
-    return view('ploty', compact('products_plot','products_sloupek','products_otisk'));
+    $products_sloupek_cat_types = [
+        CategoryType::TYPE_PRUBEZNY,
+        CategoryType::TYPE_KONCOVY,
+        CategoryType::TYPE_ROHOVY,
+    ];
+
+    $products_sloupek_hladke = Product
+        ::where('type', 2)
+        ->where('category', 1)
+        ->get()
+        ->groupBy('height')
+        ->map(function ($products) {
+            return $products->mapWithKeys(function ($product, $key) {
+                $category_type = $product["category_type"];
+                return [$category_type => $product];
+            });
+        })
+        ->sortBy('height');
+    
+    $products_sloupek_cihlicka = Product
+        ::where('type', 2)
+        ->where('category', 2)
+        ->get()
+        ->groupBy('height')
+        ->mapWithKeys(function ($products, $category_type) {
+            return [$category_type => $products];
+        })
+        ->sortBy('height');    
+
+    $products_sloupek_stip_kamen = Product
+        ::where('type', 2)
+        ->where('category', 3)
+        ->get()
+        ->groupBy('height')
+        ->mapWithKeys(function ($products, $category_type) {
+            return [$category_type => $products];
+        })
+        ->sortBy('height'); 
+
+    return view('ploty', compact(
+        'products_plot',
+        'products_sloupek',
+        'products_sloupek_cat_types',
+        'products_sloupek_hladke',
+        'products_sloupek_cihlicka',
+        'products_sloupek_stip_kamen',
+        'products_otisk'));
 });
 
 Route::get('/product/{id}', function ($id) {
     $products_detail = Product::find($id);
-    return view('konfigurator', compact('products_detail'));
+    $products_sloupek = Category::all();
+    $products_otisk = Product::where('type', Type::TYPE_OTISK)->get();
+    return view('konfigurator', compact('products_detail', 'products_sloupek', 'products_otisk'));
 });
 
 Route::get('specifikace', function () {
