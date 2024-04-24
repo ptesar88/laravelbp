@@ -84,6 +84,7 @@
        @yield('page-content')
        @yield('page-main-products')
        @yield('page-owner')
+       @yield('page-gallery')
        @yield('page-benefits')
        @yield('page-all-products')
        @yield('page-specifications')

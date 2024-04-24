@@ -79,11 +79,29 @@
     </section>
 @endsection
 
+@section('page-gallery')
+    <section class="free-post">
+<div class="max-w-6xl mx-auto text-center mb-8 grid grid-cols-2 md:grid-cols-3 gap-4">
+  <div>
+      <img class="h-auto max-w-full rounded-lg" src="1.png" alt="">
+  </div>
+  <div>
+      <img class="h-auto max-w-full rounded-lg" src="2.png" alt="">
+  </div>
+  <div>
+      <img class="h-auto max-w-full rounded-lg" src="3.png" alt="">
+  </div>
+
+  
+</div>
+</section>
+@endsection
+
 @section('page-benefits')
     <section class="free-post">
             <div class="mx-auto max-w-6xl">
   
-              <div class="grid gap-8 lg:grid-cols-2">
+              <div class="grid gap-3 lg:grid-cols-2">
                 @foreach($advantages as $adv)
                  <article class="p-6 bg-white rounded-lg border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700" key={keyF.id}>
                   <div class="flex justify-between items-center mb-5 text-gray-500">

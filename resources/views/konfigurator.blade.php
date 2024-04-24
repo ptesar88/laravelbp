@@ -31,7 +31,7 @@
     <section class="free-post">
       <h2 class="mx-auto items-center text-center text-2xl mb-2 max-w-4xl md:mb-8 font-extrabold dark:text-white">Konfigurátor</h2>
       <div class="relative z-20 mx-auto max-w-6xl items-center p-2 mb-8 text-base text-amber-800 rounded-lg bg-amber-50 border border-amber-200" role="alert">
-        <span class="font-medium">Vybrali jste</span>
+        <span class="font-medium">1. Vybrali jste</span>
       </div>
       <div class="mx-auto items-center grid mb-2 max-w-6xl md:mb-8 md:grid-cols-3 md:gap-3">
         <div>
@@ -64,7 +64,7 @@
       
         </div>
       </div>  
-      @endif
+      
       <div id="otiskKonfig" class="mx-auto items-center grid mb-2 max-w-6xl md:mb-8 md:grid-cols-4 md:gap-3">
         @foreach($products_otisk as $otisk)
                     <div key={{ $otisk->id }}>
@@ -97,9 +97,9 @@
                     </div>    
             @endforeach
           </div>   
-
+          @endif
       <div class="relative z-20 mx-auto max-w-6xl items-center p-2 mb-8 text-base text-amber-800 rounded-lg bg-amber-50 border border-amber-200" role="alert">
-        <span class="font-medium">Vyberte typ sloupku</span>
+        <span class="font-medium">2. Vyberte typ sloupku</span>
       </div>
 
       <div class="mx-auto items-center grid mb-2 max-w-6xl md:mb-8 md:grid-cols-4 md:gap-3">
@@ -111,7 +111,7 @@
     @endforeach 
     </div>
       <div class="relative z-20 mx-auto max-w-6xl items-center p-2 mb-8 text-base text-amber-800 rounded-lg bg-amber-50 border border-amber-200" role="alert">
-        <span class="font-medium">Vyberte tvar plotu</span>
+        <span class="font-medium">3. Vyberte tvar plotu</span>
       </div> 
     
     
@@ -205,7 +205,7 @@
                 <div>
                     <form>
                         <div className="relative z-20 mx-auto max-w-6xl items-center p-2 mb-8 text-base text-amber-800 rounded-lg bg-amber-50 border border-amber-200" role="alert">
-                        <span className="font-medium">Zadejte rozměry plotu</span>
+                        <span className="font-medium">4. Zadejte rozměry plotu</span>
                         </div>
                             <div className="grid gap-6 mb-6 md:grid-cols-4">
                             <div>
@@ -235,7 +235,7 @@
                     <canvas ref={canvasRef} width={(fenceLength + 2) * 10} height={(fenceWidth + 2) * 10 + 20}></canvas>
                     {totalPrice > 0 && (
                         <div>
-                            <ul class="max-w-md space-y-1 text-gray-500 list-disc list-inside dark:text-gray-400">
+                            <ul className="max-w-md space-y-1 text-gray-500 list-disc list-inside dark:text-gray-400">
                                 <li>
                                     <span className="font-bold">Cena celkem: </span> {totalPrice} Kč
                                 </li>
@@ -461,20 +461,20 @@
                 <div className="mx-auto items-center grid mb-2 max-w-6xl md:mb-8 md:grid-cols-4 md:gap-3">
                   <div>
                     <div className="flex items-center ps-4 border border-gray-200 rounded dark:border-gray-700">
-                        <input id="bordered-radio-1" type="radio" value="I" onChange={handleTypeChange} name="radioSel" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300"/>
-                        <label for="bordered-radio-1" class="w-full py-4 ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Tvar I (jedna strana)</label>
+                        <input id="bordered-radio-1" type="radio" value="I" onChange={handleTypeChange} name="radioSel" className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300"/>
+                        <label htmlFor= "bordered-radio-1" className="w-full py-4 ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Tvar I (jedna strana)</label>
                     </div>
                   </div>
                   <div>
                     <div className="flex items-center ps-4 border border-gray-200 rounded dark:border-gray-700">
-                        <input id="bordered-radio-2" type="radio" value="L" onChange={handleTypeChange} name="radioSel" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300"/>
-                        <label for="bordered-radio-2" class="w-full py-4 ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Tvar L (dvě strany)</label>
+                        <input id="bordered-radio-2" type="radio" value="L" onChange={handleTypeChange} name="radioSel" className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300"/>
+                        <label htmlFor= "bordered-radio-2" className="w-full py-4 ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Tvar L (dvě strany)</label>
                     </div>
                   </div>
                   <div>
                     <div className="flex items-center ps-4 border border-gray-200 rounded dark:border-gray-700">
-                        <input id="bordered-radio-3" type="radio" value="U" onChange={handleTypeChange} name="radioSel" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300"/>
-                        <label for="bordered-radio-3" class="w-full py-4 ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Tvar U (tři strany)</label>
+                        <input id="bordered-radio-3" type="radio" value="U" onChange={handleTypeChange} name="radioSel" className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300"/>
+                        <label htmlFor= "bordered-radio-3" className="w-full py-4 ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Tvar U (tři strany)</label>
                     </div>
                   </div>
                 </div> 
@@ -490,7 +490,7 @@
     </script>
 
 <div class="relative z-20 mx-auto max-w-6xl items-center p-2 mb-8 text-base text-amber-800 rounded-lg bg-amber-50 border border-amber-200" role="alert">
-    <span class="font-medium">Poptávka</span>
+    <span class="font-medium">5. Poptávka</span>
   </div>
 <form class="max-w-6xl mx-auto">
     <div class="relative z-0 w-full mb-5 group">
