@@ -76,12 +76,16 @@
 <div class="relative overflow-x-auto">
   <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
       <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+       <tr>
+          <th scope="col" colspan="7" class="text-center px-6 py-3 text-lg font-extrabold">
+            HLADKÉ
+          </th>
+       </tr>
         <tr>
           <th scope="col" class="px-6 py-3">
-           
         </th>
           @foreach($products_sloupek_cat_types as $typ)
-            <th scope="col" colspan="2" class="px-6 py-3 items-center text-center">
+            <th scope="col" colspan="2" class="px-6 py-3 items-center text-base font-extrabold text-center">
              {{ App\Models\CategoryType::getNameById($typ) }}
             </th>
             @endforeach
@@ -138,6 +142,21 @@
 <div class="relative overflow-x-auto mt-8">
   <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
       <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+        <tr>
+          <th scope="col" colspan="5" class="text-center px-6 py-3 text-lg font-extrabold">
+            CIHLIČKA
+          </th>
+       </tr>
+        <tr>
+          <th scope="col" class="px-6 py-3">
+           
+        </th>
+          @foreach($products_sloupek_cat_types_others as $typ)
+            <th scope="col" colspan="2" class="px-6 py-3 items-center text-base font-extrabold text-center">
+             {{ App\Models\CategoryType::getNameById($typ) }}
+            </th>
+            @endforeach
+        </tr>
           <tr>
             <th scope="col" class="px-6 py-3">
               Výška (cm)
@@ -182,6 +201,21 @@
 <div class="relative overflow-x-auto mt-8">
   <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
       <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+        <tr>
+          <th scope="col" colspan="5" class="text-center px-6 py-3 text-lg font-extrabold">
+            ŠTÍPANÝ KÁMEN
+          </th>
+       </tr>
+        <tr>
+          <th scope="col" class="px-6 py-3">
+           
+        </th>
+          @foreach($products_sloupek_cat_types_others as $typ)
+            <th scope="col" colspan="2" class="px-6 py-3 items-center text-base font-extrabold text-center">
+             {{ App\Models\CategoryType::getNameById($typ) }}
+            </th>
+            @endforeach
+        </tr>
           <tr>
             <th scope="col" class="px-6 py-3">
               Výška (cm)
@@ -243,23 +277,23 @@
                       <div class="h-24">
                       <img class="mx-auto max-h-[85px]" src="{{ $otisk->thumbnail_url }}" alt="" />
                       </div>
-                      <div class="h-16 text-right bg-gray-200 right-0">
-                      @if ($otisk->top == 'Ano')
-                        <span class="inline-flex items-center bg-blue-100 text-blue-800 text-xs font-medium px-2.5 py-0.5 rounded-full">
-                          <span class="w-2 h-2 me-1 bg-blue-500 rounded-full"></span>
-                          TOP
-                        </span>
-                      @endif
-                      
-                      @if ($otisk->label == 'Ano')
-                        <span class="inline-flex items-center bg-green-100 text-green-800 text-xs font-medium px-2.5 py-0.5 rounded-full dark:bg-green-900 dark:text-green-300">
-                          <span class="w-2 h-2 me-1 bg-green-500 rounded-full"></span>
-                          OTISK
-                        </span>
-                      @endif
-                        <span class="text-sm font-semibold ml-2">cena od: {{ $otisk->price }} Kč</span>
-                        <button onclick="window.location='{{ url("/product/{$prod->id}") }}'" class="text-center text-sm m-2 p-2 mt-4 shadow-md rounded-md text-white bg-pink-950 border border-pink-950">Konfigurátor</button>
+                      <div class="h-16 text-center justify-center items-center bg-gray-200 right-0">
+                          <div class="text-center justify-center items-center mt-4">
+                        @if ($otisk->top == 'Ano')
+                          <span class="inline-flex items-center bg-blue-100 text-blue-800 text-xs font-medium px-2.5 py-0.5 rounded-full">
+                            <span class="w-2 h-2 me-1 bg-blue-500 rounded-full"></span>
+                            TOP
+                          </span>
+                        @endif
                         
+                        @if ($otisk->label == 'Ano')
+                          <span class="inline-flex items-center bg-green-100 text-green-800 text-xs font-medium px-2.5 py-0.5 rounded-full dark:bg-green-900 dark:text-green-300">
+                            <span class="w-2 h-2 me-1 bg-green-500 rounded-full"></span>
+                            OTISK
+                          </span>
+                        @endif
+                        <span class="text-sm font-semibold ml-2">cena od: {{ $otisk->price }} Kč</span>
+                          </div>                        
                       </div>
                     </figure>
                   </div>    

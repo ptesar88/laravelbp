@@ -7,6 +7,7 @@ use App\Models\Assembly;
 use App\Models\Type;
 use App\Models\Category;
 use App\Models\CategoryType;
+use App\Http\Controllers\FormController;
 use Illuminate\Support\Facades\Route;
 
 // list
@@ -301,6 +302,11 @@ Route::get('kompletni-nabidka-plotu', function () {
         CategoryType::TYPE_ROHOVY,
     ];
 
+    $products_sloupek_cat_types_others = [
+        CategoryType::TYPE_PRUBEZNY,
+        CategoryType::TYPE_KONCOVY_LEVY_PRAVY,
+    ];
+
     $products_sloupek_hladke = Product
         ::where('type', 2)
         ->where('category', 1)
@@ -338,6 +344,7 @@ Route::get('kompletni-nabidka-plotu', function () {
         'products_plot',
         'products_sloupek',
         'products_sloupek_cat_types',
+        'products_sloupek_cat_types_others',
         'products_sloupek_hladke',
         'products_sloupek_cihlicka',
         'products_sloupek_stip_kamen',
@@ -345,11 +352,15 @@ Route::get('kompletni-nabidka-plotu', function () {
 });
 
 Route::get('/product/{id}', function ($id) {
+    $showDivField = false;
     $products_detail = Product::find($id);
     $products_sloupek = Category::all();
     $products_otisk = Product::where('type', Type::TYPE_OTISK)->get();
-    return view('konfigurator', compact('products_detail', 'products_sloupek', 'products_otisk'));
+    return view('konfigurator', compact('products_detail', 'products_sloupek', 'products_otisk', 'showDivField'));
 });
+
+//Route::get('/radio-form', [FormController::class, 'index'])->name('radioForm');
+//Route::post('/process-form', [FormController::class, 'processForm'])->name('processForm');
 
 Route::get('specifikace', function () {
     $specifications = Specification::all();

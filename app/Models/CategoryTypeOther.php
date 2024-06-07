@@ -4,12 +4,10 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class CategoryType extends Model
+class CategoryTypeOther extends Model
 {
 
     CONST TYPE_PRUBEZNY = 1;
-    CONST TYPE_KONCOVY = 2;
-    CONST TYPE_ROHOVY = 3;
     CONST TYPE_KONCOVY_LEVY_PRAVY = 4;
 
     const CREATED_AT = null;
@@ -45,7 +43,7 @@ class CategoryType extends Model
      */
 
      public static function getNameById($id) {
-        $categoryType = CategoryType::find($id);
+        $categoryType = CategoryTypeOther::find($id);
         return $categoryType ? $categoryType->name : "-";
      }
 
