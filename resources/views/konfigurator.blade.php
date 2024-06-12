@@ -57,8 +57,8 @@
       
         </div>
       </div> 
-      @if ($showDivField == true) 
-      <div id="otiskKonfig" class="hidden mx-auto items-center grid mb-2 max-w-6xl md:mb-8 md:grid-cols-4 md:gap-3">
+
+      <div id="otiskKonfig" class="mx-auto items-center grid mb-2 max-w-6xl md:mb-8 md:grid-cols-4 md:gap-3">
         @foreach($products_otisk as $otisk)
                     <div key={{ $otisk->id }}>
                         <figure class="flex h-48 flex-col rounded-md shadow-md bg-gray-50 border border-gray-300">
@@ -91,9 +91,9 @@
             @endforeach
           </div>  
           @endif  
-          @endif
+     
          
-      <div class="relative z-20 mx-auto max-w-6xl items-center p-2 mb-8 text-base text-amber-800 rounded-lg bg-amber-50 border border-amber-200" role="alert">
+      <div class="relative z-20 mx-auto max-w-6xl items-center mt-12 p-2 mb-2 text-base text-amber-800 rounded-lg bg-amber-50 border border-amber-200" role="alert">
         <span class="font-medium">2. Vyberte typ sloupku</span>
       </div>
 
@@ -105,7 +105,7 @@
     </div>
     @endforeach 
     </div>
-      <div class="relative z-20 mx-auto max-w-6xl items-center p-2 mb-8 text-base text-amber-800 rounded-lg bg-amber-50 border border-amber-200" role="alert">
+      <div class="relative z-20 mx-auto max-w-6xl items-center mt-12 p-2 mb-2 text-base text-amber-800 rounded-lg bg-amber-50 border border-amber-200" role="alert">
         <span class="font-medium">3. Vyberte tvar plotu</span>
       </div> 
     

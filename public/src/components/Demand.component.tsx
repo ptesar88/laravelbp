@@ -3,7 +3,7 @@
 const Demand = () => {
 return (
     <div>
-<div className="relative z-20 mx-auto max-w-6xl items-center p-2 mb-8 text-base text-amber-800 rounded-lg bg-amber-50 border border-amber-200" role="alert">
+<div className="relative z-20 mx-auto max-w-6xl items-center mt-12 p-2 mb-2 text-base text-amber-800 rounded-lg bg-amber-50 border border-amber-200" role="alert">
     <span className="font-medium">5. Poptávka</span>
   </div>
 <form className="max-w-6xl mx-auto">

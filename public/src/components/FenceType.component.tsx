@@ -6,22 +6,22 @@ const meter = 100;
 const FenceICalculator = () => {
   const [fenceLength, setFenceLength] = useState(0);
   const [fenceWidth, setFenceWidth] = useState(0);
-  const canvasRef = useRef(null);
+  //const canvasRef = useRef(null);
 
   useEffect(() => {
       if (fenceLength > 0 && fenceWidth > 0) {
-          const canvas = canvasRef.current;
-          const ctx = canvas.getContext('2d');
-          ctx.clearRect(0, 0, canvas.width, canvas.height);
+          //const canvas = canvasRef.current;
+          //const ctx = canvas.getContext('2d');
+          //ctx.clearRect(0, 0, canvas.width, canvas.height);
 
           // Draw fence panels
-          ctx.fillStyle = 'black';
-          ctx.fillRect(20, 20, fenceLength * 10, 20); // Draw horizontal part of the I
+          //ctx.fillStyle = 'black';
+          //ctx.fillRect(20, 20, fenceLength * 10, 20); // Draw horizontal part of the I
 
           // Draw fence posts
-          ctx.fillStyle = 'gray';
-          ctx.fillRect(10 + 10, 10, 10, 10); // Starting post
-          ctx.fillRect(10 + fenceLength * 10, 10, 10, 10); // Ending post
+          //ctx.fillStyle = 'gray';
+          //ctx.fillRect(10 + 10, 10, 10, 10); // Starting post
+          //ctx.fillRect(10 + fenceLength * 10, 10, 10, 10); // Ending post
       }
   }, [fenceLength, fenceWidth]);
 
@@ -68,7 +68,7 @@ const FenceICalculator = () => {
   // jedna strana
     return <div>
       <form>
-                        <div className="relative z-20 mx-auto max-w-6xl items-center p-2 mb-8 text-base text-amber-800 rounded-lg bg-amber-50 border border-amber-200" role="alert">
+                        <div className="relative z-20 mx-auto max-w-6xl items-center mt-12 p-2 mb-2 text-base text-amber-800 rounded-lg bg-amber-50 border border-amber-200" role="alert">
                         <span className="font-medium">4. Zadejte rozměry plotu</span>
                         </div>
                         
@@ -104,7 +104,7 @@ const FenceICalculator = () => {
                                     </svg>
                                 </button>
                             </div>
-                            <p id="helper-text-explanation" className="mt-2 text-sm text-gray-500 dark:text-gray-400">popisek</p>
+                            
                             </div>
 
                             <div>
@@ -138,7 +138,7 @@ const FenceICalculator = () => {
                                     </svg>
                                 </button>
                             </div>
-                            <p id="helper-text-explanation" className="mt-2 text-sm text-gray-500 dark:text-gray-400">popisek</p>
+                            
                           </div>
                           
                           {totalPrice > 0 && (
@@ -161,7 +161,7 @@ const FenceICalculator = () => {
                           <div>
                                 <ul className="max-w-md space-y-1 text-gray-500 list-none list-inside dark:text-gray-400">
                                 <li>
-                                    <span className="text-sm font-medium text-gray-900">Cena celkem:  {totalPrice} Kč </span>
+                                    <span className="text-sm font-medium text-gray-900">*Orientační cena celkem:  {totalPrice} Kč </span>
                                 </li>
 
                                 <li>
@@ -179,7 +179,7 @@ const FenceICalculator = () => {
 
                             
                     </form>
-                    <canvas ref={canvasRef} width={(fenceLength + 2) * 10} height={(fenceWidth + 2) * 10 + 20}></canvas>
+                  
                    
     </div>;
 }
@@ -226,3 +226,5 @@ const FenceType = () => {
     </form>
     );
 };
+// render plotu
+//<canvas ref={canvasRef} width={(fenceLength + 2) * 10} height={(fenceWidth + 2) * 10 + 20}></canvas>

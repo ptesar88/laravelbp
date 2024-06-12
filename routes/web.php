@@ -7,8 +7,48 @@ use App\Models\Assembly;
 use App\Models\Type;
 use App\Models\Category;
 use App\Models\CategoryType;
+use App\Models\Demand;
 use App\Http\Controllers\FormController;
 use Illuminate\Support\Facades\Route;
+
+// list
+Route::any('/api/demands', function () {
+    header("Access-Control-Expose-Headers: Content-Range");
+    header("Content-Range: " . Demand::count());
+
+    return Demand::all();
+});
+
+// get
+Route::get('/api/demands/{id}', function ($id) {
+    return Demand::find($id);
+});
+
+// delete
+Route::delete('/api/demands/{id}', function ($id) {
+    return Demand::find($id)->delete();
+});
+
+// update
+Route::post('/api/demands/{id}', function ($id) {
+    $request = request();
+
+    $demand = Demand::find($id);
+    $demand->update($request->all());
+    $demand->save();
+
+    return Demand::find($id);
+});
+
+// create
+Route::post('/api/demands', function () {
+    $request = request();
+    
+    $demand = Demand::create($request->all());
+    $demand->save();
+
+    return $demand;
+});
 
 // list
 Route::any('/api/category_types', function () {

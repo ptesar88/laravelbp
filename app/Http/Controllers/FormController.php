@@ -11,7 +11,7 @@ class FormController extends Controller
         $showDivField = false;
         $option = '';
 
-        return view('knofigurator', compact('showDivField', 'option'));
+        return view('konfigurator', compact('showDivField', 'option'));
     }
 
     public function processForm(Request $request)

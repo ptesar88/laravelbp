@@ -21,11 +21,38 @@ import {
     useGetOne,
     ReferenceInput,
     Pagination,
+    RichTextField,
 } from "react-admin";
 import { dataProvider } from "./dataProvider";
 import { authProvider } from "./authProvider";
 import { RichTextInput, RichTextInputToolbar } from "ra-input-rich-text";
 import { useWatch } from 'react-hook-form';
+
+const DemandCreate = () => (
+    <Create>
+        <SimpleForm>
+            <TextInput source="firstname" validate={[required()]} fullWidth />
+            <TextInput source="lastname" validate={[required()]} fullWidth />
+            <TextInput source="company" validate={[required()]} fullWidth />
+            <TextInput source="phone" validate={[required()]} fullWidth />
+            <TextInput source="email" validate={[required()]} fullWidth />
+            <RichTextInput source="body" toolbar={<RichTextInputToolbar size="large" />} fullWidth />
+        </SimpleForm>
+    </Create>
+);
+
+const DemandShow = () => (
+    <Show>
+        <SimpleShowLayout>
+            <TextInput source="firstname" />
+            <TextField source="lastname" />
+            <TextField source="company" />
+            <TextField source="phone" />
+            <TextField source="email" />
+            <RichTextField source="body" />
+        </SimpleShowLayout>
+    </Show>
+);
 
 const ProductCreate = () => (
     <Create>
@@ -194,8 +221,23 @@ const ProductList = (props: any) => (
     </List>
 );
 
+const DemandList = (props: any) => (
+    <List pagination={<PostPagination />}>
+        <Datagrid rowClick="show">
+            <TextField source="id" />
+            <TextField source="firstname" />
+            <TextField source="lastname" />
+            <TextField source="company" />
+            <TextField source="phone" />
+            <TextField source="email" />
+            <TextField source="body" />
+        </Datagrid>
+    </List>
+);
+
 export const App = () => (
     <Admin dataProvider={dataProvider} authProvider={authProvider}>
+        <Resource name="demands" list={DemandList} show={DemandShow} create={DemandCreate} />
         <Resource name="products" list={ProductList} show={ProductShow} edit={ProductEdit} create={ProductCreate} />
         <Resource name="advantages" list={ListGuesser} show={AdvantageShow} edit={AdvantageEdit} create={AdvantageCreate} />
         <Resource name="specifications" list={ListGuesser} show={SpecificationShow} edit={SpecificationEdit} />

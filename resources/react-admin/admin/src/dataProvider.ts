@@ -40,6 +40,31 @@ type AssemblyParams = {
     body: string;
 };
 
+type DemandParams = {
+    id: number; // Add the 'id' property to satisfy the 'RaRecord<Identifier>' constraint
+    firstname: string;
+    lastname: string;
+    company: string;
+    phone: string;
+    email: string;
+    body: string;
+};
+
+const createDemandFormData = (
+    params: CreateParams<DemandParams>
+) => {
+    const formData = new FormData();
+
+    params.data.firstname && formData.append("firstname", params.data.firstname);
+    params.data.lastname && formData.append("lastname", params.data.lastname);
+    params.data.company && formData.append("company", params.data.company);
+    params.data.phone && formData.append("phone", params.data.phone);
+    params.data.email && formData.append("email", params.data.email);
+    params.data.body && formData.append("body", params.data.body);
+
+    return formData;
+};
+
 const createProductsFormData = (
     params: CreateParams<ProductParams>
 ) => {
@@ -134,6 +159,14 @@ export const dataProvider: DataProvider = {
                 .then(({ json }) => ({ data: json }));
         }else if (resource === "advantages") {  
             const formData = createAdvantagesFormData(params);
+            return fetchUtils
+                .fetchJson(`${endpoint}/${resource}`, {
+                    method: "POST",
+                    body: formData,
+                })
+                .then(({ json }) => ({ data: json }));
+        }else if (resource === "demand") {  
+            const formData = createDemandFormData(params);
             return fetchUtils
                 .fetchJson(`${endpoint}/${resource}`, {
                     method: "POST",
