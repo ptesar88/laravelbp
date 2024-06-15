@@ -49,11 +49,22 @@
       <div class="mx-auto items-center grid mb-2 max-w-6xl md:mb-8 md:grid-cols-1 md:gap-1"> 
         <div>
                 <div class="flex">
-                    <div class="flex items-center me-4 font-bold">
+                    <div class="flex items-center me-4 ms-2 font-bold">
                         Chcete použít otisk?
                     </div>
-                    <div id="labelChange"></div>
-                   </div>
+                  
+                    
+                        <div class="flex items-center me-4">
+                            <input id="inline-radio" type="radio" value="ano" onChange={handleLabelChange} name="inline-radio-group" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                            <label for="inline-radio" class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">ANO</label>
+                        </div>
+                        <div class="flex items-center me-4">
+                            <input id="inline-2-radio" type="radio" value="ne" onChange={handleLabelChange} name="inline-radio-group" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                            <label for="inline-2-radio" class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">NE</label>
+                        </div>
+                      
+                 
+                </div>
       
         </div>
       </div> 
@@ -128,6 +139,9 @@
     <script type="text/babel" src="{{ asset('src/components/SlopeType.component.tsx') }}"></script>
     <script type="text/babel" src="{{ asset('src/components/UserSelectedFence.component.tsx') }}"></script>
     <script type="text/babel" src="{{ asset('src/components/FenceType.component.tsx') }}"></script>
+    <script type="text/babel" src="{{ asset('src/components/FenceI.component.tsx') }}"></script>
+    <script type="text/babel" src="{{ asset('src/components/FenceL.component.tsx') }}"></script>
+    <script type="text/babel" src="{{ asset('src/components/FenceU.component.tsx') }}"></script>
     <script type="text/babel" src="{{ asset('src/components/Demand.component.tsx') }}"></script>
 
     <script type="text/babel" src="{{ asset('fencecalc.js') }}"></script>

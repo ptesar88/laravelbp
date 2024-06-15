@@ -3,12 +3,15 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Demand extends Model
 {
 
     const CREATED_AT = null;
     const UPDATED_AT = null;
+
+    use HasFactory;
 
     /**
      * The attributes that are mass assignable.
