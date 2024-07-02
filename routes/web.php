@@ -9,6 +9,8 @@ use App\Models\Category;
 use App\Models\CategoryType;
 use App\Models\Demand;
 use App\Http\Controllers\FormController;
+use Illuminate\Contracts\View\View;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Route;
 
 // list
@@ -396,8 +398,42 @@ Route::get('/product/{id}', function ($id) {
     $products_detail = Product::find($id);
     $products_sloupek = Category::all();
     $products_otisk = Product::where('type', Type::TYPE_OTISK)->get();
-    return view('konfigurator', compact('products_detail', 'products_sloupek', 'products_otisk', 'showDivField'));
+    return view('konfigurator', compact("id", 'products_detail', 'products_sloupek', 'products_otisk', 'showDivField'));
 });
+
+Route::post('/product/{id}', function ($id) {
+    $request = request();
+    $data = $request->all();
+    //var_dump($data);
+
+    $sloupek = Category::find($data["sloupek_id"]);
+
+    $body = view('body', [
+        "data" => $data,
+        "sloupek" => $sloupek,
+    ])->render();
+
+    $demand = Demand::create([
+        "firstname" => $data["firstname"],
+        "lastname" => $data["lastname"],
+        "email" => $data["email"],
+        "phone" => $data["phone"],
+        "company" => $data["company"],
+        "body" => $body,
+    ]);
+
+    Mail::send([], [], function ($message) use ($demand) {
+        $message->to('info@pcservispt.cz')
+            ->subject('Nová poptávka')
+            ->html($demand->body);
+    });
+
+    return redirect()->route("dekujeme");
+})->name("product.save");
+
+Route::get('dekujeme', function () {
+    return view('dekujeme');
+})->name("dekujeme");
 
 //Route::get('/radio-form', [FormController::class, 'index'])->name('radioForm');
 //Route::post('/process-form', [FormController::class, 'processForm'])->name('processForm');
@@ -410,7 +446,7 @@ Route::get('specifikace', function () {
 Route::get('montaz', function () {
     $assemblies = Assembly::all();
     return view('montaz', compact('assemblies'));
-});
+})->name("montaz");
 
 Route::get('kontakt', function () {
     return view('kontakt');

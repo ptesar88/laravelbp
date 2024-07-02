@@ -61,7 +61,7 @@
                     <a href="specifikace" class="block py-2 px-3 text-white md:p-0" aria-current="page">SPECIFIKACE</a>
                   </li>
                   <li>
-                    <a href="montaz" class="block py-2 px-3 text-white md:p-0" aria-current="page">MONTÁŽ</a>
+                    <a href="{{ route("montaz") }}" class="block py-2 px-3 text-white md:p-0" aria-current="page">MONTÁŽ</a>
                   </li>
                   <li>
                     <a href="kontakt" class="block py-2 px-3 text-white md:p-0" aria-current="page">KONTAKT</a>

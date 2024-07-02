@@ -1,15 +1,1 @@
-
-const MainLayout = () => {
-    return (
-        <div>
-            <UserSelectedFence />
-            <SlopeType />
-            <FenceType />
-            <Demand />
-        </div>
-    );
-};
-
-//export default MainLayout;
-
-ReactDOM.render(<MainLayout />, document.getElementById("root"));
+ReactDOM.render(<FenceRoot produkt={produkt} sloupky={sloupky} otisky={otisky} />, document.getElementById("fence-root"));
