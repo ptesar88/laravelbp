@@ -32,7 +32,7 @@ function FenceRoot(props: FenceRootProps) {
     const {
         produkt,
         sloupky,
-        otisky
+        otisky,
     } = props;
 
     const [chciOtisk, setChciOtisk] = React.useState(false);
@@ -68,11 +68,11 @@ function FenceRoot(props: FenceRootProps) {
                                 </div>
 
                                 <div className="flex items-center me-4">
-                                    <input id="inline-radio" type="radio" value="ano" onChange={() => setChciOtisk(true)} name="inline-radio-group" className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
+                                    <input id="inline-radio" type="radio" value="ano" onChange={() => setChciOtisk(true)} name="otiskq" className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
                                     <label htmlFor="inline-radio" className="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">ANO</label>
                                 </div>
                                 <div className="flex items-center me-4">
-                                    <input id="inline-2-radio" type="radio" value="ne" onChange={() => setChciOtisk(false)} name="inline-radio-group" className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
+                                    <input id="inline-2-radio" type="radio" value="ne" onChange={() => setChciOtisk(false)} name="otiskq" className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
                                     <label htmlFor="inline-2-radio" className="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">NE</label>
                                 </div>
                             </div>
@@ -85,7 +85,7 @@ function FenceRoot(props: FenceRootProps) {
                                 <div key={otisk.id}>
                                     <figure className="flex h-48 flex-col rounded-md shadow-md bg-gray-50 border border-gray-300">
                                         <div className="flex items-center ps-4 ">
-                                            <input id={"otisk-" + otisk.id} type="radio" value={otisk.id} onChange={handleTypeChange} name="radioSel" className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300" />
+                                            <input id={"otisk-" + otisk.id} type="radio" value={otisk.id} onChange={handleTypeChange} name="otisk_id" className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300" />
                                             <label htmlFor={"otisk-" + otisk.id} className="w-full py-4 ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">{otisk.name}</label>
                                         </div>
                                         <div className="h-24">

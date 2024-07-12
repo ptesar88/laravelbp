@@ -3,6 +3,7 @@
 const FenceI = (props: {
     produkt: Produkt;
 }) => {
+
     let width = props.produkt.width;
     let heightValue = props.produkt.height;
     let priceValue = props.produkt.price;
@@ -32,12 +33,12 @@ const FenceI = (props: {
     }, [fenceLength, fenceWidth]);
 
     const handleLengthChange = (e) => {
-        const length = parseInt(e.target.value);
+        const length = e.target.value;
         setFenceLength(length);
     };
 
     const handleWidthChange = (e) => {
-        const width = parseInt(e.target.value);
+        const width = e.target.value;
         setFenceWidth(width);
     };
 
@@ -90,11 +91,12 @@ const FenceI = (props: {
                     </button>
                     <input
                         type="number"
-                        id="bedrooms-input"
+                        id="lengthInput"
                         value={fenceLength}
                         onChange={handleLengthChange}
-                        data-input-counter data-input-counter-min="1"
-                        data-input-counter-max="5"
+                        step="0.1"
+                        min="1"
+                        max="50"
                         aria-describedby="helper-text-explanation"
                         className="bg-gray-50 border-x-0 border-gray-300 h-11 font-medium text-center text-gray-900 text-sm focus:ring-blue-500 focus:border-blue-500 block w-full pb-6 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                         placeholder=""
@@ -115,20 +117,23 @@ const FenceI = (props: {
             </div>
 
             <div>
-                <label htmlFor="lengthInput" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Zadejte výšku strany (v m):</label>
+                <label htmlFor="quantity-input" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Zadejte výšku strany (v m):</label>
                 <div className="relative flex items-center max-w-[11rem]">
-                    <button type="button" id="decrement-button" data-input-counter-decrement="lengthInput" className="bg-gray-100 dark:bg-gray-700 dark:hover:bg-gray-600 dark:border-gray-600 hover:bg-gray-200 border border-gray-300 rounded-s-lg p-3 h-11 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none">
+                    <button type="button" id="decrement-button" data-input-counter-decrement="quantity-input" className="bg-gray-100 dark:bg-gray-700 dark:hover:bg-gray-600 dark:border-gray-600 hover:bg-gray-200 border border-gray-300 rounded-s-lg p-3 h-11 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none">
                         <svg className="w-3 h-3 text-gray-900 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 2">
                             <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M1 1h16" />
                         </svg>
                     </button>
                     <input
+                    
                         type="number"
-                        id="bedrooms-input"
+                        id="quantity-input"
                         value={fenceWidth}
                         onChange={handleWidthChange}
-                        data-input-counter data-input-counter-min="1"
-                        data-input-counter-max="5"
+                        step="0.1"
+                        min="1"
+                        max="3"
+                        data-input-counter
                         aria-describedby="helper-text-explanation"
                         className="bg-gray-50 border-x-0 border-gray-300 h-11 font-medium text-center text-gray-900 text-sm focus:ring-blue-500 focus:border-blue-500 block w-full pb-6 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                         placeholder=""
@@ -139,7 +144,7 @@ const FenceI = (props: {
                         </svg>
                         <span>výška plotu</span>
                     </div>
-                    <button type="button" id="increment-button" data-input-counter-increment="lengthInput" className="bg-gray-100 dark:bg-gray-700 dark:hover:bg-gray-600 dark:border-gray-600 hover:bg-gray-200 border border-gray-300 rounded-e-lg p-3 h-11 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none">
+                    <button type="button" id="increment-button" data-input-counter-increment="quantity-input" className="bg-gray-100 dark:bg-gray-700 dark:hover:bg-gray-600 dark:border-gray-600 hover:bg-gray-200 border border-gray-300 rounded-e-lg p-3 h-11 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none">
                         <svg className="w-3 h-3 text-gray-900 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
                             <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 1v16M1 9h16" />
                         </svg>
@@ -154,12 +159,19 @@ const FenceI = (props: {
 
                         <li>
                             <span className="text-sm font-medium text-gray-900">Panelů celkem:  {panelCountTotal} ks </span>
+                            <input type="hidden" id="panelCountTotal" name="panelCountTotal" value={panelCountTotal} />
                         </li>
                         <li>
                             <span className="text-sm font-medium text-gray-900">Sloupků celkem:  {totalPostCount} ks </span>
+                            <input type="hidden" id="totalPostCount" name="totalPostCount" value={totalPostCount} />
                         </li>
                         <li>
-                            <span className="text-sm font-medium text-gray-900">Výška sloupku:  {fenceWidth} m </span>
+                            <span className="text-sm font-medium text-gray-900">Délka plotu:  {fenceLength} m </span>
+                            <input type="hidden" id="fenceLength" name="fenceLength" value={fenceLength} />
+                        </li>
+                        <li>
+                            <span className="text-sm font-medium text-gray-900">Výška sloupku a plotu:  {fenceWidth} m </span>
+                            <input type="hidden" id="fenceWidth" name="fenceWidth" value={fenceWidth} />
                         </li>
                     </ul>
                 </div>
@@ -169,10 +181,12 @@ const FenceI = (props: {
                     <ul className="max-w-md space-y-1 text-gray-500 list-none list-inside dark:text-gray-400">
                         <li>
                             <span className="text-sm font-medium text-gray-900">*Orientační cena celkem:  {totalPrice} Kč </span>
+                            <input type="hidden" id="totalPrice" name="totalPrice" value={totalPrice} />
                         </li>
 
                         <li>
                             <span className="text-sm font-medium text-gray-900">Položek celkem:  {itemCount} ks </span>
+                            <input type="hidden" id="itemCount" name="itemCount" value={itemCount} />
                         </li>
 
                     </ul>

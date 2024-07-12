@@ -2,16 +2,16 @@
 
 @section('page-banner')
 <section class="free-post">
-<div class="relative z-10 mx-auto max-full bg-gray-100 h-[400px]">
+<div class="relative z-10 mx-auto max-full bg-gray-100 md:h-[400px] h-[160px]">
     <img class="z-0 flex mx-auto w-auto h-auto items-center mb-2" src="bannerV2.png"alt="Banner" />
-    <img class="flex mx-auto max-w-sm items-center -mt-64" src="logo.PNG" alt="Logo" />
+    <img class="flex mx-auto max-w-sm items-center md:h-auto h-20 md:-mt-64 -mt-24" src="logo.PNG" alt="Logo" />
   </div>
 </section>  
 @endsection
 
 @section('page-content')
     <section class="free-post">
-        <div class="relative z-20 mx-auto max-w-5xl items-center p-2 mb-4 -mt-20 text-base text-green-800 rounded-lg bg-green-50 border border-green-700" role="alert">
+        <div class="relative z-20 mx-auto max-w-5xl items-center p-2 md:mb-4 mb-2 md:-mt-20 -mt-6 md:text-base text-sm text-green-800 rounded-lg bg-green-50 border border-green-700" role="alert">
             <span class="font-medium">Akce!</span> Při objednávce betonových plotů i s montáží akce 15%. Pouze na materiál 5%.
           </div>
           <div class="max-w-6xl mx-auto mt-16 mb-8">
@@ -32,7 +32,7 @@
       <div class="mx-auto items-center grid mb-2 max-w-6xl md:mb-8 md:grid-cols-3 md:gap-3">
       @foreach($products as $prod)
                   <div key={{ $prod->id }}>
-                    <figure class="flex h-48 flex-col items-center justify-center  rounded-md text-center shadow-md bg-gray-50 border border-gray-300">
+                    <figure class="flex h-48 flex-col items-center justify-center md:m-0 m-2 rounded-md text-center shadow-md bg-gray-50 border border-gray-300">
                       <div class="h-6">
                       <h3 class="text-lg font-semibold text-gray-900 dark:text-white">{{ $prod->name }}</h3>
                       </div>
@@ -43,7 +43,7 @@
                       <img class="" src="{{ $prod->thumbnail_url }}" alt="" />
                       </div>
                       <div>
-                        <button class="text-center text-sm m-2 p-2 mt-4 shadow-md rounded-md text-white bg-pink-950 border border-pink-950">Konfigurátor</button>
+                        <button onclick="window.location='{{ url("/product/{$prod->id}") }}'" class="text-center text-sm m-2 p-2 mt-4 shadow-md rounded-md text-white bg-pink-950 border border-pink-950">Konfigurátor</button>
                         <span class="text-sm font-semibold ml-4">cena od: {{ $prod->price }} Kč</span>
                       </div>
                     </figure>
@@ -81,14 +81,14 @@
 
 @section('page-gallery')
     <section class="free-post">
-<div class="max-w-6xl mx-auto text-center mb-8 grid grid-cols-2 md:grid-cols-3 gap-4">
-  <div>
+<div class="max-w-6xl mx-auto text-center mb-8  grid grid-cols-1 md:grid-cols-3 gap-4">
+  <div class="md:m-0 m-2">
       <img class="h-auto max-w-full rounded-lg" src="1.png" alt="">
   </div>
-  <div>
+  <div class="md:m-0 m-2">
       <img class="h-auto max-w-full rounded-lg" src="2.png" alt="">
   </div>
-  <div>
+  <div class="md:m-0 m-2">
       <img class="h-auto max-w-full rounded-lg" src="3.png" alt="">
   </div>
 
@@ -103,7 +103,7 @@
   
               <div class="grid gap-3 lg:grid-cols-2">
                 @foreach($advantages as $adv)
-                 <article class="p-6 bg-white rounded-lg border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700" key={keyF.id}>
+                 <article class="md:p-6 p-2 bg-white rounded-lg md:m-0 m-2 border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700" key={keyF.id}>
                   <div class="flex justify-between items-center mb-5 text-gray-500">
                     <span class="bg-primary-100 text-primary-800 text-sm font-medium inline-flex items-center px-2.5 py-0.5 rounded dark:bg-primary-200 dark:text-primary-800">
                       {!! $adv->icon !!}

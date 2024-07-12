@@ -55,16 +55,16 @@
               <div class="hidden w-full md:block md:w-auto" id="navbar-default">
                 <ul class="font-semibold text-sm flex flex-col p-4 md:p-0 mt-4 md:ml-4 md:flex-row md:space-x-8 rtl:space-x-reverse md:mt-0">
                   <li>
-                    <a href="/" class="block py-2 px-3 text-white md:p-0" aria-current="page">ÚVOD</a>
+                    <a href="{{ route("uvod") }}" class="block py-2 px-3 text-white md:p-0" aria-current="page">ÚVOD</a>
                   </li>
                   <li>
-                    <a href="specifikace" class="block py-2 px-3 text-white md:p-0" aria-current="page">SPECIFIKACE</a>
+                    <a href="{{ route("specifikace") }}" class="block py-2 px-3 text-white md:p-0" aria-current="page">SPECIFIKACE</a>
                   </li>
                   <li>
                     <a href="{{ route("montaz") }}" class="block py-2 px-3 text-white md:p-0" aria-current="page">MONTÁŽ</a>
                   </li>
                   <li>
-                    <a href="kontakt" class="block py-2 px-3 text-white md:p-0" aria-current="page">KONTAKT</a>
+                    <a href="{{ route("kontakt") }}" class="block py-2 px-3 text-white md:p-0" aria-current="page">KONTAKT</a>
                   </li>
                 </ul>
               </div>

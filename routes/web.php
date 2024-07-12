@@ -13,6 +13,7 @@ use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Route;
 
+
 // list
 Route::any('/api/demands', function () {
     header("Access-Control-Expose-Headers: Content-Range");
@@ -407,10 +408,14 @@ Route::post('/product/{id}', function ($id) {
     //var_dump($data);
 
     $sloupek = Category::find($data["sloupek_id"]);
-
+    $produkt = Product::find($id);
+    $otisk = Product::find($data["otisk_id"]);
+  
     $body = view('body', [
         "data" => $data,
         "sloupek" => $sloupek,
+        "produkt" => $produkt,
+        "otisk" => $otisk,
     ])->render();
 
     $demand = Demand::create([
@@ -422,9 +427,17 @@ Route::post('/product/{id}', function ($id) {
         "body" => $body,
     ]);
 
+    if ($demand['company'] == null) {
+        $demand['company'] = "";
+    }else{
+        $demand['company'] = " / ".$demand['company'];
+    }
+
     Mail::send([], [], function ($message) use ($demand) {
-        $message->to('info@pcservispt.cz')
-            ->subject('Nová poptávka')
+        $message
+            ->to('info@pcservispt.cz')
+            ->cc($demand['email'])
+            ->subject('Nová poptávka - '.$demand['firstname'].' '.$demand['lastname'].' '.$demand['company'] )
             ->html($demand->body);
     });
 
@@ -441,7 +454,7 @@ Route::get('dekujeme', function () {
 Route::get('specifikace', function () {
     $specifications = Specification::all();
     return view('spec', compact('specifications'));
-});
+})->name("specifikace");
 
 Route::get('montaz', function () {
     $assemblies = Assembly::all();
@@ -450,7 +463,13 @@ Route::get('montaz', function () {
 
 Route::get('kontakt', function () {
     return view('kontakt');
-});
+})->name("kontakt");
+
+Route::get('uvod', function () {
+    $products = Product::where('top', 'Ano')->take(6)->get();
+    $advantages = Advantage::all();
+    return view('index', compact('products'), compact('advantages'));
+})->name("uvod");
 
 
 
