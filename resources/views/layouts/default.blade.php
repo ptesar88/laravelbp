@@ -68,15 +68,32 @@
                   </li>
                 </ul>
               </div>
-              <div class="flex items-center justify-between">
+              <div class="md:hidden flex items-center">
+                <button class="mobile-menu-button">
+                    <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                    </svg>
+                </button>
+            </div>
+              <!--
+                <div class="flex items-center justify-between">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="white" class="w-5 h-5">
                   <path strokeLinecap="round" strokeLinejoin="round" d="M12 6.042A8.967 8.967 0 0 0 6 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 0 1 6 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 0 1 6-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0 0 18 18a8.967 8.967 0 0 0-6 2.292m0-14.25v14.25" />
                 </svg>
     
                 <a href="#" class="block ml-1 py-2 px-3 font-medium text-white md:p-0">Katalog 2024</a>
     
-              </div>
+                </div>
+              -->
+              <!-- mobile menu -->
+              <div class="mobile-menu hidden md:hidden">
+                <a href="" class="block py-2 px-4 text-sm hover:bg-gray-200">Home</a>
+                <a href="" class="block py-2 px-4 text-sm hover:bg-gray-200">About</a>
+                <a href="" class="block py-2 px-4 text-sm hover:bg-gray-200">Contact</a>
             </div>
+            </div>
+            
+            
           </nav>
     </header>
     <main>
@@ -119,5 +136,15 @@
             </div>
           </div>
     </footer>
+
+    <script>
+      const btn = document.querySelector('button.mobile-menu-button');
+      const menu = document.querySelector('.mobile-menu');
+
+      btn.addEventListener('click', () => {
+          menu.classList.toggle('hidden');
+      });
+  </script>
+  
 </body>
 </html>
