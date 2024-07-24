@@ -1,36 +1,68 @@
+export type Produkt = {
+  name: string;
+  thumbnail_url: string;
+  width: number;
+  height: number;
+  depth: number;
+  price: number;
+  label: string;
+};
+
+export type Otisk = {
+  id: number;
+  name: string;
+  thumbnail_url: string;
+  top: string;
+  label: string;
+  price: number;
+};
+
+export type Sloupek = {
+  id: number;
+  name: string;
+  price: number;
+};
 
 const meter = 100;
 
 const FenceICalculator = (props: {
   produkt: Produkt;
+  otisk: Otisk | null;
+  sloupek: Sloupek | null;
 }) => {
   return (
     <div>
-      <FenceI produkt={props.produkt} />
+      <FenceI produkt={props.produkt} otisk={props.otisk} sloupek={props.sloupek} />
     </div>
   );
 }
 const FenceLCalculator = (props: {
   produkt: Produkt;
+  otisk: Otisk | null;
+  sloupek: Sloupek | null;
 }) => {
   return (
     <div>
-      <FenceL produkt={props.produkt} />
+      <FenceL produkt={props.produkt} otisk={props.otisk} sloupek={props.sloupek}/>
     </div>
   );
 }
 const FenceUCalculator = (props: {
   produkt: Produkt;
+  otisk: Otisk | null;
+  sloupek: Sloupek | null;
 }) => {
   return (
     <div>
-      <FenceU produkt={props.produkt} />
+      <FenceU produkt={props.produkt} otisk={props.otisk} sloupek={props.sloupek}/>
     </div>
   );
 }
 
 const FenceType = (props: {
   produkt: Produkt;
+  otisk: Otisk | null;
+  sloupek: Sloupek | null;
 }) => {
   const [fenceType, setFenceType] = React.useState('');
 
@@ -64,9 +96,9 @@ const FenceType = (props: {
         </div>
       </div>
 
-      {fenceType === "tvar-I" && <FenceICalculator produkt={props.produkt} />}
-      {fenceType === "tvar-L" && <FenceLCalculator produkt={props.produkt} />}
-      {fenceType === "tvar-U" && <FenceUCalculator produkt={props.produkt} />}
+      {fenceType === "tvar-I" && <FenceICalculator produkt={props.produkt} otisk={props.otisk} sloupek={props.sloupek}/>}
+      {fenceType === "tvar-L" && <FenceLCalculator produkt={props.produkt} otisk={props.otisk} sloupek={props.sloupek}/>}
+      {fenceType === "tvar-U" && <FenceUCalculator produkt={props.produkt} otisk={props.otisk} sloupek={props.sloupek}/>}
 
       <Demand />
     </div>

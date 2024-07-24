@@ -2,21 +2,28 @@
 
 const FenceI = (props: {
     produkt: Produkt;
+    otisk: Otisk | null;
+    sloupek: Sloupek | null;
 }) => {
 
     let width = props.produkt.width;
     let heightValue = props.produkt.height;
     let priceValue = props.produkt.price;
-    let postPriceValue = props.produkt.price;
+    let priceLabel = props.otisk ? +props.otisk.price : 0;
+    let pricePost = props.sloupek ? +props.sloupek.price : 0;
 
     const { useState, useEffect, useRef } = React;
 
-    const [fenceHeight, setFenceHeightOper] = useState(0);
-    const [fenceWidth, setFenceWidthOper] = useState(0);
+    const [fenceHeightR, setFenceHeightOper] = useState(0);
+    const fenceHeight = Number(fenceHeightR.toFixed(1));
+
+    const [fenceWidthR, setFenceWidthOper] = useState(0);
+    const fenceWidth = Number(fenceWidthR.toFixed(1));
+
     //const canvasRef = useRef(null);
 
     useEffect(() => {
-        if (fenceHeight > 0 && fenceWidth > 0) {
+        if (fenceHeightR > 0 && fenceWidthR > 0) {
             //const canvas = canvasRef.current;
             //const ctx = canvas.getContext('2d');
             //ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -30,7 +37,7 @@ const FenceI = (props: {
             //ctx.fillRect(10 + 10, 10, 10, 10); // Starting post
             //ctx.fillRect(10 + fenceLength * 10, 10, 10, 10); // Ending post
         }
-    }, [fenceHeight, fenceWidth]);
+    }, [fenceHeightR, fenceWidthR]);
 
     const handleHeightChange = (e) => {
         const height = e.target.value;
@@ -38,11 +45,11 @@ const FenceI = (props: {
     };
 
     const heightChangePlus = () => {
-        setFenceHeightOper(fenceHeight + 0.1);
+        setFenceHeightOper(fenceHeightR + 0.1);
     };
 
     const heightChangeMinus = () => {
-        setFenceHeightOper(fenceHeight - 0.1);
+        setFenceHeightOper(fenceHeightR - 0.1);
     };
 
     const handleWidthChange = (e) => {
@@ -51,11 +58,11 @@ const FenceI = (props: {
     };
 
     const widthChangePlus = () => {
-        setFenceWidthOper(fenceWidth + 0.1);
+         setFenceWidthOper(fenceWidthR + 0.1);
     };
 
     const widthChangeMinus = () => {
-        setFenceWidthOper(fenceWidth - 0.1);
+        setFenceWidthOper(fenceWidthR - 0.1);
     };
 
     const calculatePrice = () => {
@@ -76,9 +83,13 @@ const FenceI = (props: {
             verticalPanelCount = horizontalPanelCount * heightFence;
 
             const panelPrice = (horizontalPanelCount + (verticalPanelCount || 0)) * priceValue;
-            const postPrice = postCount * postPriceValue;
+            const labelPrice = priceLabel;
+            const postPrice = pricePost;
+            const postPriceTotal = postCount * pricePost;
 
-            totalPrice = panelPrice + postPrice;
+            console.log(panelPrice, postPrice, labelPrice, postPriceTotal);
+
+            totalPrice = panelPrice + labelPrice + postPriceTotal;
             panelCountTotal = horizontalPanelCount + (verticalPanelCount || 0);
             itemCount = horizontalPanelCount + (verticalPanelCount || 0) + postCount;
             totalPostCount = postCount;

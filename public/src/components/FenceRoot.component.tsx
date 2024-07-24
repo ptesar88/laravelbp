@@ -1,27 +1,3 @@
-type Produkt = {
-    name: string;
-    thumbnail_url: string;
-    width: number;
-    height: number;
-    depth: number;
-    price: number;
-    label: string;
-};
-
-type Otisk = {
-    id: number;
-    name: string;
-    thumbnail_url: string;
-    top: string;
-    label: string;
-    price: number;
-};
-
-type Sloupek = {
-    id: number;
-    name: string;
-};
-
 type FenceRootProps = {
     produkt: Produkt;
     sloupky: Sloupek[];
@@ -36,8 +12,11 @@ function FenceRoot(props: FenceRootProps) {
     } = props;
 
     const [chciOtisk, setChciOtisk] = React.useState(false);
+    const [vybranyOtisk, vyberOtisk] = React.useState(null);
+    const [vybranySloupek, vyberSloupek] = React.useState(null);
+    
 
-    const handleTypeChange = () => { };
+    console.log("render", vybranyOtisk, vybranySloupek);
 
     return (
         <section className="free-post">
@@ -85,7 +64,7 @@ function FenceRoot(props: FenceRootProps) {
                                 <div key={otisk.id}>
                                     <figure className="flex h-48 flex-col rounded-md shadow-md bg-gray-50 border border-gray-300">
                                         <div className="flex items-center ps-4 ">
-                                            <input id={"otisk-" + otisk.id} type="radio" value={otisk.id} onChange={handleTypeChange} name="otisk_id" className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300" />
+                                            <input id={"otisk-" + otisk.id} type="radio" value={otisk.id} onChange={() => { console.log("select", otisk); vyberOtisk(otisk); }} name="otisk_id" className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300" />
                                             <label htmlFor={"otisk-" + otisk.id} className="w-full py-4 ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">{otisk.name}</label>
                                         </div>
                                         <div className="h-24">
@@ -106,7 +85,6 @@ function FenceRoot(props: FenceRootProps) {
                                                 </span>
                                             )}
                                             <span className="text-sm font-semibold ml-2">cena od: {otisk.price} Kč</span>
-
                                         </div>
                                     </figure>
                                 </div>
@@ -125,7 +103,7 @@ function FenceRoot(props: FenceRootProps) {
                 {sloupky.map(sloupek => {
                     return (
                         <div className="flex items-center ps-4 border border-gray-200 rounded dark:border-gray-700">
-                            <input id={"sloupek-id" + sloupek.id} type="radio" value={sloupek.id} name="sloupek_id" className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300" />
+                            <input id={"sloupek-id" + sloupek.id} type="radio" value={sloupek.id} onChange={() => { console.log("select", sloupek); vyberSloupek(sloupek); }} name="sloupek_id" className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300" />
                             <label htmlFor={"sloupek-id" + sloupek.id} className="w-full py-4 ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">{sloupek.name}</label>
                         </div>
                     );
@@ -135,7 +113,7 @@ function FenceRoot(props: FenceRootProps) {
                 <span className="font-medium">3. Vyberte tvar plotu</span>
             </div>
 
-            <FenceType produkt={produkt} />
+            <FenceType produkt={produkt} otisk={vybranyOtisk} sloupek={vybranySloupek} />
         </section>
     );
 }

@@ -2,6 +2,7 @@
 
 const FenceU = (props: {
     produkt: Produkt;
+    otisk: Otisk | null;
 }) => {
     let width = props.produkt.width;
     let heightValue = props.produkt.height;
