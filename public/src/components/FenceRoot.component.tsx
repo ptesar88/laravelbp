@@ -1,7 +1,9 @@
+
 type FenceRootProps = {
     produkt: Produkt;
     sloupky: Sloupek[];
     otisky: Otisk[];
+    produkty: Produkty[];
 };
 
 function FenceRoot(props: FenceRootProps) {
@@ -9,14 +11,14 @@ function FenceRoot(props: FenceRootProps) {
         produkt,
         sloupky,
         otisky,
+        produkty,
     } = props;
 
     const [chciOtisk, setChciOtisk] = React.useState(false);
     const [vybranyOtisk, vyberOtisk] = React.useState(null);
     const [vybranySloupek, vyberSloupek] = React.useState(null);
-    
 
-    console.log("render", vybranyOtisk, vybranySloupek);
+    console.log("render", vybranyOtisk, vybranySloupek, produkty);
 
     return (
         <section className="free-post">
@@ -113,7 +115,7 @@ function FenceRoot(props: FenceRootProps) {
                 <span className="font-medium">3. Vyberte tvar plotu</span>
             </div>
 
-            <FenceType produkt={produkt} otisk={vybranyOtisk} sloupek={vybranySloupek} />
+            <FenceType produkt={produkt} otisk={vybranyOtisk} sloupek={vybranySloupek} produkty={produkty}/>
         </section>
     );
 }

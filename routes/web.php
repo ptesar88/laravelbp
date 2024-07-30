@@ -399,7 +399,9 @@ Route::get('/product/{id}', function ($id) {
     $products_detail = Product::find($id);
     $products_sloupek = Category::all();
     $products_otisk = Product::where('type', Type::TYPE_OTISK)->get();
-    return view('konfigurator', compact("id", 'products_detail', 'products_sloupek', 'products_otisk', 'showDivField'));
+    $products_sloupek_type_selected = Product::where('category', Type::TYPE_SLOUPEK)->get();
+    $products = Product::all();
+    return view('konfigurator', compact("id", 'products_detail', 'products_sloupek', 'products_otisk', 'products_sloupek_type_selected','showDivField'), compact('products'));
 });
 
 Route::post('/product/{id}', function ($id) {
@@ -424,6 +426,7 @@ Route::post('/product/{id}', function ($id) {
         "email" => $data["email"],
         "phone" => $data["phone"],
         "company" => $data["company"],
+        "localisation" => $data["localisation"],
         "body" => $body,
     ]);
 

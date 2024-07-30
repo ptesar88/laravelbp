@@ -14,6 +14,9 @@
     <li>
         Email: {{ $data['email'] }}
     </li>
+    <li>
+        Místo realizace: {{ $data['localisation'] }}
+    </li>
 </ul>
 </p>
 <p>
@@ -41,13 +44,13 @@
         Tvar plotu: {{ $data['tvarplotu'] }}
     </li>
     <li>
-        Rozměry plotu: {{ $data['fenceLength']}}x{{ $data['fenceWidth'] }} m
+        Rozměry plotu: {{ $data['widthFenceM']}}x{{ $data['heightFenceM'] }} m
     </li>
     <li>
-        Délka plotu: {{ $data['fenceLength']}} m
+        Délka plotu: {{ $data['widthFenceM']}} m
     </li>
     <li>
-        Výška sloupku a plotu: {{ $data['fenceWidth'] }} m
+        Výška sloupku a plotu: {{ $data['heightFenceM'] }} m
     </li>
     <li>
         Počet sloupků: {{ $data['totalPostCount'] }} ks

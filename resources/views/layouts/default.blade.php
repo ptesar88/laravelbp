@@ -87,9 +87,10 @@
               -->
               <!-- mobile menu -->
               <div class="mobile-menu hidden md:hidden">
-                <a href="" class="block py-2 px-4 text-sm hover:bg-gray-200">Home</a>
-                <a href="" class="block py-2 px-4 text-sm hover:bg-gray-200">About</a>
-                <a href="" class="block py-2 px-4 text-sm hover:bg-gray-200">Contact</a>
+                <a href="{{ route("uvod") }}" class="block py-2 px-3 text-sm text-white md:p-0" aria-current="page">ÚVOD</a>
+                <a href="{{ route("specifikace") }}" class="block py-2 px-3 text-white md:p-0" aria-current="page">SPECIFIKACE</a>
+                <a href="{{ route("montaz") }}" class="block py-2 px-3 text-white md:p-0" aria-current="page">MONTÁŽ</a>
+                <a href="{{ route("kontakt") }}" class="block py-2 px-3 text-white md:p-0" aria-current="page">KONTAKT</a>
             </div>
             </div>
             

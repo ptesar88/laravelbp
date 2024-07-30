@@ -6,7 +6,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class CategoryType extends Model
 {
-
     CONST TYPE_PRUBEZNY = 1;
     CONST TYPE_KONCOVY = 2;
     CONST TYPE_ROHOVY = 3;

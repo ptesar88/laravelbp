@@ -6,6 +6,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class Category extends Model
 {
+    CONST CAT_HLADKE = 1;
+    CONST CAT_CIHLICKA = 2;
+    CONST CAT_STIPANY_KAMEN = 3;
+    CONST CAT_LITY_PREMIUM = 4;
 
     const CREATED_AT = null;
     const UPDATED_AT = null;
@@ -17,6 +21,7 @@ class Category extends Model
      */
     protected $fillable = [
         'name',
+        'price',
     ];
 
     /**
@@ -38,6 +43,9 @@ class Category extends Model
      *
      * @return array|null
      */
-
+    public static function getNameById($id) {
+        $categoryType = Category::find($id);
+        return $categoryType ? $categoryType->name : "-";
+     }
 
 }

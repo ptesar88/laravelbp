@@ -3,22 +3,27 @@
 const FenceI = (props: {
     produkt: Produkt;
     otisk: Otisk | null;
-    sloupek: Sloupek | null;
+    sloupek: Sloupek[];
+    produkty: Produkty[];
 }) => {
 
-    let width = props.produkt.width;
-    let heightValue = props.produkt.height;
+    let widthFence = props.produkt.width;
+    let heightFence = props.produkt.height;
     let priceValue = props.produkt.price;
     let priceLabel = props.otisk ? +props.otisk.price : 0;
-    let pricePost = props.sloupek ? +props.sloupek.price : 0;
+    let pricePost = null;
+    let idPost = props.sloupek.id;
 
     const { useState, useEffect, useRef } = React;
 
     const [fenceHeightR, setFenceHeightOper] = useState(0);
-    const fenceHeight = Number(fenceHeightR.toFixed(1));
+    const fenceHeight = Number(fenceHeightR.toFixed(2));
+    const postHeight = Number(fenceHeightR*100);
+    const postTypeProduktsK = props.produkty.filter(produkt => produkt.category == idPost && produkt.height == postHeight && produkt.category_type == 2);
+    const postTypeProduktsP = props.produkty.filter(produkt => produkt.category == idPost && produkt.height == postHeight && produkt.category_type == 1);
 
     const [fenceWidthR, setFenceWidthOper] = useState(0);
-    const fenceWidth = Number(fenceWidthR.toFixed(1));
+    const fenceWidth = Number(fenceWidthR.toFixed(2));
 
     //const canvasRef = useRef(null);
 
@@ -45,11 +50,15 @@ const FenceI = (props: {
     };
 
     const heightChangePlus = () => {
-        setFenceHeightOper(fenceHeightR + 0.1);
+        setFenceHeightOper(fenceHeightR + 0.25);
+        if (fenceHeightR > 3) {
+            setFenceHeightOper(3);
+            window.alert("Maximální výška plotu je 3m");
+        }
     };
 
     const heightChangeMinus = () => {
-        setFenceHeightOper(fenceHeightR - 0.1);
+        setFenceHeightOper(fenceHeightR - 0.25);
     };
 
     const handleWidthChange = (e) => {
@@ -58,43 +67,70 @@ const FenceI = (props: {
     };
 
     const widthChangePlus = () => {
-         setFenceWidthOper(fenceWidthR + 0.1);
+         setFenceWidthOper(fenceWidthR + 0.25);
     };
 
     const widthChangeMinus = () => {
-        setFenceWidthOper(fenceWidthR - 0.1);
+        setFenceWidthOper(fenceWidthR - 0.25);
     };
 
     const calculatePrice = () => {
+        const meter = 100; // 1m = 100cm
         let totalPrice = 0;
         let itemCount = 0;
         let panelCountTotal = 0;
         let totalPostCount = 0;
 
         if (fenceHeight > 0 && fenceWidth > 0) {
-            let horizontalPanelCount;
-            let verticalPanelCount;
+            let widthPanelCount;
+            let heightPanelCount;
             let postCount;
 
-            const heightFence = Math.ceil(heightValue / meter);
+            
+            const heightFenceM = heightFence/meter; // vyska plotu v metrech
+            const widthFenceM = widthFence/meter; // delka plotu v metrech
 
-            horizontalPanelCount = Math.ceil((fenceHeight / (width / meter)) * fenceWidth); // Assuming each panel width in m
-            postCount = Math.ceil((fenceHeight / (width / meter)) + 1); // Assuming one post for each end of the panel
-            verticalPanelCount = horizontalPanelCount * heightFence;
+            widthPanelCount = fenceWidth/widthFenceM; // pocet panelu na jedne strane 
 
-            const panelPrice = (horizontalPanelCount + (verticalPanelCount || 0)) * priceValue;
-            const labelPrice = priceLabel;
-            const postPrice = pricePost;
-            const postPriceTotal = postCount * pricePost;
+            postCount = (fenceWidth/(widthFenceM) + 1); // pocet sloupku na jedne strane
+            panelCountTotal = widthPanelCount * (fenceHeight/heightFenceM);
 
-            console.log(panelPrice, postPrice, labelPrice, postPriceTotal);
+            const panelPrice = panelCountTotal * priceValue;
+            const labelPrice = priceLabel * panelCountTotal;
 
-            totalPrice = panelPrice + labelPrice + postPriceTotal;
-            panelCountTotal = horizontalPanelCount + (verticalPanelCount || 0);
-            itemCount = horizontalPanelCount + (verticalPanelCount || 0) + postCount;
+            let postPriceK = 0;
+            let postPriceP = 0;
+            
+            postTypeProduktsK.map(postTypeProduktK => {
+                return (
+                   postPriceK = postTypeProduktK.price
+                )}
+            );
+            
+            if (postCount > 2){
+            postTypeProduktsP.map(postTypeProduktP => {
+                return (
+                   postPriceP = postTypeProduktP.price
+                )}
+            );
+            }else{
+                postPriceP = 0
+            }
+
+            const postPriceTotalK = 2 * postPriceK;
+            const postPriceTotalP = (postCount - 2) * postPriceP;
+
+            console.log(
+                "Delka plotu: ",widthFenceM, "(", fenceWidth, ")",
+                "Vyska plotu: ",heightFenceM,"(", fenceHeight, ")",
+                "Sloupek", postHeight, postPriceTotalK, postPriceTotalP,
+                "Panelů celkem", panelCountTotal, "ks",
+            );
+
+            totalPrice = Math.ceil(panelPrice + labelPrice + postPriceTotalK + postPriceTotalP);
+            itemCount = panelCountTotal + postCount;
             totalPostCount = postCount;
         }
-        console.log(panelCountTotal);
 
         return { totalPrice, itemCount, panelCountTotal, totalPostCount };
     };
@@ -120,6 +156,7 @@ const FenceI = (props: {
                         type="number"
                         id="lengthInput"
                         value={fenceWidth}
+                        max={100}
                         onChange={handleWidthChange}
                         className="bg-gray-50 border-x-0 border-gray-300 h-11 font-medium text-center text-gray-900 text-sm focus:ring-blue-500 focus:border-blue-500 block w-full pb-6 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                         required 
@@ -152,6 +189,7 @@ const FenceI = (props: {
                         type="number"
                         id="quantity-input"
                         value={fenceHeight}
+                        max={3}
                         onChange={handleHeightChange}
                         className="bg-gray-50 border-x-0 border-gray-300 h-11 font-medium text-center text-gray-900 text-sm focus:ring-blue-500 focus:border-blue-500 block w-full pb-6 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                         required
@@ -185,12 +223,12 @@ const FenceI = (props: {
                             <input type="hidden" id="totalPostCount" name="totalPostCount" value={totalPostCount} />
                         </li>
                         <li>
-                            <span className="text-sm font-medium text-gray-900">Délka plotu:  {fenceHeight} m </span>
-                            <input type="hidden" id="fenceHeight" name="fenceHeight" value={fenceHeight} />
+                            <span className="text-sm font-medium text-gray-900">Délka plotu:  {fenceWidth} m </span>
+                            <input type="hidden" id="fenceHeight" name="fenceHeight" value={fenceWidth} />
                         </li>
                         <li>
-                            <span className="text-sm font-medium text-gray-900">Výška sloupku a plotu:  {fenceWidth} m </span>
-                            <input type="hidden" id="fenceWidth" name="fenceWidth" value={fenceWidth} />
+                            <span className="text-sm font-medium text-gray-900">Výška sloupku a plotu:  {fenceHeight} m </span>
+                            <input type="hidden" id="fenceWidth" name="fenceWidth" value={fenceHeight} />
                         </li>
                     </ul>
                 </div>

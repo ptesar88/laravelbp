@@ -24,6 +24,7 @@ class Demand extends Model
         'email',
         'phone',
         'company',
+        'localisation',
         'body', 
     ];
 

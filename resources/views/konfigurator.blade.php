@@ -38,11 +38,14 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.css" rel="stylesheet" />
 
     <script>
+        let produkty = JSON.parse('{!! $products->toJSON() !!}');
         let produkt = JSON.parse('{!! $products_detail->toJSON() !!}');
         let sloupky = JSON.parse('{!! $products_sloupek->toJSON() !!}');
+        let sloupkySelected = JSON.parse('{!! $products_sloupek_type_selected->toJSON() !!}'); 
         let otisky = JSON.parse('{!! $products_otisk->toJSON() !!}');
     </script>
 
+    <script type="text/babel" src="{{ asset('src/components/FenceRoot.component.tsx') }}"></script>
     <script type="text/babel" src="{{ asset('src/components/SlopeType.component.tsx') }}"></script>
     <script type="text/babel" src="{{ asset('src/components/UserSelectedFence.component.tsx') }}"></script>
     <script type="text/babel" src="{{ asset('src/components/FenceType.component.tsx') }}"></script>
@@ -50,7 +53,7 @@
     <script type="text/babel" src="{{ asset('src/components/FenceL.component.tsx') }}"></script>
     <script type="text/babel" src="{{ asset('src/components/FenceU.component.tsx') }}"></script>
     <script type="text/babel" src="{{ asset('src/components/Demand.component.tsx') }}"></script>
-    <script type="text/babel" src="{{ asset('src/components/FenceRoot.component.tsx') }}"></script>
+
     
     <script type="text/babel" src="{{ asset('fencecalc.js') }}"></script>
 @endsection
