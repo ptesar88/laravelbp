@@ -19,8 +19,8 @@ const FenceI = (props: {
     const [fenceHeightR, setFenceHeightOper] = useState(0);
     const fenceHeight = Number(fenceHeightR.toFixed(2));
     const postHeight = Number(fenceHeightR*100);
-    const postTypeProduktsK = props.produkty.filter(produkt => produkt.category == idPost && produkt.height == postHeight && produkt.category_type == 2);
-    const postTypeProduktsP = props.produkty.filter(produkt => produkt.category == idPost && produkt.height == postHeight && produkt.category_type == 1);
+    const postTypeProduktsK = props.produkty.filter(produkt => produkt.category == idPost && produkt.height >= postHeight && (produkt.category_type == 2 || produkt.category_type == 4)).slice(0, 1);
+    const postTypeProduktsP = props.produkty.filter(produkt => produkt.category == idPost && produkt.height >= postHeight && produkt.category_type == 1).slice(0, 1);
 
     const [fenceWidthR, setFenceWidthOper] = useState(0);
     const fenceWidth = Number(fenceWidthR.toFixed(2));
