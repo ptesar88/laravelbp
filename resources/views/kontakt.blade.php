@@ -1,21 +1,21 @@
-
 @extends('layouts.default')
 
 @section('page-banner')
 <section class="free-post">
-<div class="relative z-10 mx-auto max-full bg-gray-100 h-[400px]">
-    <img class="z-0 flex mx-auto w-auto h-auto items-center mb-2" src="bannerV2.png"alt="Banner" />
-    <img class="flex mx-auto max-w-sm items-center -mt-64" src="logo.PNG" alt="Logo" />
+  <div class="relative z-10 mx-auto w-max-full bg-gray-100 sm:h-[135px] md:h-[320px] lg:h-[400px] xl:h-[400px]">
+    <img class="z-0 flex mx-auto w-auto h-auto bg-cover items-center" src="bannerV2.png"alt="Banner" />
+    <img class="flex mx-auto max-w-sm items-center md:h-auto h-20 md:-mt-64 -mt-24" src="logo.PNG" alt="Logo" />
+  </div>
+  <div style="top: -12px" class="relative z-20 mx-auto max-w-6xl items-center p-2 text-base text-green-800 rounded-lg bg-green-50 border border-green-700" role="alert">
+    <span class="font-medium">Akce!</span> Při objednávce betonových plotů i s montáží akce 15%. Pouze na materiál 5%.
   </div>
 </section>  
 @endsection
 
 @section('page-content')
     <section class="free-post">
-        <div class="relative z-20 mx-auto max-w-5xl items-center p-2 mb-4 -mt-20 text-base text-green-800 rounded-lg bg-green-50 border border-green-700" role="alert">
-            <span class="font-medium">Akce!</span> Při objednávce betonových plotů i s montáží akce 15%. Pouze na materiál 5%.
-          </div>
-          <div class="max-w-6xl mx-auto mt-16 mb-8">
+        
+          <div class="max-w-6xl mx-auto mt-8 mb-8">
             <div class="py-2 px-2 mx-auto max-w-6xl">
               <div class="mx-auto max-w-screen-sm text-center lg:mb-8 mb-8">
                 <h2 class="mb-4 text-3xl lg:text-4xl tracking-tight font-extrabold text-pink-950">Široký výběr designu a barev</h2>
@@ -30,9 +30,9 @@
 
 <section class="free-post">
   <h2 class="mx-auto items-center text-center text-2xl mb-2 max-w-6xl md:mb-8 font-extrabold dark:text-white">Kontakt</h2>
-  <div class="mx-auto grid mb-2 max-w-6xl md:mb-8 md:grid-cols-3 md:gap-3">
+  <div class="mx-auto grid p-2 max-w-6xl md:mb-8 md:grid-cols-3 md:gap-3">
     <div>
-      <figure class="flex flex-col h-32 rounded-md shadow-md p-2 bg-gray-50 border border-gray-300">
+      <figure class="flex flex-col h-32 rounded-md shadow-md p-2 m-2 bg-gray-50 border border-gray-300">
       <span class="text-md font-bold mb-1">Fakturační adresa</span>
       <span class="text-md font-normal mt-1">Jaroslav Cipra</span>
       <span class="text-md font-normal">Preislerovo nám. 150, Králův Dvůr 267 01</span>
@@ -40,20 +40,20 @@
       </figure>
     </div>
     <div>  
-      <figure class="flex flex-col h-32 rounded-md shadow-md p-2 bg-gray-50 border border-gray-300">
+      <figure class="flex flex-col h-32 rounded-md shadow-md p-2 m-2 bg-gray-50 border border-gray-300">
       <span class="text-md font-bold mb-1">Telefonní kontakt</span>
       <span class="text-md font-normal mt-1">+420 606 415 330</span>
         <span class="text-md font-normal">+420 722 900 387</span>
       </figure>
     </div>
     <div>
-      <figure class="flex flex-col h-32 rounded-md shadow-md p-2 bg-gray-50 border border-gray-300">
+      <figure class="flex flex-col h-32 rounded-md shadow-md p-2 m-2 bg-gray-50 border border-gray-300">
       <span class="text-md font-bold mb-1">Objednávky</span>
       <span class="text-md font-normal mt-1 text-blue-800">betonoveplotykraluvdvur@seznam.cz</span>
       </figure>
     </div>
   </div>   
-  <div class="mx-auto items-center mb-2 max-w-6xl">
+  <div class="mx-auto items-center m-2 p-2 max-w-6xl">
     <span class="text-md font-bold mb-1">Jak se k nám dostanete?</span><br>
     <span class="text-md font-normal mt-1 mb-1">Ulice Pod Skalkou Králův Dvůr - v moment kdy vás navigace bude návadět do této ulice odbočit do ní neodbočíte a odbočíte vlevo o cca 200m dál na prašnou cestu a my jsme dole v areálu.</span><br>
   </div>
