@@ -33,17 +33,24 @@ export type Sloupek = {
   price: number;
 };
 
+export type Barva = {
+  id: number;
+  name: string;
+  priceup: number;
+};
+
 const meter = 100;
 
 const FenceICalculator = (props: {
   produkt: Produkt;
   otisk: Otisk | null;
   sloupek: Sloupek | null;
+  barva: Barva | null;
   produkty: Produkty;
 }) => {
   return (
     <div>
-      <FenceI produkt={props.produkt} otisk={props.otisk} sloupek={props.sloupek} produkty={props.produkty} />
+      <FenceI produkt={props.produkt} otisk={props.otisk} sloupek={props.sloupek} produkty={props.produkty} barva={props.barva} />
     </div>
   );
 }
@@ -51,11 +58,12 @@ const FenceLCalculator = (props: {
   produkt: Produkt;
   otisk: Otisk | null;
   sloupek: Sloupek | null;
+  barva: Barva | null;
   produkty: Produkty;
 }) => {
   return (
     <div>
-      <FenceL produkt={props.produkt} otisk={props.otisk} sloupek={props.sloupek} produkty={props.produkty} />
+      <FenceL produkt={props.produkt} otisk={props.otisk} sloupek={props.sloupek} produkty={props.produkty} barva={props.barva}/>
     </div>
   );
 }
@@ -63,11 +71,12 @@ const FenceUCalculator = (props: {
   produkt: Produkt;
   otisk: Otisk | null;
   sloupek: Sloupek | null;
+  barva: Barva | null;
   produkty: Produkty;
 }) => {
   return (
     <div>
-      <FenceU produkt={props.produkt} otisk={props.otisk} sloupek={props.sloupek} produkty={props.produkty} />
+      <FenceU produkt={props.produkt} otisk={props.otisk} sloupek={props.sloupek} produkty={props.produkty} barva={props.barva}/>
     </div>
   );
 }
@@ -76,6 +85,7 @@ const FenceType = (props: {
   produkt: Produkt;
   otisk: Otisk | null;
   sloupek: Sloupek | null;
+  barva: Barva | null;
   produkty: Produkty;
 }) => {
   const [fenceType, setFenceType] = React.useState('');
@@ -112,9 +122,9 @@ const FenceType = (props: {
         */}
       </div>
 
-      {fenceType === "tvar-I" && <FenceICalculator produkt={props.produkt} otisk={props.otisk} sloupek={props.sloupek} produkty={props.produkty}/>}
-      {fenceType === "tvar-L" && <FenceLCalculator produkt={props.produkt} otisk={props.otisk} sloupek={props.sloupek} produkty={props.produkty}/>}
-      {fenceType === "tvar-U" && <FenceUCalculator produkt={props.produkt} otisk={props.otisk} sloupek={props.sloupek} produkty={props.produkty}/>}
+      {fenceType === "tvar-I" && <FenceICalculator produkt={props.produkt} otisk={props.otisk} sloupek={props.sloupek} produkty={props.produkty} barva={props.barva}/>}
+      {fenceType === "tvar-L" && <FenceLCalculator produkt={props.produkt} otisk={props.otisk} sloupek={props.sloupek} produkty={props.produkty} barva={props.barva}/>}
+      {fenceType === "tvar-U" && <FenceUCalculator produkt={props.produkt} otisk={props.otisk} sloupek={props.sloupek} produkty={props.produkty} barva={props.barva}/>}
 
       <Demand />
     </div>

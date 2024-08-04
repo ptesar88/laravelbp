@@ -8,6 +8,7 @@ use App\Models\Type;
 use App\Models\Category;
 use App\Models\CategoryType;
 use App\Models\Demand;
+use App\Models\Color;
 use App\Http\Controllers\FormController;
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Mail;
@@ -332,7 +333,7 @@ Route::get('/', function () {
     $products = Product::where('top', 'Ano')->take(6)->get();
     $advantages = Advantage::all();
     return view('index', compact('products'), compact('advantages'));
-});
+})->name("index");
 
 Route::get('kompletni-nabidka-plotu', function () {
     $products_plot = Product::where('type', Type::TYPE_PLOT)->get();
@@ -392,7 +393,7 @@ Route::get('kompletni-nabidka-plotu', function () {
         'products_sloupek_cihlicka',
         'products_sloupek_stip_kamen',
         'products_otisk'));
-});
+})->name("kompletni-nabidka-plotu");
 
 Route::get('/product/{id}', function ($id) {
     $showDivField = false;
@@ -401,8 +402,9 @@ Route::get('/product/{id}', function ($id) {
     $products_otisk = Product::where('type', Type::TYPE_OTISK)->get();
     $products_sloupek_type_selected = Product::where('category', Type::TYPE_SLOUPEK)->get();
     $products = Product::all();
-    return view('konfigurator', compact("id", 'products_detail', 'products_sloupek', 'products_otisk', 'products_sloupek_type_selected','showDivField'), compact('products'));
-});
+    $colors = Color::all();
+    return view('konfigurator', compact("id", 'products_detail', 'products_sloupek', 'products_otisk', 'products_sloupek_type_selected','showDivField', 'products', 'colors'));
+})->name("product");
 
 Route::post('/product/{id}', function ($id) {
     $request = request();
@@ -474,6 +476,11 @@ Route::get('uvod', function () {
     return view('index', compact('products'), compact('advantages'));
 })->name("uvod");
 
+Route::get('sitemap.xml', function () {
+    $products = Product::all();
+
+    return response()->view('sitemap', compact('products'))->header('Content-Type', 'text/xml');
+})->name("sitemap");
 
 
 //Route::get('/konfigurator', [KonfiguratorController::class, 'index']);

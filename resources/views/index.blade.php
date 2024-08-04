@@ -1,16 +1,6 @@
 @extends('layouts.default')
 
-@section('page-banner')
-<section class="free-post">
-  <div class="relative z-10 mx-auto w-max-full bg-gray-100 sm:h-[135px] md:h-[320px] lg:h-[400px] xl:h-[400px]">
-    <img class="z-0 flex mx-auto w-auto h-auto bg-cover items-center" src="bannerV2.png"alt="Banner" />
-    <img class="flex mx-auto max-w-sm items-center md:h-auto h-20 md:-mt-64 -mt-24" src="logo.PNG" alt="Logo" />
-  </div>
-  <div style="top: -12px" class="relative z-20 mx-auto max-w-6xl items-center p-2 text-base text-green-800 rounded-lg bg-green-50 border border-green-700" role="alert">
-    <span class="font-medium">Akce!</span> Při objednávce betonových plotů i s montáží akce 15%. Pouze na materiál 5%.
-  </div>
-</section>  
-@endsection
+@extends('layouts.banner')
 
 @section('page-content')
     <section class="free-post">
@@ -18,6 +8,7 @@
           <div class="max-w-6xl mx-auto mt-8 mb-8">
             <div class="py-2 px-2 mx-auto max-w-6xl">
               <div class="mx-auto max-w-screen-sm text-center lg:mb-8 mb-8">
+                <h1 class="hidden mx-auto items-center text-center text-2xl mb-8 font-extrabold dark:text-white">Betonové ploty Jaroslav Cipra</h1>
                 <h2 class="mb-4 text-3xl lg:text-4xl tracking-tight font-extrabold text-pink-950">Široký výběr designu a barev</h2>
                 <p class="font-normal text-gray-600 sm:text-xl dark:text-gray-400">Nabízíme Vám více jak 30 druhu plotů různého dekoru či barvy, jednotlivé bloky lze mezi sebou libovolně kombinovat, finální počet kombinací, tak nelze plně určit, vše je pouze na vaší fantazii.</p>
               </div>
@@ -28,35 +19,54 @@
 
 @section('page-main-products')
 
-    <section class="free-post">
-      <h2 class="mx-auto items-center text-center text-2xl mb-2 max-w-6xl md:mb-8 font-extrabold dark:text-white">Nejprodávanější</h2>
-      <div class="mx-auto items-center grid mb-2 max-w-6xl md:mb-8 md:grid-cols-3 md:gap-3">
-      @foreach($products as $prod)
-                  <div key={{ $prod->id }}>
-                    <figure class="flex h-48 flex-col items-center justify-center md:m-0 m-2 rounded-md text-center shadow-md bg-gray-50 border border-gray-300">
-                      <div class="h-6">
-                      <h3 class="text-lg font-semibold text-gray-900 dark:text-white">{{ $prod->name }}</h3>
-                      </div>
-                      <div class="h-6">
-                      <span class="text-sm">{{ $prod->width }}x{{ $prod->height }}x{{ $prod->depth }}cm</span>
-                      </div>
-                      <div class="h-24">
-                      <img class="" src="{{ $prod->thumbnail_url }}" alt="" />
-                      </div>
-                      <div>
-                        <button onclick="window.location='{{ url("/product/{$prod->id}") }}'" class="text-center text-sm m-2 p-2 mt-4 shadow-md rounded-md text-white bg-pink-950 border border-pink-950">Konfigurátor</button>
-                        <span class="text-sm font-semibold ml-4">cena od: {{ $prod->price }} Kč</span>
-                      </div>
-                    </figure>
-                  </div>    
-          @endforeach
-        </div>
-              <div class="mx-auto max-w-6xl">
-                <div class="mx-auto max-w-6xl items-center">
-                  <button onclick="window.location='{{ url("kompletni-nabidka-plotu") }}'" class="text-center items-center mx-auto text-sm font-semibold p-4 shadow-md rounded-md text-white bg-pink-950 border border-pink-950">Kompletní nabídka plotů</button>
-                </div>
-              </div>
-    </section>
+<section class="free-post">
+  <h2 class="mx-auto items-center text-center text-2xl mb-8 font-extrabold dark:text-white">Nejprodávanější</h2>
+  <div class="mx-auto items-center grid mb-2 max-w-6xl md:mb-8 md:grid-cols-3 md:gap-3">
+  @foreach($products as $prod)
+              <div key={{ $prod->id }}>
+                <figure class="flex h-52 flex-col rounded-md shadow-md bg-gray-50 border border-gray-300">
+                 
+                  <div class="h-6">
+                  <h3 class="text-lg font-semibold items-center justify-center text-center text-gray-900 dark:text-white">{{ $prod->name }}
+                   
+                  </h3>
+                  </div>
+                  <div class="h-6 items-center justify-center text-center">
+                  <span class="text-sm items-center justify-center text-center">{{ $prod->width }}x{{ $prod->height }}x{{ $prod->depth }}cm</span>
+                  </div>
+                  <div class="h-24">
+                  <img class="mx-auto max-h-[85px]" src="{{ $prod->thumbnail_url }}" alt="" />
+                  </div>
+                  <div class="h-16 text-right bg-gray-200 right-0">
+                  @if ($prod->top == 'Ano')
+                    <span class="inline-flex items-center bg-blue-100 text-blue-800 text-xs font-medium px-2.5 py-0.5 rounded-full">
+                      <span class="w-2 h-2 me-1 bg-blue-500 rounded-full"></span>
+                      TOP
+                    </span>
+                  @endif
+                  
+                  @if ($prod->label == 'Ano')
+                    <span class="inline-flex items-center bg-green-100 text-green-800 text-xs font-medium px-2.5 py-0.5 rounded-full dark:bg-green-900 dark:text-green-300">
+                      <span class="w-2 h-2 me-1 bg-green-500 rounded-full"></span>
+                      OTISK
+                    </span>
+                  @endif
+                    <span class="text-sm font-semibold ml-2">cena od: {{ $prod->price }} Kč</span>
+                    <button onclick="window.location='{{ url("/product/{$prod->id}") }}'" class="text-center text-sm m-2 p-2 mt-4 shadow-md rounded-md text-white bg-pink-950 border border-pink-950">Konfigurátor</button>
+                    
+                  </div>
+                </figure>
+              </div>    
+      @endforeach
+     
+    </div>  
+    <div class="mx-auto max-w-6xl">
+      <div class="mx-auto max-w-6xl items-center">
+        <button onclick="window.location='{{ url("kompletni-nabidka-plotu") }}'" class="text-center items-center mx-auto text-sm font-semibold p-4 shadow-md rounded-md text-white bg-pink-950 border border-pink-950">Kompletní nabídka plotů</button>
+      </div>
+    </div> 
+</section>
+
 @endsection
 
 @section('page-owner')
@@ -111,9 +121,9 @@
                       &nbsp;
                         {{ strtoupper($adv->title) }}
                     </span>
-                    <span class="text-sm">{{ strtoupper($adv->motto) }}</span>
+                    <span class="text-sm text-blue-700 shadow font-semibold">{{ strtoupper($adv->motto) }}</span>
                   </div>
-                  <h2 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white"><a href="#">{{ $adv->name }}</a></h2>
+                  <h2 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{{ $adv->name }}</h2>
                   <p class="mb-5 font-normal text-pink-950">{!! $adv->body !!}</p>
                   <div class="flex justify-between items-center">
                   </div>

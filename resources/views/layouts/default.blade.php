@@ -4,14 +4,15 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Betonové ploty Cipra</title>
+    <title>Betonové ploty Cipra @hasSection('title') - @yield('title') @endif</title>
     @vite('resources/css/app.css')
 </head>
 <body class="bg-white text-black">
     <header class="">
-        <div class="max-w-6xl mx-auto flex flex-wrap items-center justify-between h-8">
-            <div class="flex items-center justify-between  bg-white">
-              <a href="https://facebook.com" class="block py-2 px-3 text-gray-400 md:p-0" aria-current="page">
+      <nav>
+        <div class="flex flex-wrap max-w-6xl my-2 justify-between items-center mx-auto">
+            <div class="flex flex-wrap items-center justify-between bg-white">
+              <a href="https://www.facebook.com/share/gx32N1nSB3rkymu2/?mibextid=LQQJ4d" class=" py-2 px-3 text-gray-400 md:p-0" aria-current="page" target="_blank" rel="nofollow">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   class="h-5 w-5"
@@ -21,7 +22,7 @@
                   <path d="M9 8h-3v4h3v12h5v-12h3.642l.358-4h-4v-1.667c0-.955.192-1.333 1.115-1.333h2.885v-5h-3.808c-3.596 0-5.192 1.583-5.192 4.615v3.385z" />
                 </svg>
               </a>
-              <a href="https://instagram.com" class="block ml-2 py-2 px-3 text-gray-400 md:p-0" aria-current="page">
+              <a href="https://www.instagram.com/beton_ploty/" class="ml-2 py-2 px-3 text-gray-400 md:p-0" aria-current="page" target="_blank" rel="nofollow">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   class="h-5 w-5"
@@ -32,25 +33,31 @@
                 </svg>
               </a>
             </div>
-            <div class="flex items-center justify-between bg-white">
+            <div class="hidden justify-between items-center w-full lg:flex xl:flex xl:flex-wrap lg:w-auto bg-white">
+                
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" class="w-4 h-4">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M9 6.75V15m6-6v8.25m.503 3.498 4.875-2.437c.381-.19.622-.58.622-1.006V4.82c0-.836-.88-1.38-1.628-1.006l-3.869 1.934c-.317.159-.69.159-1.006 0L9.503 3.252a1.125 1.125 0 0 0-1.006 0L3.622 5.689C3.24 5.88 3 6.27 3 6.695V19.18c0 .836.88 1.38 1.628 1.006l3.869-1.934c.317-.159.69-.159 1.006 0l4.994 2.497c.317.158.69.158 1.006 0Z" />
               </svg>
-              <span class="ml-2 text-blue-600 text-xs mr-4">Prodejna - <a href="https://mapy.cz">zobrazit mapu</a></span>
+              <span class="ml-2 text-blue-600 text-xs mr-4 hover:underline"><a href="https://mapy.cz/turisticka?x=14.0138162428&y=49.9394902926&z=18&source=coor&id=14.0138479053%2C49.9394871575" target="_blank" rel="nofollow">Prodejna - zobrazit mapu</a></span>
+            
+              
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" class="w-4 h-4">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 0 0 2.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-.282.376-.769.542-1.21.38a12.035 12.035 0 0 1-7.143-7.143c-.162-.441.004-.928.38-1.21l1.293-.97c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 0 0-1.091-.852H4.5A2.25 2.25 0 0 0 2.25 4.5v2.25Z" />
               </svg>
-              <span class="ml-2 text-blue-600 text-xs mr-4">+420 606 415 330</span>
+              <span class="ml-2 text-gray-600 text-xs mr-4">+420 606 415 330</span>
+            
+              
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" class="w-4 h-4">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 0 1-2.25 2.25h-15a2.25 2.25 0 0 1-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0 0 19.5 4.5h-15a2.25 2.25 0 0 0-2.25 2.25m19.5 0v.243a2.25 2.25 0 0 1-1.07 1.916l-7.5 4.615a2.25 2.25 0 0 1-2.36 0L3.32 8.91a2.25 2.25 0 0 1-1.07-1.916V6.75" />
               </svg>
-    
-              <span class="ml-2 text-blue-600 text-xs">betonoveplotykraluvdvur@seznam.cz</span>
+              <span class="ml-2 text-gray-600 text-xs">betonoveplotykraluvdvur@seznam.cz</span>
+            
+              
             </div>
           </div>
     
     
-          <nav>
+          
             <div class="max-w-6xl mx-auto flex flex-wrap items-center justify-between p-4 bg-pink-950 rounded-t-lg">
               <div class="hidden w-full md:block md:w-auto" id="navbar-default">
                 <ul class="font-semibold text-sm flex flex-col p-4 md:p-0 mt-4 md:ml-4 md:flex-row md:space-x-8 rtl:space-x-reverse md:mt-0">
@@ -70,7 +77,7 @@
               </div>
               <div class="md:hidden flex items-center">
                 <button class="mobile-menu-button">
-                    <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="white">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
                     </svg>
                 </button>
@@ -110,7 +117,7 @@
     <footer class="">
         <div class="relative z-10 mx-auto mt-8 w-full bg-gray-100 mb-0">
             <div class="mx-auto justify-between items-center grid max-w-6xl md:grid-cols-3 md:gap-3">
-                <div class="my-8 border-r border-pink-950">
+                <div class="my-2 border-r border-pink-950">
                   <div class="relative justify-between z-20 mx-auto p-4 text-sm text-gray-800">
                     <span class="flex justify-between items-center font-medium mx-auto">Oblast působení</span>
                     <span class="flex justify-between items-center mx-auto">Celá Česká Republika - především Středočeský kraj</span>
@@ -118,7 +125,7 @@
                     Unhošť, Roztoky, Praha, Nižbor,...</span> 
                   </div>
                 </div> 
-                <div class="my-8 border-r border-pink-950">
+                <div class="my-2 border-r border-pink-950">
                   <div class="relative justify-between z-20 mx-auto p-4 text-sm text-gray-800">
                     <span class="flex justify-between items-center font-medium mx-auto">Fakturační údaje</span>
                     <span class="flex justify-between items-center mx-auto">Jaroslav Cipra</span> 
@@ -126,7 +133,7 @@
                     <span class="flex justify-between items-center mx-auto">IČO: 74477447 DIČ: CZ8111180627</span>
                   </div>
                 </div>    
-                <div class="my-8 border-r border-pink-950">
+                <div class="my-2 border-r border-pink-950">
                   <div class="relative justify-between z-20 mx-auto p-4 text-sm text-gray-800">
                     <span class="flex justify-between items-center font-medium mx-auto">Prodejna</span>
                     <span class="flex justify-between items-center mx-auto">Vedle ulice Pod Skalkou, Areál bývalé JZD</span>

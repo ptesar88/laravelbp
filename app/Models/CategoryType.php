@@ -21,6 +21,7 @@ class CategoryType extends Model
      */
     protected $fillable = [
         'name',
+        'thumbnail',    
     ];
 
     /**
@@ -28,20 +29,36 @@ class CategoryType extends Model
      *
      * @var array<int, string>
      */
-    //protected $appends = ['thumbnail_url', 'thumbnail_file'];
+    protected $appends = ['thumbnail_url', 'thumbnail_file'];
 
     /**
      * Get the URL of the thumbnail.
      *
      * @return string|null
      */
-
+    public function getThumbnailUrlAttribute()
+    {
+        if ($this->thumbnail) {
+            return asset('attachments/' . $this->thumbnail);
+        }
+        
+        return null;
+    }
 
     /**
      * Get the file of the thumbnail.
      *
      * @return array|null
      */
+    public function getThumbnailFileAttribute() {
+        if ($this->thumbnail) {
+            return [
+                "file" => $this->thumbnail,
+            ];
+        }
+
+        return null;
+    }
 
      public static function getNameById($id) {
         $categoryType = CategoryType::find($id);

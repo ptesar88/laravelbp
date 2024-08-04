@@ -4,6 +4,7 @@ type FenceRootProps = {
     sloupky: Sloupek[];
     otisky: Otisk[];
     produkty: Produkty[];
+    colors: Colors[];
 };
 
 function FenceRoot(props: FenceRootProps) {
@@ -12,19 +13,22 @@ function FenceRoot(props: FenceRootProps) {
         sloupky,
         otisky,
         produkty,
+        colors,
     } = props;
 
     const [chciOtisk, setChciOtisk] = React.useState(false);
     const [vybranyOtisk, vyberOtisk] = React.useState(null);
+    const [chciBarvu, setChciBarvu] = React.useState(false);
+    const [vybranaBarva, vyberBarvu] = React.useState(null);
     const [vybranySloupek, vyberSloupek] = React.useState(null);
 
-    console.log("render", vybranyOtisk, vybranySloupek, produkty);
+    console.log("render", vybranyOtisk,vybranaBarva, vybranySloupek, produkty);
 
     return (
         <section className="free-post">
             <h2 className="mx-auto items-center text-center text-2xl mb-2 max-w-4xl md:mb-8 font-extrabold dark:text-white">Konfigurátor</h2>
             <div className="relative z-20 mx-auto max-w-6xl items-center p-2 mb-8 text-base text-amber-800 rounded-lg bg-amber-50 border border-amber-200" role="alert">
-                <span className="font-medium">1. Vybrali jste</span>
+                <span className="font-medium">Vybrali jste</span>
             </div>
             <div className="mx-auto items-center grid mb-2 max-w-6xl md:mb-8 md:grid-cols-3 md:gap-3">
                 <div>
@@ -38,7 +42,9 @@ function FenceRoot(props: FenceRootProps) {
                     <div className="mx-auto items-center text-center font-bold dark:text-white">Cena: {produkt.price} Kč</div>
                 </div>
             </div>
-
+            <div className="relative z-20 mx-auto max-w-6xl items-center p-2 my-8 text-base text-amber-800 rounded-lg bg-amber-50 border border-amber-200" role="alert">
+                <span className="font-medium">Doplňky</span>
+            </div>
             {produkt.label == 'Ano' && (
                 <div>
                     <div className="mx-auto items-center grid mb-2 max-w-6xl md:mb-8 md:grid-cols-1 md:gap-1">
@@ -96,33 +102,77 @@ function FenceRoot(props: FenceRootProps) {
                 </div>)
             }
 
+                <div>
+                    <div className="mx-auto items-center grid mb-2 max-w-6xl md:mb-8 md:grid-cols-1 my-4 md:gap-1">
+                        <div>
+                            <div className="flex">
+                                <div className="flex items-center me-4 ms-2 font-bold">
+                                    Chcete použít překrytí barvou?
+                                </div>
+
+                                <div className="flex items-center me-4">
+                                    <input id="inline-radio" type="radio" value="ano" onChange={() => setChciBarvu(true)} name="barvaq" className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
+                                    <label htmlFor="inline-radio" className="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">ANO</label>
+                                </div>
+                                <div className="flex items-center me-4">
+                                    <input id="inline-2-radio" type="radio" value="ne" onChange={() => setChciBarvu(false)} name="barvaq" className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
+                                    <label htmlFor="inline-2-radio" className="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">NE</label>
+                                    
+                                </div>
+                            </div>
+                            <div className="text-xs font-bold">
+                                    +35% z celkové ceny plotu 
+                                    </div>
+                        </div>
+                    </div>
+
+                    {chciBarvu && <div id="barvaKonfig" className="mx-auto items-center grid mb-2 max-w-6xl md:mb-8 md:grid-cols-4 md:gap-3">
+                        {colors.map(color => {
+                            return (
+                                <div key={color.id}>
+                                    <figure className="flex h-48 flex-col rounded-md shadow-md bg-gray-50 border border-gray-300">
+                                        <div className="flex items-center ps-4 ">
+                                            <input id={"barva-" + color.id} type="radio" value={color.id} onChange={() => { console.log("select", color); vyberBarvu(color); }} name="barva_id" className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300" />
+                                            <label htmlFor={"barva-" + color.id} className="w-full py-4 ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">{color.name}</label>
+                                        </div>
+                                        <div className="h-24">
+                                            
+                                        </div>
+                                 
+                                    </figure>
+                                </div>
+                            );
+                        })}
+                    </div>}
+                </div>
+
 
             <div className="relative z-20 mx-auto max-w-6xl items-center mt-12 p-2 mb-2 text-base text-amber-800 rounded-lg bg-amber-50 border border-amber-200" role="alert">
-                <span className="font-medium">2. Vyberte typ sloupku</span>
+                <span className="font-medium">Vyberte typ sloupku</span>
             </div>
 
             <div className="mx-auto items-center grid mb-2 max-w-6xl md:mb-8 md:grid-cols-4 md:gap-3">
                 {sloupky.map(sloupek => {
                     return (
                         <div key={sloupek.id}>
-                        <div className="flex h-16 items-center ps-4 border border-gray-200 rounded dark:border-gray-700">
+                        <div className="flex h-16 items-center ps-4 mb-2 border border-gray-200 rounded dark:border-gray-700">
                             <input id={"sloupek-id" + sloupek.id} type="radio" value={sloupek.id} onChange={() => { console.log("select", sloupek); vyberSloupek(sloupek); }} name="sloupek_id" className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300" />
                             <label htmlFor={"sloupek-id" + sloupek.id} className="w-full py-4 ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">{sloupek.name}</label>
                             <span className="w-full py-4 ms-2 text-xs font-medium text-gray-900 dark:text-gray-300">{sloupek.desc}</span>
                             
                         </div>
-                        <span className="w-full py-4 ms-2 text-xs font-medium text-gray-900 dark:text-gray-300">
-                        <img src={sloupek.thumbnail}/>
-                    </span>
+                        <span className="w-full py-2 text-xs font-medium text-gray-900 dark:text-gray-300">
+                            <img src={sloupek.thumbnail_url} className="w-full h-52 rounded-lg"/>
+                        </span>
                     </div>                        
                     );
                 })}
             </div>
             <div className="relative z-20 mx-auto max-w-6xl items-center mt-12 p-2 mb-2 text-base text-amber-800 rounded-lg bg-amber-50 border border-amber-200" role="alert">
-                <span className="font-medium">3. Vyberte tvar plotu</span>
+                <span className="font-medium">Vyberte tvar plotu</span>
             </div>
 
-            <FenceType produkt={produkt} otisk={vybranyOtisk} sloupek={vybranySloupek} produkty={produkty}/>
+            <FenceType produkt={produkt} otisk={vybranyOtisk} barva={vybranaBarva} sloupek={vybranySloupek} produkty={produkty}/>
         </section>
     );
 }

@@ -4,11 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class CategoryTypeOther extends Model
+class Color extends Model
 {
-
-    CONST TYPE_PRUBEZNY = 1;
-    CONST TYPE_KONCOVY_LEVY_PRAVY = 4;
 
     const CREATED_AT = null;
     const UPDATED_AT = null;
@@ -20,20 +17,22 @@ class CategoryTypeOther extends Model
      */
     protected $fillable = [
         'name',
+        'priceup',
     ];
 
-     /**
+    /**
      * The accessors to append to the model's array form.
      *
      * @var array<int, string>
      */
-    protected $appends = ['thumbnail_url', 'thumbnail_file'];
+    //protected $appends = ['thumbnail_url'];
 
     /**
      * Get the URL of the thumbnail.
      *
      * @return string|null
      */
+    /*
     public function getThumbnailUrlAttribute()
     {
         if ($this->thumbnail) {
@@ -42,26 +41,5 @@ class CategoryTypeOther extends Model
         
         return null;
     }
-
-    /**
-     * Get the file of the thumbnail.
-     *
-     * @return array|null
-     */
-    public function getThumbnailFileAttribute() {
-        if ($this->thumbnail) {
-            return [
-                "file" => $this->thumbnail,
-            ];
-        }
-
-        return null;
-    }
-
-     public static function getNameById($id) {
-        $categoryType = CategoryTypeOther::find($id);
-        return $categoryType ? $categoryType->name : "-";
-     }
-
+*/
 }
-
