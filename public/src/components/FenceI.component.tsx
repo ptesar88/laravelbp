@@ -5,25 +5,36 @@ const FenceI = (props: {
     otisk: Otisk | null;
     sloupek: Sloupek[];
     produkty: Produkty[];
+    barva: Colors[];
+    chciOtisk: boolean;
+    chciBarvu: boolean;
 }) => {
 
-    let widthFence = props.produkt.width;
-    let heightFence = props.produkt.height;
+    let widthFenceSelected = props.produkt.width;
+    let heightFenceSelected = props.produkt.height;
     let priceValue = props.produkt.price;
     let priceLabel = props.otisk ? +props.otisk.price : 0;
     let pricePost = null;
     let idPost = props.sloupek.id;
+    let otiskRes = props.chciOtisk;
+    let barvaRes = props.chciBarvu;
 
+    const valuesElement = false;
     const { useState, useEffect, useRef } = React;
-
+    const [valueSelectedS, setValue] = useState(0);
+    const valueSelected = Number(valueSelectedS.toFixed(2));
     const [fenceHeightR, setFenceHeightOper] = useState(0);
     const fenceHeight = Number(fenceHeightR.toFixed(2));
-    const postHeight = Number(fenceHeightR*100);
+    //sirka
+    const [fenceWidthR, setFenceWidthOper] = useState(0);
+    const fenceWidth = Number(fenceWidthR.toFixed(2));
+    //vyska sloupku 1.strana
+    const postHeight = Number(fenceHeightR * 100);
     const postTypeProduktsK = props.produkty.filter(produkt => produkt.category == idPost && produkt.height >= postHeight && (produkt.category_type == 2 || produkt.category_type == 4)).slice(0, 1);
     const postTypeProduktsP = props.produkty.filter(produkt => produkt.category == idPost && produkt.height >= postHeight && produkt.category_type == 1).slice(0, 1);
 
-    const [fenceWidthR, setFenceWidthOper] = useState(0);
-    const fenceWidth = Number(fenceWidthR.toFixed(2));
+    const colorSelect = props.barva ? props.barva.name : null;
+    const priceUp = props.barva ? +props.barva.priceup : 0;
 
     //const canvasRef = useRef(null);
 
@@ -43,7 +54,7 @@ const FenceI = (props: {
             //ctx.fillRect(10 + fenceLength * 10, 10, 10, 10); // Ending post
         }
     }, [fenceHeightR, fenceWidthR]);
-
+    //zmena vysky 1.strana
     const handleHeightChange = (e) => {
         const height = e.target.value;
         setFenceHeightOper(height);
@@ -60,7 +71,7 @@ const FenceI = (props: {
     const heightChangeMinus = () => {
         setFenceHeightOper(fenceHeightR - 0.25);
     };
-
+    //zmena sirky 1.strana
     const handleWidthChange = (e) => {
         const width = e.target.value;
         setFenceWidthOper(width);
@@ -74,29 +85,47 @@ const FenceI = (props: {
         setFenceWidthOper(fenceWidthR - 0.25);
     };
 
+    //vypocet ceny
     const calculatePrice = () => {
         const meter = 100; // 1m = 100cm
         let totalPrice = 0;
         let itemCount = 0;
         let panelCountTotal = 0;
         let totalPostCount = 0;
+        let postCountPA = 0;
 
         if (fenceHeight > 0 && fenceWidth > 0) {
             let widthPanelCount;
-            let heightPanelCount;
-            let postCount;
+            let panelCountTotalAll;
+            let postCountTotalAll;
+            let priceUpPro = 0;
+
+            if (barvaRes == true) {
+                priceUpPro = 1.35;
+            } else {
+                priceUpPro = 1;
+            }    
+            
+            if (otiskRes == true) {
+                priceLabel;
+            } else {
+                priceLabel = 0;
+            }
+            
+            const heightPanelM = heightFenceSelected / meter; // vyska panelu v metrech
+            const widthPanelM = widthFenceSelected / meter; // delka panelu v metrech
+
+            widthPanelCount = fenceWidth / widthPanelM; // pocet panelu na sirku 1.strana
+
+            const postCount = (fenceWidth / (widthPanelM) + 1); // pocet sloupku 1.strana
+            const postCountK = 2; // pocet sloupku K 1.strana + 2.strana
+            panelCountTotal = widthPanelCount * (fenceHeight / heightPanelM); // pocet panelu celkem 1.strana
+
+            panelCountTotalAll = panelCountTotal; // pocet panelu celkem
+            postCountTotalAll = postCount;            
+            const postCountP = Math.ceil(postCount - 2); // pocet sloupku P 1.strana
 
             
-            const heightFenceM = heightFence/meter; // vyska plotu v metrech
-            const widthFenceM = widthFence/meter; // delka plotu v metrech
-
-            widthPanelCount = fenceWidth/widthFenceM; // pocet panelu na jedne strane 
-
-            postCount = (fenceWidth/(widthFenceM) + 1); // pocet sloupku na jedne strane
-            panelCountTotal = widthPanelCount * (fenceHeight/heightFenceM);
-
-            const panelPrice = panelCountTotal * priceValue;
-            const labelPrice = priceLabel * panelCountTotal;
 
             let postPriceK = 0;
             let postPriceP = 0;
@@ -107,40 +136,57 @@ const FenceI = (props: {
                 )}
             );
             
-            if (postCount > 2){
-            postTypeProduktsP.map(postTypeProduktP => {
-                return (
-                   postPriceP = postTypeProduktP.price
-                )}
-            );
-            }else{
+            if (postCount >= 2) {
+                postTypeProduktsP.map(postTypeProduktP => {
+                    return (
+                        postPriceP = postTypeProduktP.price
+                    )
+                }
+                );
+            } else {
                 postPriceP = 0
             }
 
             const postPriceTotalK = 2 * postPriceK;
-            const postPriceTotalP = (postCount - 2) * postPriceP;
+            const postPriceTotalP = Math.ceil(postCountP * postPriceP);
+
+            let pricePanel = Math.ceil(panelCountTotalAll * priceValue); 
+            let tempCalc = Math.ceil(pricePanel + postPriceTotalP + postPriceTotalK);
+            let panelPriceAndPostWithColor = Math.ceil(tempCalc * priceUpPro);  // cena panelu s barvou
+            let panelPriceColorHandle = barvaRes ? panelPriceAndPostWithColor : tempCalc; // cena panelu s barvou nebo bez barvy
+            let labelPrice = Math.ceil(panelCountTotalAll * priceLabel); // cena za otisk
+            let labelPriceHandle = props.otisk ? labelPrice : 0; // cena za otisk nebo bez otisku
 
             console.log(
-                "Delka plotu: ",widthFenceM, "(", fenceWidth, ")",
-                "Vyska plotu: ",heightFenceM,"(", fenceHeight, ")",
-                "Sloupek", postHeight, postPriceTotalK, postPriceTotalP,
-                "Panelů celkem", panelCountTotal, "ks",
+                labelPriceHandle,
+                tempCalc,
+                "Cena za barvu v %", priceUpPro,
+                "Cena za panel (barva)", panelPriceColorHandle,
+                "Počet sloupků 1.strana", postCount,
+                "Počet sloupků K", postCountK,
+                "Počet sloupků P", postCountP,
+                "Počet sloupků celkem", postCountTotalAll,
+                "Cena sloupku K 1.strana", postPriceK,
+                "Cena sloupku P 1.strana", postPriceP,
             );
 
-            totalPrice = Math.ceil(panelPrice + labelPrice + postPriceTotalK + postPriceTotalP);
-            itemCount = panelCountTotal + postCount;
-            totalPostCount = postCount;
+            totalPrice = +((+panelPriceColorHandle) + (+labelPriceHandle)).toFixed(0);
+            itemCount = panelCountTotalAll + postCountTotalAll;
+            totalPostCount = postCountTotalAll;
+            postCountPA = postCountP;
+            
+       
         }
 
-        return { totalPrice, itemCount, panelCountTotal, totalPostCount };
+        return { panelCountTotal, panelCountTotalAll, totalPrice, itemCount, totalPostCount, postCountPA };
     };
 
-    const { totalPrice, itemCount, panelCountTotal, totalPostCount } = calculatePrice();
+    const { panelCountTotal, panelCountTotalAll, totalPrice, itemCount, totalPostCount, postCountPA  } = calculatePrice();
     // jedna strana
     return <div>
 
         <div className="relative z-20 mx-auto max-w-6xl items-center mt-12 p-2 mb-2 text-base text-amber-800 rounded-lg bg-amber-50 border border-amber-200" role="alert">
-            <span className="font-medium">4. Zadejte rozměry plotu</span>
+            <span className="font-medium">Zadejte rozměry plotu</span>
         </div>
 
         <div className="grid gap-6 mb-6 md:grid-cols-4">
@@ -216,7 +262,15 @@ const FenceI = (props: {
 
                         <li>
                             <span className="text-sm font-medium text-gray-900">Panelů celkem:  {panelCountTotal} ks </span>
-                            <input type="hidden" id="panelCountTotal" name="panelCountTotal" value={panelCountTotal} />
+                            <input type="hidden" id="panelCountTotal" name="panelCountTotal" value={panelCountTotalAll} />
+                        </li>
+                        <li>
+                            <span className="text-sm font-medium text-gray-900">Sloupků koncových: 2 ks </span>
+                            <input type="hidden" id="totalPostCountK" name="totalPostCountK" value='2' />
+                        </li>
+                        <li>
+                            <span className="text-sm font-medium text-gray-900">Sloupků průběžných: {postCountPA} ks </span>
+                            <input type="hidden" id="postCountPA" name="postCountPA" value={postCountPA} />
                         </li>
                         <li>
                             <span className="text-sm font-medium text-gray-900">Sloupků celkem:  {totalPostCount} ks </span>
@@ -224,12 +278,12 @@ const FenceI = (props: {
                         </li>
                         <li>
                             <span className="text-sm font-medium text-gray-900">Délka plotu:  {fenceWidth} m </span>
-                            <input type="hidden" id="fenceHeight" name="fenceHeight" value={fenceWidth} />
+                            <input type="hidden" id="fenceWidth" name="fenceWidth" value={fenceWidth} />
                         </li>
                         <li>
                             <span className="text-sm font-medium text-gray-900">Výška sloupku a plotu:  {fenceHeight} m </span>
-                            <input type="hidden" id="fenceWidth" name="fenceWidth" value={fenceHeight} />
-                        </li>
+                            <input type="hidden" id="fenceHeight" name="fenceHeight" value={fenceHeight} />
+                              </li>
                     </ul>
                 </div>
             )}
@@ -239,14 +293,22 @@ const FenceI = (props: {
                         <li>
                             <span className="text-sm font-medium text-gray-900">*Orientační cena celkem:  {totalPrice} Kč </span>
                             <input type="hidden" id="totalPrice" name="totalPrice" value={totalPrice} />
-                        </li>
+                            <input type="hidden" id="panelCountTotal" name="panelCountTotalAll" value={panelCountTotalAll} />                         </li>
 
                         <li>
-                            <span className="text-sm font-medium text-gray-900">Položek celkem:  {itemCount} ks </span>
+                            <span className="text-sm font-medium text-gray-900">Položek celkem: {itemCount} ks </span>
                             <input type="hidden" id="itemCount" name="itemCount" value={itemCount} />
+                        </li>
+                        <li>
+                            <span className="text-sm font-medium text-gray-900">Sloupků celkem: {totalPostCount} ks, včetně 2 ks koncových</span>
+                            <input type="hidden" id="totalPostCount" name="totalPostCount" value={totalPostCount} />
+                            <input type="hidden" id="typeFence" name="typeFence" value='I' />
                         </li>
 
                     </ul>
+                    <div>
+                    <span className="text-xs text-gray-500 dark:text-gray-400">*Poznámka: Orientační cena celkem bude upravena podle místa realizace zakázky a bude přičtena cena za montáž a dopravu.</span>
+                </div>
                 </div>
 
             )}

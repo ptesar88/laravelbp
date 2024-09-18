@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Product extends Model
 {
+    CONST PRODUCT_PREMIUM = 1;
+    CONST PRODUCT_KLASIK = 2;
 
     const CREATED_AT = null;
     const UPDATED_AT = null;

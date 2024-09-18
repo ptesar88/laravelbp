@@ -15,6 +15,7 @@ class DemandController extends Controller
             'email' => 'required|string|email|max:255',
             'phone' => 'required|string|max:255',
             'company' => 'required|string|max:255',
+            'localisation' => 'required|string|max:255',
             'body' => 'required|string',
         ]);
 

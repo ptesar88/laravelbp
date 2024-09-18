@@ -18,9 +18,9 @@
 @section('page-all-products')
 
     <section class="free-post">
-      <h2 class="mx-auto items-center text-center text-2xl mb-8 font-extrabold dark:text-white">Betonové ploty KLASIK</h2>
+      <h2 class="mx-auto items-center text-center text-2xl mb-8 font-extrabold dark:text-white">Betonové ploty PREMIUM</h2>
       <div class="mx-auto items-center grid mb-2 max-w-6xl md:mb-8 md:grid-cols-3 md:gap-3">
-      @foreach($products_plot as $prod)
+      @foreach($products_plot_premium as $prod)
                   <div key={{ $prod->id }}>
                     <figure class="flex h-52 flex-col rounded-md shadow-md bg-gray-50 border border-gray-300">
                      
@@ -58,6 +58,49 @@
           @endforeach
         </div>   
     </section>
+
+    <section class="free-post">
+      <h2 class="mx-auto items-center text-center text-2xl mb-8 font-extrabold dark:text-white">Betonové ploty KLASIK</h2>
+      <div class="mx-auto items-center grid mb-2 max-w-6xl md:mb-8 md:grid-cols-3 md:gap-3">
+      @foreach($products_plot_klasik as $prod)
+                  <div key={{ $prod->id }}>
+                    <figure class="flex h-52 flex-col rounded-md shadow-md bg-gray-50 border border-gray-300">
+                     
+                      <div class="h-6">
+                      <h3 class="text-lg font-semibold items-center justify-center text-center text-gray-900 dark:text-white">{{ $prod->name }}
+                       
+                      </h3>
+                      </div>
+                      <div class="h-6 items-center justify-center text-center">
+                      <span class="text-sm items-center justify-center text-center">{{ $prod->width }}x{{ $prod->height }}x{{ $prod->depth }}cm</span>
+                      </div>
+                      <div class="h-24">
+                      <img class="mx-auto max-h-[85px]" src="{{ $prod->thumbnail_url }}" alt="" />
+                      </div>
+                      <div class="h-16 text-right bg-gray-200 right-0">
+                      @if ($prod->top == 'Ano')
+                        <span class="inline-flex items-center bg-blue-100 text-blue-800 text-xs font-medium px-2.5 py-0.5 rounded-full">
+                          <span class="w-2 h-2 me-1 bg-blue-500 rounded-full"></span>
+                          TOP
+                        </span>
+                      @endif
+                      
+                      @if ($prod->label == 'Ano')
+                        <span class="inline-flex items-center bg-green-100 text-green-800 text-xs font-medium px-2.5 py-0.5 rounded-full dark:bg-green-900 dark:text-green-300">
+                          <span class="w-2 h-2 me-1 bg-green-500 rounded-full"></span>
+                          OTISK
+                        </span>
+                      @endif
+                        <span class="text-sm font-semibold ml-2">cena od: {{ $prod->price }} Kč</span>
+                        <button onclick="window.location='{{ url("/product/{$prod->id}") }}'" class="text-center text-sm m-2 p-2 mt-4 shadow-md rounded-md text-white bg-pink-950 border border-pink-950">Konfigurátor</button>
+                        
+                      </div>
+                    </figure>
+                  </div>    
+          @endforeach
+        </div>   
+    </section>
+
     <section class="free-post">
       <h2 class="mx-auto items-center text-center text-2xl mb-8 font-extrabold dark:text-white">Betonové sloupky</h2>
       <div class="mx-auto items-center max-w-6xl md:mb-8">

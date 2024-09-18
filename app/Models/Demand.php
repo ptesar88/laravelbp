@@ -25,6 +25,8 @@ class Demand extends Model
         'phone',
         'company',
         'localisation',
+        'montazq',
+        'dopravaq',
         'body', 
     ];
 

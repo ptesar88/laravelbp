@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\Product;
+use App\Models\ProductType;
 use App\Models\Advantage;
 use App\Models\Specification;
 use App\Models\Assembly;
@@ -336,6 +337,8 @@ Route::get('/', function () {
 })->name("index");
 
 Route::get('kompletni-nabidka-plotu', function () {
+    $products_plot_klasik = Product::where('type', Type::TYPE_PLOT)->where('product_type', ProductType::TYPE_KLASIK)->get();
+    $products_plot_premium = Product::where('type', Type::TYPE_PLOT)->where('product_type', ProductType::TYPE_PREMIUM)->get();
     $products_plot = Product::where('type', Type::TYPE_PLOT)->get();
     $products_sloupek = Product::where('type', Type::TYPE_SLOUPEK)->get();
     $products_otisk = Product::where('type', Type::TYPE_OTISK)->get();
@@ -344,6 +347,11 @@ Route::get('kompletni-nabidka-plotu', function () {
         CategoryType::TYPE_PRUBEZNY,
         CategoryType::TYPE_KONCOVY,
         CategoryType::TYPE_ROHOVY,
+    ];
+
+    $products_types = [
+        ProductType::TYPE_KLASIK,
+        ProductType::TYPE_PREMIUM,
     ];
 
     $products_sloupek_cat_types_others = [
@@ -385,8 +393,9 @@ Route::get('kompletni-nabidka-plotu', function () {
         ->sortBy('height'); 
 
     return view('ploty', compact(
+        'products_plot_klasik',
+        'products_plot_premium',
         'products_plot',
-        'products_sloupek',
         'products_sloupek_cat_types',
         'products_sloupek_cat_types_others',
         'products_sloupek_hladke',
@@ -398,12 +407,15 @@ Route::get('kompletni-nabidka-plotu', function () {
 Route::get('/product/{id}', function ($id) {
     $showDivField = false;
     $products_detail = Product::find($id);
+    $products_types = Product::where('product_type', ProductType::TYPE_PREMIUM)->get();
+    $products_sloupek_premium = Category::where('type', 1)->get();// 1 = premium vyresit dynamicky Todo Petr
+    $products_sloupek_klasik = Category::where('type', 2)->get();// 2 = klasik vyresit dynamicky Todo Petr
     $products_sloupek = Category::all();
     $products_otisk = Product::where('type', Type::TYPE_OTISK)->get();
     $products_sloupek_type_selected = Product::where('category', Type::TYPE_SLOUPEK)->get();
     $products = Product::all();
     $colors = Color::all();
-    return view('konfigurator', compact("id", 'products_detail', 'products_sloupek', 'products_otisk', 'products_sloupek_type_selected','showDivField', 'products', 'colors'));
+    return view('konfigurator', compact("id", 'products_detail', 'products_types', 'products_sloupek_premium', 'products_sloupek_klasik', 'products_sloupek', 'products_otisk', 'products_sloupek_type_selected','showDivField', 'products', 'colors'));
 })->name("product");
 
 Route::post('/product/{id}', function ($id) {
@@ -411,15 +423,18 @@ Route::post('/product/{id}', function ($id) {
     $data = $request->all();
     //var_dump($data);
 
+    $otisk = array_key_exists('otisk_id', $data) ? Product::find($data["otisk_id"]) : null;
+    $barva = array_key_exists('barva_id', $data) ? Color::find($data["barva_id"]) : null;
+
     $sloupek = Category::find($data["sloupek_id"]);
     $produkt = Product::find($id);
-    $otisk = Product::find($data["otisk_id"]);
   
     $body = view('body', [
         "data" => $data,
         "sloupek" => $sloupek,
         "produkt" => $produkt,
         "otisk" => $otisk,
+        "barva" => $barva,
     ])->render();
 
     $demand = Demand::create([
@@ -428,6 +443,9 @@ Route::post('/product/{id}', function ($id) {
         "email" => $data["email"],
         "phone" => $data["phone"],
         "company" => $data["company"],
+        "notes" => $data["notes"],
+        "montaz" => $data["montazq"],
+        "doprava" => $data["dopravaq"],
         "localisation" => $data["localisation"],
         "body" => $body,
     ]);

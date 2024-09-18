@@ -6,9 +6,14 @@ export default {
     "./resources/**/*.vue",
     "./public/**/*.tsx",
   ],
-  theme: {
-    extend: {},
-  },
+
+    theme: {
+      extend: {
+        fontFamily: {
+          poppins: ["Poppins", "sans-serif"],
+        },
+      },
+    },
   plugins: [],
 }
 

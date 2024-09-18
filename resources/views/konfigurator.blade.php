@@ -34,6 +34,8 @@
         let produkty = JSON.parse('{!! $products->toJSON() !!}');
         let produkt = JSON.parse('{!! $products_detail->toJSON() !!}');
         let sloupky = JSON.parse('{!! $products_sloupek->toJSON() !!}');
+        let sloupkyPremium = JSON.parse('{!! $products_sloupek_premium->toJSON() !!}');
+        let sloupkyKlasik = JSON.parse('{!! $products_sloupek_klasik->toJSON() !!}');
         let sloupkySelected = JSON.parse('{!! $products_sloupek_type_selected->toJSON() !!}'); 
         let otisky = JSON.parse('{!! $products_otisk->toJSON() !!}');
         let colors = JSON.parse('{!! $colors->toJSON() !!}');
@@ -47,7 +49,7 @@
     <script type="text/babel" src="{{ asset('src/components/FenceL.component.tsx') }}"></script>
     <script type="text/babel" src="{{ asset('src/components/FenceU.component.tsx') }}"></script>
     <script type="text/babel" src="{{ asset('src/components/Demand.component.tsx') }}"></script>
-
+    <script type="text/babel" src="{{ asset('src/components/Conditions.component.tsx') }}"></script>
     
     <script type="text/babel" src="{{ asset('fencecalc.js') }}"></script>
 @endsection

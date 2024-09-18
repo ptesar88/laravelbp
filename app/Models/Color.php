@@ -18,6 +18,7 @@ class Color extends Model
     protected $fillable = [
         'name',
         'priceup',
+        'thumbnail',
     ];
 
     /**
@@ -25,14 +26,13 @@ class Color extends Model
      *
      * @var array<int, string>
      */
-    //protected $appends = ['thumbnail_url'];
+    protected $appends = ['thumbnail_url', 'thumbnail_file'];
 
     /**
      * Get the URL of the thumbnail.
      *
      * @return string|null
      */
-    /*
     public function getThumbnailUrlAttribute()
     {
         if ($this->thumbnail) {
@@ -41,5 +41,24 @@ class Color extends Model
         
         return null;
     }
-*/
+
+    /**
+     * Get the file of the thumbnail.
+     *
+     * @return array|null
+     */
+    public function getThumbnailFileAttribute() {
+        if ($this->thumbnail) {
+            return [
+                "file" => $this->thumbnail,
+            ];
+        }
+
+        return null;
+    }
+    public static function getNameById($id) {
+        $color = Color::find($id);
+        return $color ? $color->name : "-";
+     }
+
 }

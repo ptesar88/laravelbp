@@ -23,6 +23,7 @@ class Category extends Model
         'name',
         'price',
         'thumbnail',
+        'type',
     ];
 
     /**
