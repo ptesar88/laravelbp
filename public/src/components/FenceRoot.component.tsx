@@ -28,12 +28,15 @@ function FenceRoot(props: FenceRootProps) {
 
     const sloupkyTypy = props.produkt.product_type == 1 ? sloupkyPremium : sloupkyKlasik;
 
-    const doplnekVybran = (chciOtisk && chciBarvu) !== null ? 'block' : 'hidden'; 
+    let doplnekVybranOtiskBarva = (chciBarvu !== null) && (chciOtisk !== null) ? 'block' : 'hidden';
+    let doplnekVybranBarva = chciBarvu !== null ? 'block' : 'hidden'; 
+  
+    const doplnekVybran = produkt.label == 'Ano' ? doplnekVybranOtiskBarva : doplnekVybranBarva;
     const sloupekVybran = vybranySloupek !== null ? 'block' : 'hidden'; 
-    const titulekHandle = (chciOtisk && chciBarvu) !== null ? true : false;
+    const titulekHandle = (chciBarvu !== null) && (chciOtisk !== null) ? true : false;
     const titulekHandlePlot = vybranySloupek !== null ? true : false;
    
-    console.log("render", chciOtisk, chciBarvu);
+    console.log("render", chciOtisk, chciBarvu, doplnekVybran);
 
     console.log("sloupky product_type", props.produkt.product_type, sloupkyTypy );
 
