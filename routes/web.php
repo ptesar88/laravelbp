@@ -371,7 +371,7 @@ Route::post('/api/assemblies/{id}', function ($id) {
 });
 
 Route::get('/', function () {
-    $products = Product::where('top', 'Ano')->take(6)->orderBy('id', 'desc')->get();
+    $products = Product::where('top', 'Ano')->take(6)->get();
     $advantages = Advantage::all();
     return view('index', compact('products'), compact('advantages'));
 })->name("index");
