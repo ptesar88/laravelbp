@@ -43,13 +43,13 @@ function FenceRoot(props: FenceRootProps) {
     return (
 
         <section className="free-post">
-            <h2 className="mx-auto items-center text-center text-2xl mb-2 max-w-4xl md:mb-8 font-extrabold dark:text-white">Konfigurátor</h2>
+            <h2 className="mx-auto items-center text-center text-2xl mb-2 max-w-4xl md:mb-8 font-extrabold">Konfigurátor</h2>
             <div className="relative z-20 mx-auto max-w-6xl items-center p-2 text-base text-amber-800 rounded-lg bg-amber-50 border border-amber-500" role="alert">
                 <span className="font-medium">Vybrali jste</span>
             </div>
             <div className="mx-auto items-center p-8 grid max-w-6xl md:grid-cols-3 md:gap-3 bg-gray-50">
                 <div>
-                    <h3 className="mx-auto items-center text-center font-bold dark:text-white">{produkt.name}</h3>
+                    <h3 className="mx-auto items-center text-center font-bold">{produkt.name}</h3>
                 </div>
                 <div>
                     <img className="mx-auto items-center" src={produkt.thumbnail_url} alt="" />
@@ -74,12 +74,12 @@ function FenceRoot(props: FenceRootProps) {
                         </div> 
                         <div className="flex">  
                                 <div className="flex h-16 items-center text-center ps-4 pe-4 mr-2 border border-gray-200 bg-slate-200 rounded">
-                                        <input id="inline-radio" type="radio" value="Ano" onChange={() => setChciOtisk(true)} name="otiskq" className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
-                                        <label htmlFor="inline-radio" className="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">ANO</label>
+                                        <input id="inline-radio" type="radio" value="Ano" onChange={() => setChciOtisk(true)} name="otiskq" className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500" />
+                                        <label htmlFor="inline-radio" className="ms-2 text-sm font-medium text-gray-900">ANO</label>
                                 </div>
                                 <div className="flex h-16 items-center text-center ps-4 pe-4 border border-gray-200 bg-slate-200 rounded">
-                                        <input id="inline-2-radio" type="radio" value="Ne" onChange={() => setChciOtisk(false)} name="otiskq" className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
-                                        <label htmlFor="inline-2-radio" className="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">NE</label>
+                                        <input id="inline-2-radio" type="radio" value="Ne" onChange={() => setChciOtisk(false)} name="otiskq" className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500" />
+                                        <label htmlFor="inline-2-radio" className="ms-2 text-sm font-medium text-gray-900">NE</label>
                                 </div>
                             </div>     
                         <div></div>
@@ -92,7 +92,7 @@ function FenceRoot(props: FenceRootProps) {
                                     <figure className="flex h-48 flex-col rounded-md shadow-md bg-gray-50 border border-gray-300">
                                         <div className="flex items-center ps-4 ">
                                             <input id={"otisk-" + otisk.id} type="radio" value={otisk.id} onChange={() => { console.log("select", otisk); vyberOtisk(otisk); }} name="otisk_id" className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300" />
-                                            <label htmlFor={"otisk-" + otisk.id} className="w-full py-4 ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">{otisk.name}</label>
+                                            <label htmlFor={"otisk-" + otisk.id} className="w-full py-4 ms-2 text-sm font-medium text-gray-900">{otisk.name}</label>
                                         </div>
                                         <div className="h-24">
                                             <img className="mx-auto max-h-[85px]" src={otisk.thumbnail_url} alt="" />
@@ -108,7 +108,7 @@ function FenceRoot(props: FenceRootProps) {
                                             )}
 
                                             {(otisk.label == 'Ano') && (
-                                                <span className="inline-flex items-center bg-green-100 text-green-800 text-xs font-medium px-2.5 py-0.5 rounded-full dark:bg-green-900 dark:text-green-300">
+                                                <span className="inline-flex items-center bg-green-100 text-green-800 text-xs font-medium px-2.5 py-0.5 rounded-full">
                                                     <span className="w-2 h-2 me-1 bg-green-500 rounded-full"></span>
                                                     OTISK
                                                 </span>
@@ -122,7 +122,7 @@ function FenceRoot(props: FenceRootProps) {
                     </div>}
                 </div>)
             }
-        <hr className="h-px my-4 bg-amber-300 border-0"></hr>
+        {produkt.label == 'Ano' && <hr className="h-px my-4 bg-amber-300 border-0"></hr>}
         <div>
                     <div className="mx-auto items-center text-center grid md:grid-cols-3 md:gap-3 mb-2 max-w-6xl">
                         <div className="flex">
@@ -134,12 +134,12 @@ function FenceRoot(props: FenceRootProps) {
                         </div> 
                         <div className="flex">
                             <div className="flex h-16 items-center ps-4 pe-4 mr-2 border border-gray-200 bg-slate-200 rounded">
-                                <input id="inline-radio" type="radio" value="Ano" onChange={() => setChciBarvu(true)} name="barvaq" className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
-                                <label htmlFor="inline-radio" className="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">ANO</label>
+                                <input id="inline-radio" type="radio" value="Ano" onChange={() => setChciBarvu(true)} name="barvaq" className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500" />
+                                <label htmlFor="inline-radio" className="ms-2 text-sm font-medium text-gray-900">ANO</label>
                             </div>
                             <div className="flex h-16 items-center ps-4 pe-4 border border-gray-200 bg-slate-200 rounded">
-                                <input id="inline-2-radio" type="radio" value="Ne" onChange={() => setChciBarvu(false)} name="barvaq" className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
-                                <label htmlFor="inline-2-radio" className="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">NE</label>     
+                                <input id="inline-2-radio" type="radio" value="Ne" onChange={() => setChciBarvu(false)} name="barvaq" className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500" />
+                                <label htmlFor="inline-2-radio" className="ms-2 text-sm font-medium text-gray-900">NE</label>     
                             </div>
                         </div>    
                         <div className="flex items-center text-xs font-bold">
@@ -157,7 +157,7 @@ function FenceRoot(props: FenceRootProps) {
                                     <figure className="flex h-64 flex-col rounded-md shadow-md bg-gray-50 border border-gray-300">
                                         <div className="flex items-center ps-4 ">
                                             <input id={"barva-" + color.id} type="radio" value={color.id} onChange={() => { console.log("select", color); vyberBarvu(color); }} name="barva_id" className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300" />
-                                            <label htmlFor={"barva-" + color.id} className="w-full py-4 ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">{color.name}</label>
+                                            <label htmlFor={"barva-" + color.id} className="w-full py-4 ms-2 text-sm font-medium text-gray-900">{color.name}</label>
                                         </div>
                                         <div className="h-48">
                                             <img className="mx-auto bg-cover w-full max-h-[190px]" src={color.thumbnail_url} alt="" /> 
@@ -182,7 +182,7 @@ function FenceRoot(props: FenceRootProps) {
                                  <figure className="flex h-64 flex-col rounded-md shadow-md bg-gray-50 border border-gray-300">
                                         <div className="flex items-center ps-4 ">
                                             <input id={"sloupek-id" + sloupek.id} type="radio" value={sloupek.id} onChange={() => { console.log("select", sloupek); vyberSloupek(sloupek); }} name="sloupek_id" className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300" />
-                                            <label htmlFor={"sloupek-id" + sloupek.id} className="w-full py-4 ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">{sloupek.name}</label>
+                                            <label htmlFor={"sloupek-id" + sloupek.id} className="w-full py-4 ms-2 text-sm font-medium text-gray-900">{sloupek.name}</label>
                                         </div>
                                         <div className="h-48">
                                             <img className="mx-auto bg-cover w-full max-h-[190px]" src={sloupek.thumbnail_url} alt="" /> 

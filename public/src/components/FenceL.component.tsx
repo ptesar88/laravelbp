@@ -81,7 +81,11 @@ const FenceL = (props: {
 
     //zmena vysky 1.strana
     const handleHeightChange = (e) => {
-        const height = e.target.value;
+        if(parseInt(e.target.value) > parseInt(e.target.max)) {
+            e.target.value = e.target.max;
+            window.alert("Maximální výška plotu je 3m");
+        }
+        const height = +e.target.value;
         setFenceHeightOper(height);
     };
 
@@ -99,7 +103,7 @@ const FenceL = (props: {
 
     //zmena sirky 1.strana
     const handleWidthChange = (e) => {
-        const width = e.target.value;
+        const width = +e.target.value;
         setFenceWidthOper(width);
     };
 
@@ -113,7 +117,11 @@ const FenceL = (props: {
 
     //zmena vysky 2.strana
     const handleHeightChange2 = (e) => {
-        const height2 = e.target.value;
+        if(parseInt(e.target.value) > parseInt(e.target.max)) {
+            e.target.value = e.target.max;
+            window.alert("Maximální výška plotu je 3m");
+        }
+        const height2 = +e.target.value;
         setFenceHeightOper2(height2);
     };
 
@@ -131,7 +139,7 @@ const FenceL = (props: {
 
     //zmena sirky 2.strana
     const handleWidthChange2 = (e) => {
-        const width2 = e.target.value;
+        const width2 = +e.target.value;
         setFenceWidthOper2(width2);
     };
 
@@ -180,19 +188,19 @@ const FenceL = (props: {
             widthPanelCount = fenceWidth / widthPanelM; // pocet panelu na sirku 1.strana
             widthPanelCount2 = fenceWidth2 / widthPanelM; // pocet panelu na sirku 2.strana
 
-            const postCount = (fenceWidth / (widthPanelM) + 1); // pocet sloupku 1.strana
-            const postCount2 = (fenceWidth2 / (widthPanelM) + 1); // pocet sloupku 2.strana
+            const postCount = Math.ceil((fenceWidth / (widthPanelM) + 1)).toFixed(0); // pocet sloupku 1.strana
+            const postCount2 = Math.ceil((fenceWidth2 / (widthPanelM) + 1)).toFixed(0); // pocet sloupku 2.strana
             const postCountK = 2; // pocet sloupku K 1.strana + 2.strana
             const postCountR = 1; // pocet sloupku R
 
-            panelCountTotal = widthPanelCount * (fenceHeight / heightPanelM); // pocet panelu celkem 1.strana
-            panelCountTotal2 = widthPanelCount2 * (fenceHeight2 / heightPanelM); // pocet panelu celkem 2.strana
+            panelCountTotal = +Math.ceil(widthPanelCount * (fenceHeight / heightPanelM)).toFixed(0); // pocet panelu celkem 1.strana
+            panelCountTotal2 = +Math.ceil(widthPanelCount2 * (fenceHeight2 / heightPanelM)).toFixed(0); // pocet panelu celkem 2.strana
 
             panelCountTotalAll = Math.ceil(panelCountTotal + panelCountTotal2); // pocet panelu celkem
-            postCountTotalAll = Math.ceil((postCount + postCount2 + postCountR) - 2);
+            postCountTotalAll = Math.ceil((Number(postCount) + Number(postCount2) + Number(postCountR)) - 2);
 
-            const postCountP = Math.ceil(postCount - 2); // pocet sloupku P 1.strana
-            const postCountP2 = Math.ceil(postCount2 - 2);// pocet sloupku P 2.strana
+            const postCountP = Math.ceil(Number(postCount) - 2); // pocet sloupku P 1.strana
+            const postCountP2 = Math.ceil(Number(postCount2) - 2);// pocet sloupku P 2.strana
 
           
 
@@ -216,7 +224,7 @@ const FenceL = (props: {
             }
             );
 
-            if (postCount >= 2) {
+            if (Number(postCount) >= 2) {
                 postTypeProduktsP.map(postTypeProduktP => {
                     return (
                         postPriceP = postTypeProduktP.price
@@ -227,7 +235,7 @@ const FenceL = (props: {
                 postPriceP = 0
             }
 
-            if (postCount2 >= 2) {
+            if (Number(postCount2) >= 2) {
                 postTypeProduktsP2.map(postTypeProduktP2 => {
                     return (
                         postPriceP2 = postTypeProduktP2.price
@@ -257,6 +265,7 @@ const FenceL = (props: {
             let panelPriceColorHandle = barvaRes ? panelPriceAndPostWithColor : tempCalc; // cena panelu s barvou nebo bez barvy
             let labelPrice = Math.ceil(panelCountTotalAll * priceLabel); // cena za otisk
             let labelPriceHandle = props.otisk ? labelPrice : 0; // cena za otisk nebo bez otisku
+
             console.log(
                 labelPriceHandle,
                 tempCalc,
@@ -305,16 +314,16 @@ const FenceL = (props: {
                                 </div>
 
                                 <div className="flex items-center me-4">
-                                    <input id="inline-radio" type="radio" value="0,25" name="valueq" onChange={handleValueChange} className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
-                                    <label htmlFor="inline-radio" className="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">0,25 m</label>
+                                    <input id="inline-radio" type="radio" value="0,25" name="valueq" onChange={handleValueChange} className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500" />
+                                    <label htmlFor="inline-radio" className="ms-2 text-sm font-medium text-gray-900">0,25 m</label>
                                 </div>
                                 <div className="flex items-center me-4">
-                                    <input id="inline-2-radio" type="radio" value="1" name="valueq" onChange={handleValueChange} className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
-                                    <label htmlFor="inline-2-radio" className="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">1 m</label>
+                                    <input id="inline-2-radio" type="radio" value="1" name="valueq" onChange={handleValueChange} className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500" />
+                                    <label htmlFor="inline-2-radio" className="ms-2 text-sm font-medium text-gray-900">1 m</label>
                                 </div>
                                 <div className="flex items-center me-4">
-                                    <input id="inline-3-radio" type="radio" value="10" name="valueq" onChange={handleValueChange} className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
-                                    <label htmlFor="inline-3-radio" className="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">10 m</label>
+                                    <input id="inline-3-radio" type="radio" value="10" name="valueq" onChange={handleValueChange} className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500" />
+                                    <label htmlFor="inline-3-radio" className="ms-2 text-sm font-medium text-gray-900">10 m</label>
                                 </div>
                             </div>
                         </div>
@@ -329,8 +338,8 @@ const FenceL = (props: {
 
                 <label htmlFor="lengthInput" className="block mb-2 text-sm font-medium text-gray-900">Zadejte délku 1.strany (v m):</label>
                 <div className="relative flex items-center max-w-[11rem]">
-                    <button type="button" onClick={widthChangeMinus} id="decrement-button" data-input-counter-decrement="lengthInput" className="bg-gray-100 dark:bg-gray-700 dark:hover:bg-gray-600 dark:border-gray-600 hover:bg-gray-200 border border-gray-300 rounded-s-lg p-3 h-11 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none">
-                        <svg className="w-3 h-3 text-gray-900 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 2">
+                    <button type="button" onClick={widthChangeMinus} id="decrement-button" data-input-counter-decrement="lengthInput" className="bg-gray-100 hover:bg-gray-200 border border-gray-300 rounded-s-lg p-3 h-11 focus:ring-gray-100 focus:ring-2 focus:outline-none">
+                        <svg className="w-3 h-3 text-gray-900" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 2">
                             <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M1 1h16" />
                         </svg>
                     </button>
@@ -338,11 +347,12 @@ const FenceL = (props: {
                         type="number"
                         id="lengthInput"
                         value={fenceWidth}
-                        max={100}
+                        min={0}
+                        step={0.25}
+                        max={150}
                         onChange={handleWidthChange}
-                        className="bg-gray-50 border-x-0 border-gray-300 h-11 font-medium text-center text-gray-900 text-sm focus:ring-blue-500 focus:border-blue-500 block w-full pb-6 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                        className="bg-gray-50 border-x-0 border-gray-300 h-11 font-medium text-center text-gray-900 text-sm focus:ring-blue-500 focus:border-blue-500 block w-full pb-6"
                         required
-                        readOnly
                     />
                     <div className="absolute bottom-1 start-1/2 -translate-x-1/2 rtl:translate-x-1/2 flex items-center text-xs text-gray-400 space-x-1 rtl:space-x-reverse">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-3 h-3">
@@ -350,8 +360,8 @@ const FenceL = (props: {
                         </svg>
                         <span>délka plotu</span>
                     </div>
-                    <button type="button" onClick={widthChangePlus} id="increment-button" data-input-counter-increment="lengthInput" className="bg-gray-100 dark:bg-gray-700 dark:hover:bg-gray-600 dark:border-gray-600 hover:bg-gray-200 border border-gray-300 rounded-e-lg p-3 h-11 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none">
-                        <svg className="w-3 h-3 text-gray-900 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
+                    <button type="button" onClick={widthChangePlus} id="increment-button" data-input-counter-increment="lengthInput" className="bg-gray-100 hover:bg-gray-200 border border-gray-300 rounded-e-lg p-3 h-11 focus:ring-gray-100 focus:ring-2 focus:outline-none">
+                        <svg className="w-3 h-3 text-gray-900" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
                             <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 1v16M1 9h16" />
                         </svg>
                     </button>
@@ -360,10 +370,10 @@ const FenceL = (props: {
             </div>
 
             <div>
-                <label htmlFor="quantity-input" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Zadejte výšku 1.strany (v m):</label>
+                <label htmlFor="quantity-input" className="block mb-2 text-sm font-medium text-gray-900">Zadejte výšku 1.strany (v m):</label>
                 <div className="relative flex items-center max-w-[11rem]">
-                    <button type="button" onClick={heightChangeMinus} id="decrement-button" data-input-counter-decrement="quantity-input" className="bg-gray-100 dark:bg-gray-700 dark:hover:bg-gray-600 dark:border-gray-600 hover:bg-gray-200 border border-gray-300 rounded-s-lg p-3 h-11 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none">
-                        <svg className="w-3 h-3 text-gray-900 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 2">
+                    <button type="button" onClick={heightChangeMinus} id="decrement-button" data-input-counter-decrement="quantity-input" className="bg-gray-100 hover:bg-gray-200 border border-gray-300 rounded-s-lg p-3 h-11 focus:ring-gray-100 focus:ring-2 focus:outline-none">
+                        <svg className="w-3 h-3 text-gray-900" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 2">
                             <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M1 1h16" />
                         </svg>
                     </button>
@@ -371,11 +381,12 @@ const FenceL = (props: {
                         type="number"
                         id="quantity-input"
                         value={fenceHeight}
+                        min={0}
+                        step={0.25}
                         max={3}
                         onChange={handleHeightChange}
-                        className="bg-gray-50 border-x-0 border-gray-300 h-11 font-medium text-center text-gray-900 text-sm focus:ring-blue-500 focus:border-blue-500 block w-full pb-6 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                        className="bg-gray-50 border-x-0 border-gray-300 h-11 font-medium text-center text-gray-900 text-sm focus:ring-blue-500 focus:border-blue-500 block w-full pb-6"
                         required
-                        readOnly
                     />
                     <div className="absolute bottom-1 start-1/2 -translate-x-1/2 rtl:translate-x-1/2 flex items-center text-xs text-gray-400 space-x-1 rtl:space-x-reverse">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-3 h-3">
@@ -383,8 +394,8 @@ const FenceL = (props: {
                         </svg>
                         <span>výška plotu</span>
                     </div>
-                    <button type="button" onClick={heightChangePlus} id="increment-button" data-input-counter-increment="quantity-input" className="bg-gray-100 dark:bg-gray-700 dark:hover:bg-gray-600 dark:border-gray-600 hover:bg-gray-200 border border-gray-300 rounded-e-lg p-3 h-11 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none">
-                        <svg className="w-3 h-3 text-gray-900 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
+                    <button type="button" onClick={heightChangePlus} id="increment-button" data-input-counter-increment="quantity-input" className="bg-gray-100 hover:bg-gray-200 border border-gray-300 rounded-e-lg p-3 h-11 focus:ring-gray-100 focus:ring-2 focus:outline-none">
+                        <svg className="w-3 h-3 text-gray-900" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
                             <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 1v16M1 9h16" />
                         </svg>
                     </button>
@@ -395,8 +406,8 @@ const FenceL = (props: {
 
                 <label htmlFor="lengthInput2" className="block mb-2 text-sm font-medium text-gray-900">Zadejte délku 2.strany (v m):</label>
                 <div className="relative flex items-center max-w-[11rem]">
-                    <button type="button" onClick={widthChangeMinus2} id="decrement-button" data-input-counter-decrement="lengthInput2" className="bg-gray-100 dark:bg-gray-700 dark:hover:bg-gray-600 dark:border-gray-600 hover:bg-gray-200 border border-gray-300 rounded-s-lg p-3 h-11 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none">
-                        <svg className="w-3 h-3 text-gray-900 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 2">
+                    <button type="button" onClick={widthChangeMinus2} id="decrement-button" data-input-counter-decrement="lengthInput2" className="bg-gray-100 hover:bg-gray-200 border border-gray-300 rounded-s-lg p-3 h-11 focus:ring-gray-100 focus:ring-2 focus:outline-none">
+                        <svg className="w-3 h-3 text-gray-900" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 2">
                             <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M1 1h16" />
                         </svg>
                     </button>
@@ -404,11 +415,12 @@ const FenceL = (props: {
                         type="number"
                         id="lengthInput2"
                         value={fenceWidth2}
-                        max={100}
+                        min={0}
+                        step={0.25}
+                        max={150}
                         onChange={handleWidthChange2}
-                        className="bg-gray-50 border-x-0 border-gray-300 h-11 font-medium text-center text-gray-900 text-sm focus:ring-blue-500 focus:border-blue-500 block w-full pb-6 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                        className="bg-gray-50 border-x-0 border-gray-300 h-11 font-medium text-center text-gray-900 text-sm focus:ring-blue-500 focus:border-blue-500 block w-full pb-6"
                         required
-                        readOnly
                     />
                     <div className="absolute bottom-1 start-1/2 -translate-x-1/2 rtl:translate-x-1/2 flex items-center text-xs text-gray-400 space-x-1 rtl:space-x-reverse">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-3 h-3">
@@ -416,8 +428,8 @@ const FenceL = (props: {
                         </svg>
                         <span>délka plotu</span>
                     </div>
-                    <button type="button" onClick={widthChangePlus2} id="increment-button" data-input-counter-increment="lengthInput2" className="bg-gray-100 dark:bg-gray-700 dark:hover:bg-gray-600 dark:border-gray-600 hover:bg-gray-200 border border-gray-300 rounded-e-lg p-3 h-11 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none">
-                        <svg className="w-3 h-3 text-gray-900 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
+                    <button type="button" onClick={widthChangePlus2} id="increment-button" data-input-counter-increment="lengthInput2" className="bg-gray-100 hover:bg-gray-200 border border-gray-300 rounded-e-lg p-3 h-11 focus:ring-gray-100 focus:ring-2 focus:outline-none">
+                        <svg className="w-3 h-3 text-gray-900" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
                             <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 1v16M1 9h16" />
                         </svg>
                     </button>
@@ -426,10 +438,10 @@ const FenceL = (props: {
             </div>
 
             <div>
-                <label htmlFor="quantity-input2" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Zadejte výšku 2.strany (v m):</label>
+                <label htmlFor="quantity-input2" className="block mb-2 text-sm font-medium text-gray-900">Zadejte výšku 2.strany (v m):</label>
                 <div className="relative flex items-center max-w-[11rem]">
-                    <button type="button" onClick={heightChangeMinus2} id="decrement-button" data-input-counter-decrement="quantity-input2" className="bg-gray-100 dark:bg-gray-700 dark:hover:bg-gray-600 dark:border-gray-600 hover:bg-gray-200 border border-gray-300 rounded-s-lg p-3 h-11 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none">
-                        <svg className="w-3 h-3 text-gray-900 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 2">
+                    <button type="button" onClick={heightChangeMinus2} id="decrement-button" data-input-counter-decrement="quantity-input2" className="bg-gray-100 hover:bg-gray-200 border border-gray-300 rounded-s-lg p-3 h-11 focus:ring-gray-100 focus:ring-2 focus:outline-none">
+                        <svg className="w-3 h-3 text-gray-900" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 2">
                             <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M1 1h16" />
                         </svg>
                     </button>
@@ -437,11 +449,12 @@ const FenceL = (props: {
                         type="number"
                         id="quantity-input2"
                         value={fenceHeight2}
+                        min={0}
+                        step={0.25}
                         max={3}
                         onChange={handleHeightChange2}
-                        className="bg-gray-50 border-x-0 border-gray-300 h-11 font-medium text-center text-gray-900 text-sm focus:ring-blue-500 focus:border-blue-500 block w-full pb-6 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                        className="bg-gray-50 border-x-0 border-gray-300 h-11 font-medium text-center text-gray-900 text-sm focus:ring-blue-500 focus:border-blue-500 block w-full pb-6"
                         required
-                        readOnly
                     />
                     <div className="absolute bottom-1 start-1/2 -translate-x-1/2 rtl:translate-x-1/2 flex items-center text-xs text-gray-400 space-x-1 rtl:space-x-reverse">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-3 h-3">
@@ -449,8 +462,8 @@ const FenceL = (props: {
                         </svg>
                         <span>výška plotu</span>
                     </div>
-                    <button type="button" onClick={heightChangePlus2} id="increment-button" data-input-counter-increment="quantity-input2" className="bg-gray-100 dark:bg-gray-700 dark:hover:bg-gray-600 dark:border-gray-600 hover:bg-gray-200 border border-gray-300 rounded-e-lg p-3 h-11 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none">
-                        <svg className="w-3 h-3 text-gray-900 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
+                    <button type="button" onClick={heightChangePlus2} id="increment-button" data-input-counter-increment="quantity-input2" className="bg-gray-100 hover:bg-gray-200 border border-gray-300 rounded-e-lg p-3 h-11 focus:ring-gray-100 focus:ring-2 focus:outline-none">
+                        <svg className="w-3 h-3 text-gray-900" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
                             <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 1v16M1 9h16" />
                         </svg>
                     </button>
@@ -461,7 +474,7 @@ const FenceL = (props: {
             {fenceWidthR > 0 && fenceHeightR > 0 && fenceWidthR2 > 0 && fenceHeightR2 > 0 && (
 
                 <div>
-                    <ul className="max-w-md space-y-1 text-gray-500 list-none list-inside dark:text-gray-400">
+                    <ul className="max-w-md space-y-1 text-gray-500 list-none list-inside">
                         <li>
                             <span className="text-sm font-medium text-gray-900">1. strana</span>
                         </li>
@@ -490,13 +503,13 @@ const FenceL = (props: {
             )}
             {fenceWidthR > 0 && fenceHeightR > 0 && fenceWidthR2 > 0 && fenceHeightR2 > 0 && (
                 <div>
-                <ul className="max-w-md space-y-1 text-gray-500 list-none list-inside dark:text-gray-400">
+                <ul className="max-w-md space-y-1 text-gray-500 list-none list-inside">
                     <li>
                         <span className="text-sm font-medium text-gray-900">2. strana</span>
                     </li>
                     <li>
                         <span className="text-sm font-medium text-gray-900">Panelů celkem:  {panelCountTotal2} ks </span>
-                        <input type="hidden" id="panelCountTotal" name="panelCountTotal2" value={panelCountTotal2} />
+                        <input type="hidden" id="panelCountTotal2" name="panelCountTotal2" value={panelCountTotal2} />
                     </li>
                     <li>
                             <span className="text-sm font-medium text-gray-900">Sloupků koncových: 1 ks </span>
@@ -519,11 +532,11 @@ const FenceL = (props: {
             )}
             {fenceWidthR > 0 && fenceHeightR > 0 && fenceWidthR2 > 0 && fenceHeightR2 > 0 && (
                 <div>
-                    <ul className="max-w-md space-y-1 text-gray-500 list-none list-inside dark:text-gray-400">
+                    <ul className="max-w-md space-y-1 text-gray-500 list-none list-inside">
                         <li>
                             <span className="text-sm font-medium text-gray-900">*Orientační cena celkem: {totalPrice} Kč </span>
                             <input type="hidden" id="totalPrice" name="totalPrice" value={totalPrice} />
-                            <input type="hidden" id="panelCountTotal" name="panelCountTotalAll" value={panelCountTotalAll} />                         
+                            <input type="hidden" id="panelCountTotalAll" name="panelCountTotalAll" value={panelCountTotalAll} />                         
                         </li>
                         <li>
                             <span className="text-sm font-medium text-gray-900">Položek celkem: {itemCount} ks </span>
@@ -540,7 +553,7 @@ const FenceL = (props: {
             )}
             {fenceWidthR > 0 && fenceHeightR > 0 && fenceWidthR2 > 0 && fenceHeightR2 > 0 && (
                 <div>
-                    <span className="text-xs text-gray-500 dark:text-gray-400">*Poznámka: Orientační cena celkem bude upravena podle místa realizace zakázky a bude přičtena cena za montáž a dopravu.</span>
+                    <span className="text-xs text-gray-500">*Poznámka: Orientační cena celkem bude upravena podle místa realizace zakázky a bude přičtena cena za montáž a dopravu.</span>
                 </div>
             )}
               

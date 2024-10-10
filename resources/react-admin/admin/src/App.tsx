@@ -96,6 +96,16 @@ const CategoryTypeInput = () => (
     </ReferenceInput>
 );
 
+const ProductTypeInput = () => (
+    <ReferenceInput reference="product_types" source="product_type">
+        <SelectInput
+            label="Product Type"
+            source="product_type"
+            optionText="name"
+        />
+    </ReferenceInput>
+);
+
 const ProductEdit = () => (
     <Edit>
         <SimpleForm>
@@ -118,6 +128,7 @@ const ProductEdit = () => (
                 { id: 'Ano', name: 'Ano' },
                 { id: 'Ne', name: 'Ne' },
             ]} />
+            <ProductTypeInput/>
         </SimpleForm>
     </Edit>
 );
@@ -217,6 +228,7 @@ const ProductList = (props: any) => (
             <TextField source="type.name" />
             <TextField source="category_type.name" />
             <TextField source="category.name" />
+            <TextField source="product_type" />
         </Datagrid>
     </List>
 );
@@ -239,6 +251,7 @@ export const App = () => (
     <Admin dataProvider={dataProvider} authProvider={authProvider}>
         <Resource name="demands" list={DemandList} show={DemandShow} create={DemandCreate} />
         <Resource name="products" list={ProductList} show={ProductShow} edit={ProductEdit} create={ProductCreate} />
+        <Resource name="product_types" list={ListGuesser} show={ListGuesser} edit={ListGuesser} />
         <Resource name="advantages" list={ListGuesser} show={AdvantageShow} edit={AdvantageEdit} create={AdvantageCreate} />
         <Resource name="specifications" list={ListGuesser} show={SpecificationShow} edit={SpecificationEdit} />
         <Resource name="assemblies" list={ListGuesser} show={AssemblyShow} edit={AssemblyEdit} />

@@ -22,6 +22,7 @@ type ProductParams = {
     top: string;
     category: string;
     category_type: string;
+    product_type: string;
 };
 type AdvantageParams = {
     id: number; // Add the 'id' property to satisfy the 'RaRecord<Identifier>' constraint
@@ -92,7 +93,8 @@ const updateProductsFormData = (
     params.data.type  && formData.append("type", params.data.type);
     params.data.top && formData.append("top", params.data.top);
     params.data.category && formData.append("category", params.data.category);
-    params.data.category_type  && formData.append("category_type", params.data.category_type);  
+    params.data.category_type  && formData.append("category_type", params.data.category_type); 
+    params.data.product_type && formData.append("product_type", params.data.product_type); 
 
     return formData;
 };

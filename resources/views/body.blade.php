@@ -73,7 +73,7 @@
         Počet sloupků: {{ $data['totalPostCount'] }} ks
     </li>
     <li>
-        Počet panelů: {{ $data['panelCountTotal'] }} ks
+        Počet panelů: {{ $data['panelCountTotalAll'] }} ks
     </li>
     <li>
         ----------------------------------------------------------
@@ -165,6 +165,9 @@
     </li>
     <li>
         Počet položek: {{ $data['itemCount']  }} ks
+    </li>
+    <li>
+        Panelů celkem: {{ $data['panelCountTotalAll'] }} ks
     </li>
     <li>
         Sloupků celkem: {{ $data['totalPostCount'] }} ks, včetně 1 ks rohového

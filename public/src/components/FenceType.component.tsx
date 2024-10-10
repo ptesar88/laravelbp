@@ -113,19 +113,19 @@ const FenceType = (props: {
         <div>
           <div className="flex h-16 items-center ps-4 pe-4 mb-2 border border-gray-200 rounded">
             <input id="bordered-radio-1" type="radio" value="tvar-I" onChange={handleTypeChange} name="tvarplotu" className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300" />
-            <label htmlFor="bordered-radio-1" className="w-full py-4 ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Tvar I (jedna strana)</label>
+            <label htmlFor="bordered-radio-1" className="w-full py-4 ms-2 text-sm font-medium text-gray-900">Tvar I (jedna strana)</label>
           </div>
         </div>
         <div>
           <div className="flex h-16 items-center ps-4 pe-4 mb-2 border border-gray-200 rounded">
             <input id="bordered-radio-2" type="radio" value="tvar-L" onChange={handleTypeChange} name="tvarplotu" className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300" />
-            <label htmlFor="bordered-radio-2" className="w-full py-4 ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Tvar L (dvě strany)</label>
+            <label htmlFor="bordered-radio-2" className="w-full py-4 ms-2 text-sm font-medium text-gray-900">Tvar L (dvě strany)</label>
           </div>
         </div>
         <div>
           <div className="flex h-16 items-center ps-4 pe-4 mb-2 border border-gray-200 rounded">
             <input id="bordered-radio-2" type="radio" value="tvar-U" onChange={handleTypeChange} name="tvarplotu" className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300" />
-            <label htmlFor="bordered-radio-2" className="w-full py-4 ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Tvar U (tři strany)</label>
+            <label htmlFor="bordered-radio-2" className="w-full py-4 ms-2 text-sm font-medium text-gray-900">Tvar U (tři strany)</label>
           </div>
         </div>
       </div>

@@ -56,7 +56,11 @@ const FenceI = (props: {
     }, [fenceHeightR, fenceWidthR]);
     //zmena vysky 1.strana
     const handleHeightChange = (e) => {
-        const height = e.target.value;
+        if(parseInt(e.target.value) > parseInt(e.target.max)) {
+            e.target.value = e.target.max;
+            window.alert("Maximální výška plotu je 3m");
+        }
+        const height = +e.target.value;
         setFenceHeightOper(height);
     };
 
@@ -73,7 +77,7 @@ const FenceI = (props: {
     };
     //zmena sirky 1.strana
     const handleWidthChange = (e) => {
-        const width = e.target.value;
+        const width = +e.target.value;
         setFenceWidthOper(width);
     };
 
@@ -90,13 +94,12 @@ const FenceI = (props: {
         const meter = 100; // 1m = 100cm
         let totalPrice = 0;
         let itemCount = 0;
-        let panelCountTotal = 0;
+        let panelCountTotalAll = 0;
         let totalPostCount = 0;
         let postCountPA = 0;
 
         if (fenceHeight > 0 && fenceWidth > 0) {
             let widthPanelCount;
-            let panelCountTotalAll;
             let postCountTotalAll;
             let priceUpPro = 0;
 
@@ -117,13 +120,12 @@ const FenceI = (props: {
 
             widthPanelCount = fenceWidth / widthPanelM; // pocet panelu na sirku 1.strana
 
-            const postCount = (fenceWidth / (widthPanelM) + 1); // pocet sloupku 1.strana
+            const postCount = Math.ceil((fenceWidth / (widthPanelM) + 1)).toFixed(0); // pocet sloupku 1.strana
             const postCountK = 2; // pocet sloupku K 1.strana + 2.strana
-            panelCountTotal = widthPanelCount * (fenceHeight / heightPanelM); // pocet panelu celkem 1.strana
+            panelCountTotalAll = +Math.ceil(Number(widthPanelCount) * (Number(fenceHeight) / Number(heightPanelM))).toFixed(1); // pocet panelu celkem 1.strana
 
-            panelCountTotalAll = panelCountTotal; // pocet panelu celkem
             postCountTotalAll = postCount;            
-            const postCountP = Math.ceil(postCount - 2); // pocet sloupku P 1.strana
+            const postCountP = Math.ceil(Number(postCount) - 2); // pocet sloupku P 1.strana
 
             
 
@@ -136,7 +138,7 @@ const FenceI = (props: {
                 )}
             );
             
-            if (postCount >= 2) {
+            if (Number(postCount) >= 2) {
                 postTypeProduktsP.map(postTypeProduktP => {
                     return (
                         postPriceP = postTypeProduktP.price
@@ -150,14 +152,15 @@ const FenceI = (props: {
             const postPriceTotalK = 2 * postPriceK;
             const postPriceTotalP = Math.ceil(postCountP * postPriceP);
 
-            let pricePanel = Math.ceil(panelCountTotalAll * priceValue); 
+            let pricePanel = Math.ceil(Number(panelCountTotalAll) * priceValue); 
             let tempCalc = Math.ceil(pricePanel + postPriceTotalP + postPriceTotalK);
             let panelPriceAndPostWithColor = Math.ceil(tempCalc * priceUpPro);  // cena panelu s barvou
             let panelPriceColorHandle = barvaRes ? panelPriceAndPostWithColor : tempCalc; // cena panelu s barvou nebo bez barvy
-            let labelPrice = Math.ceil(panelCountTotalAll * priceLabel); // cena za otisk
+            let labelPrice = Math.ceil(Number(panelCountTotalAll) * priceLabel); // cena za otisk
             let labelPriceHandle = props.otisk ? labelPrice : 0; // cena za otisk nebo bez otisku
 
             console.log(
+                panelCountTotalAll,
                 labelPriceHandle,
                 tempCalc,
                 "Cena za barvu v %", priceUpPro,
@@ -171,17 +174,17 @@ const FenceI = (props: {
             );
 
             totalPrice = +((+panelPriceColorHandle) + (+labelPriceHandle)).toFixed(0);
-            itemCount = panelCountTotalAll + postCountTotalAll;
+            itemCount = Number(panelCountTotalAll) + Number(postCountTotalAll);
             totalPostCount = postCountTotalAll;
             postCountPA = postCountP;
             
        
         }
 
-        return { panelCountTotal, panelCountTotalAll, totalPrice, itemCount, totalPostCount, postCountPA };
+        return { panelCountTotalAll, totalPrice, itemCount, totalPostCount, postCountPA };
     };
 
-    const { panelCountTotal, panelCountTotalAll, totalPrice, itemCount, totalPostCount, postCountPA  } = calculatePrice();
+    const { panelCountTotalAll, totalPrice, itemCount, totalPostCount, postCountPA  } = calculatePrice();
     // jedna strana
     return <div>
 
@@ -193,8 +196,8 @@ const FenceI = (props: {
             <div>
                 <label htmlFor="lengthInput" className="block mb-2 text-sm font-medium text-gray-900">Zadejte délku strany (v m):</label>
                 <div className="relative flex items-center max-w-[11rem]">
-                    <button type="button" onClick={widthChangeMinus} id="decrement-button" data-input-counter-decrement="lengthInput" className="bg-gray-100 dark:bg-gray-700 dark:hover:bg-gray-600 dark:border-gray-600 hover:bg-gray-200 border border-gray-300 rounded-s-lg p-3 h-11 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none">
-                        <svg className="w-3 h-3 text-gray-900 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 2">
+                    <button type="button" onClick={widthChangeMinus} id="decrement-button" data-input-counter-decrement="lengthInput" className="bg-gray-100 hover:bg-gray-200 border border-gray-300 rounded-s-lg p-3 h-11 focus:ring-gray-100 focus:ring-2 focus:outline-none">
+                        <svg className="w-3 h-3 text-gray-900" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 2">
                             <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M1 1h16" />
                         </svg>
                     </button>
@@ -202,11 +205,12 @@ const FenceI = (props: {
                         type="number"
                         id="lengthInput"
                         value={fenceWidth}
-                        max={100}
+                        min={0}
+                        step={0.25}
+                        max={150}
                         onChange={handleWidthChange}
-                        className="bg-gray-50 border-x-0 border-gray-300 h-11 font-medium text-center text-gray-900 text-sm focus:ring-blue-500 focus:border-blue-500 block w-full pb-6 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                        className="bg-gray-50 border-x-0 border-gray-300 h-11 font-medium text-center text-gray-900 text-sm focus:ring-blue-500 focus:border-blue-500 block w-full pb-6"
                         required 
-                        readOnly
                         />
                     <div className="absolute bottom-1 start-1/2 -translate-x-1/2 rtl:translate-x-1/2 flex items-center text-xs text-gray-400 space-x-1 rtl:space-x-reverse">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-3 h-3">
@@ -214,8 +218,8 @@ const FenceI = (props: {
                         </svg>
                         <span>délka plotu</span>
                     </div>
-                    <button type="button" onClick={widthChangePlus} id="increment-button" data-input-counter-increment="lengthInput" className="bg-gray-100 dark:bg-gray-700 dark:hover:bg-gray-600 dark:border-gray-600 hover:bg-gray-200 border border-gray-300 rounded-e-lg p-3 h-11 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none">
-                        <svg className="w-3 h-3 text-gray-900 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
+                    <button type="button" onClick={widthChangePlus} id="increment-button" data-input-counter-increment="lengthInput" className="bg-gray-100 hover:bg-gray-200 border border-gray-300 rounded-e-lg p-3 h-11 focus:ring-gray-100 focus:ring-2 focus:outline-none">
+                        <svg className="w-3 h-3 text-gray-900" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
                             <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 1v16M1 9h16" />
                         </svg>
                     </button>
@@ -224,10 +228,10 @@ const FenceI = (props: {
             </div>
 
             <div>
-                <label htmlFor="quantity-input" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Zadejte výšku strany (v m):</label>
+                <label htmlFor="quantity-input" className="block mb-2 text-sm font-medium text-gray-900">Zadejte výšku strany (v m):</label>
                 <div className="relative flex items-center max-w-[11rem]">
-                    <button type="button" onClick={heightChangeMinus} id="decrement-button" data-input-counter-decrement="quantity-input" className="bg-gray-100 dark:bg-gray-700 dark:hover:bg-gray-600 dark:border-gray-600 hover:bg-gray-200 border border-gray-300 rounded-s-lg p-3 h-11 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none">
-                        <svg className="w-3 h-3 text-gray-900 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 2">
+                    <button type="button" onClick={heightChangeMinus} id="decrement-button" data-input-counter-decrement="quantity-input" className="bg-gray-100 hover:bg-gray-200 border border-gray-300 rounded-s-lg p-3 h-11 focus:ring-gray-100 focus:ring-2 focus:outline-none">
+                        <svg className="w-3 h-3 text-gray-900" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 2">
                             <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M1 1h16" />
                         </svg>
                     </button>
@@ -235,11 +239,13 @@ const FenceI = (props: {
                         type="number"
                         id="quantity-input"
                         value={fenceHeight}
+                        min={0}
+                        step={0.25}
                         max={3}
                         onChange={handleHeightChange}
-                        className="bg-gray-50 border-x-0 border-gray-300 h-11 font-medium text-center text-gray-900 text-sm focus:ring-blue-500 focus:border-blue-500 block w-full pb-6 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                        className="bg-gray-50 border-x-0 border-gray-300 h-11 font-medium text-center text-gray-900 text-sm focus:ring-blue-500 focus:border-blue-500 block w-full pb-6"
                         required
-                        readOnly
+                
                         />
                     <div className="absolute bottom-1 start-1/2 -translate-x-1/2 rtl:translate-x-1/2 flex items-center text-xs text-gray-400 space-x-1 rtl:space-x-reverse">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-3 h-3">
@@ -247,8 +253,8 @@ const FenceI = (props: {
                         </svg>
                         <span>výška plotu</span>
                     </div>
-                    <button type="button" onClick={heightChangePlus}  id="increment-button" data-input-counter-increment="quantity-input" className="bg-gray-100 dark:bg-gray-700 dark:hover:bg-gray-600 dark:border-gray-600 hover:bg-gray-200 border border-gray-300 rounded-e-lg p-3 h-11 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none">
-                        <svg className="w-3 h-3 text-gray-900 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
+                    <button type="button" onClick={heightChangePlus}  id="increment-button" data-input-counter-increment="quantity-input" className="bg-gray-100 hover:bg-gray-200 border border-gray-300 rounded-e-lg p-3 h-11 focus:ring-gray-100 focus:ring-2 focus:outline-none">
+                        <svg className="w-3 h-3 text-gray-900" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
                             <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 1v16M1 9h16" />
                         </svg>
                     </button>
@@ -258,10 +264,10 @@ const FenceI = (props: {
 
             {totalPrice > 0 && (
                 <div>
-                    <ul className="max-w-md space-y-1 text-gray-500 list-none list-inside dark:text-gray-400">
+                    <ul className="max-w-md space-y-1 text-gray-500 list-none list-inside">
 
                         <li>
-                            <span className="text-sm font-medium text-gray-900">Panelů celkem:  {panelCountTotal} ks </span>
+                            <span className="text-sm font-medium text-gray-900">Panelů celkem:  {panelCountTotalAll} ks </span>
                             <input type="hidden" id="panelCountTotal" name="panelCountTotal" value={panelCountTotalAll} />
                         </li>
                         <li>
@@ -289,11 +295,11 @@ const FenceI = (props: {
             )}
             {totalPrice > 0 && (
                 <div>
-                    <ul className="max-w-md space-y-1 text-gray-500 list-none list-inside dark:text-gray-400">
+                    <ul className="max-w-md space-y-1 text-gray-500 list-none list-inside">
                         <li>
                             <span className="text-sm font-medium text-gray-900">*Orientační cena celkem:  {totalPrice} Kč </span>
                             <input type="hidden" id="totalPrice" name="totalPrice" value={totalPrice} />
-                            <input type="hidden" id="panelCountTotal" name="panelCountTotalAll" value={panelCountTotalAll} />                         </li>
+                            <input type="hidden" id="panelCountTotalAll" name="panelCountTotalAll" value={panelCountTotalAll} />                         </li>
 
                         <li>
                             <span className="text-sm font-medium text-gray-900">Položek celkem: {itemCount} ks </span>
@@ -307,7 +313,7 @@ const FenceI = (props: {
 
                     </ul>
                     <div>
-                    <span className="text-xs text-gray-500 dark:text-gray-400">*Poznámka: Orientační cena celkem bude upravena podle místa realizace zakázky a bude přičtena cena za montáž a dopravu.</span>
+                    <span className="text-xs text-gray-500">*Poznámka: Orientační cena celkem bude upravena podle místa realizace zakázky a bude přičtena cena za montáž a dopravu.</span>
                 </div>
                 </div>
 

@@ -56,6 +56,46 @@ Route::post('/api/demands', function () {
 });
 
 // list
+Route::any('/api/product_types', function () {
+    header("Access-Control-Expose-Headers: Content-Range");
+    header("Content-Range: " . ProductType::count());
+
+    return ProductType::all();
+});
+
+// get
+Route::get('/api/product_types/{id}', function ($id) {
+    return ProductType::find($id);
+});
+
+// delete
+Route::delete('/api/product_types/{id}', function ($id) {
+    return ProductType::find($id)->delete();
+});
+
+// update
+Route::post('/api/product_types/{id}', function ($id) {
+    $request = request();
+
+    $product_type = ProductType::find($id);
+    $product_type->update($request->all());
+    $product_type->save();
+
+    return ProductType::find($id);
+});
+
+// create
+Route::post('/api/product_types', function () {
+    $request = request();
+    
+    $product_type = ProductType::create($request->all());
+    $product_type->save();
+
+    return $product_type;
+});
+
+
+// list
 Route::any('/api/category_types', function () {
     header("Access-Control-Expose-Headers: Content-Range");
     header("Content-Range: " . CategoryType::count());
@@ -331,7 +371,7 @@ Route::post('/api/assemblies/{id}', function ($id) {
 });
 
 Route::get('/', function () {
-    $products = Product::where('top', 'Ano')->take(6)->get();
+    $products = Product::where('top', 'Ano')->take(6)->orderBy('id', 'desc')->get();
     $advantages = Advantage::all();
     return view('index', compact('products'), compact('advantages'));
 })->name("index");

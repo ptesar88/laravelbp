@@ -13,7 +13,7 @@
             <div class="py-2 px-2 mx-auto max-w-6xl">
               <div class="mx-auto max-w-screen-sm text-center lg:mb-8 mb-8">
                 <h2 class="mb-4 text-3xl lg:text-4xl tracking-tight font-extrabold text-pink-950">Široký výběr designu a barev</h2>
-                <p class="font-normal text-gray-600 sm:text-xl dark:text-gray-400">Nabízíme Vám více jak 30 druhu plotů různého dekoru či barvy, jednotlivé bloky lze mezi sebou libovolně kombinovat, finální počet kombinací, tak nelze plně určit, vše je pouze na vaší fantazii.</p>
+                <p class="font-normal text-gray-600 sm:text-xl">Nabízíme Vám více jak 30 druhu plotů různého dekoru či barvy, jednotlivé bloky lze mezi sebou libovolně kombinovat, finální počet kombinací, tak nelze plně určit, vše je pouze na vaší fantazii.</p>
               </div>
             </div>
         </div>
@@ -23,7 +23,7 @@
 @section('page-specifications')
 
 <section class="free-post">
-  <h1 class="mx-auto items-center text-center text-2xl mb-2 max-w-6xl md:mb-8 font-extrabold dark:text-white">Kontakt</h1>
+  <h1 class="mx-auto items-center text-center text-2xl mb-2 max-w-6xl md:mb-8 font-extrabold">Kontakt</h1>
   <div class="mx-auto grid p-2 max-w-6xl md:mb-8 md:grid-cols-3 md:gap-3">
     <div>
       <figure class="flex flex-col h-32 rounded-md shadow-md p-2 m-2 bg-gray-50 border border-gray-300">
