@@ -220,7 +220,7 @@ const FenceU = (props: {
             let priceUpPro = 0;
 
             if (barvaRes == true) {
-                priceUpPro = 1.35;
+                priceUpPro = 1.45;
             } else {
                 priceUpPro = 1;
             }

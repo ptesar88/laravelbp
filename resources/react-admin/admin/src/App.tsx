@@ -15,10 +15,7 @@ import {
     Edit,
     SelectInput,
     List,
-    SimpleList,
     Datagrid,
-    useGetList,
-    useGetOne,
     ReferenceInput,
     Pagination,
     RichTextField,
@@ -26,7 +23,14 @@ import {
 import { dataProvider } from "./dataProvider";
 import { authProvider } from "./authProvider";
 import { RichTextInput, RichTextInputToolbar } from "ra-input-rich-text";
-import { useWatch } from 'react-hook-form';
+import czechMessages from 'ra-language-czech';
+import polyglotI18nProvider from 'ra-i18n-polyglot';
+
+const messages: { [key: string]: any } = {
+    'cs': czechMessages,
+};
+
+const i18nProvider = polyglotI18nProvider((locale) => messages[locale]);
 
 const DemandCreate = () => (
     <Create>
@@ -105,6 +109,16 @@ const ProductTypeInput = () => (
         />
     </ReferenceInput>
 );
+
+const ProductTypeCreate = () => (
+    <Create>
+        <SimpleForm>
+        <TextInput disabled source="id" />
+        <TextInput source="name" validate={[required()]} fullWidth />
+        </SimpleForm>
+    </Create>
+);
+
 
 const ProductEdit = () => (
     <Edit>
@@ -248,10 +262,10 @@ const DemandList = (props: any) => (
 );
 
 export const App = () => (
-    <Admin dataProvider={dataProvider} authProvider={authProvider}>
+    <Admin dataProvider={dataProvider} authProvider={authProvider} i18nProvider={i18nProvider}>
         <Resource name="demands" list={DemandList} show={DemandShow} create={DemandCreate} />
         <Resource name="products" list={ProductList} show={ProductShow} edit={ProductEdit} create={ProductCreate} />
-        <Resource name="product_types" list={ListGuesser} show={ListGuesser} edit={ListGuesser} />
+        <Resource name="product_types" list={ListGuesser} show={ListGuesser} edit={ListGuesser} create={ProductTypeCreate} />
         <Resource name="advantages" list={ListGuesser} show={AdvantageShow} edit={AdvantageEdit} create={AdvantageCreate} />
         <Resource name="specifications" list={ListGuesser} show={SpecificationShow} edit={SpecificationEdit} />
         <Resource name="assemblies" list={ListGuesser} show={AssemblyShow} edit={AssemblyEdit} />
