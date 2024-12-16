@@ -528,6 +528,10 @@ Route::get('kontakt', function () {
     return view('kontakt');
 })->name("kontakt");
 
+Route::get('obchodni-podminky', function () {
+    return view('obchodni-podminky');
+})->name("obchodni-podminky");
+
 Route::get('uvod', function () {
     $products = Product::where('top', 'Ano')->take(6)->orderBy('id','desc')->get();
     $advantages = Advantage::all();

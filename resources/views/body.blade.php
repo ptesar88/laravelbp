@@ -86,8 +86,7 @@
     </li>
 </ul>
 </p>
-@endif
-@if ($data['tvarplotu'] == 'tvar-L')
+@elseif ($data['tvarplotu'] == 'tvar-L')
 <p>
     <h3>Detaily plotu:</h3>
 <ul style="list-style-type: square">
@@ -177,8 +176,7 @@
     </li>
 </ul>
 </p>
-@endif
-@if ($data['tvarplotu'] == 'tvar-U')
+@elseif ($data['tvarplotu'] == 'tvar-U')
 <p>
     <h3>Detaily plotu:</h3>
 <ul style="list-style-type: square">
@@ -286,7 +284,7 @@
     </li>
 </ul>
 </p>
-
+@endif
 
 <b>Orientační cena celkem bude upravena podle místa realizace zakázky a bude přičtena cena za montáž a dopravu.</b>
 <b>Uvedené ceny jsou bez DPH.</b>

@@ -8,7 +8,7 @@
             <div class="py-2 px-2 mx-auto max-w-6xl">
               <div class="mx-auto max-w-screen-sm text-center lg:mb-8 mb-8">
                 <h2 class="mb-4 text-3xl lg:text-4xl tracking-tight font-extrabold text-pink-950">Široký výběr designu a barev</h2>
-                <p class="font-normal text-gray-600 sm:text-xl">Nabízíme Vám více jak 30 druhu plotů různého dekoru či barvy, jednotlivé bloky lze mezi sebou libovolně kombinovat, finální počet kombinací, tak nelze plně určit, vše je pouze na vaší fantazii.</p>
+                <p class="font-normal text-gray-600 sm:text-xl dark:text-gray-400">Nabízíme Vám více jak 30 druhu plotů různého dekoru či barvy, jednotlivé bloky lze mezi sebou libovolně kombinovat, finální počet kombinací, tak nelze plně určit, vše je pouze na vaší fantazii.</p>
               </div>
             </div>
         </div>
@@ -18,14 +18,14 @@
 @section('page-all-products')
 
     <section class="free-post">
-      <h2 class="mx-auto items-center text-center text-2xl mb-8 font-extrabold">Betonové ploty PREMIUM</h2>
+      <h2 class="mx-auto items-center text-center text-2xl mb-8 font-extrabold dark:text-white">Betonové ploty PREMIUM</h2>
       <div class="mx-auto items-center grid mb-2 max-w-6xl md:mb-8 md:grid-cols-3 md:gap-3">
       @foreach($products_plot_premium as $prod)
                   <div key={{ $prod->id }}>
                     <figure class="flex h-52 flex-col rounded-md shadow-md bg-gray-50 border border-gray-300">
                      
                       <div class="h-6">
-                      <h3 class="text-lg font-semibold items-center justify-center text-center text-gray-900">{{ $prod->name }}
+                      <h3 class="text-lg font-semibold items-center justify-center text-center text-gray-900 dark:text-white">{{ $prod->name }}
                        
                       </h3>
                       </div>
@@ -37,14 +37,14 @@
                       </div>
                       <div class="h-16 text-right bg-gray-200 right-0">
                       @if ($prod->top == 'Ano')
-                        <span class="inline-flex items-center bg-blue-100 text-blue-800 text-xs font-medium px-2.5 py-0.5 rounded-full">
+                        <span class="items-center bg-blue-100 text-blue-800 text-xs font-medium px-2.5 py-0.5 rounded-full">
                           <span class="w-2 h-2 me-1 bg-blue-500 rounded-full"></span>
                           TOP
                         </span>
                       @endif
                       
                       @if ($prod->label == 'Ano')
-                        <span class="inline-flex items-center bg-green-100 text-green-800 text-xs font-medium px-2.5 py-0.5 rounded-full">
+                        <span class="items-center bg-green-100 text-green-800 text-xs font-medium px-2.5 py-0.5 rounded-full dark:bg-green-900 dark:text-green-300">
                           <span class="w-2 h-2 me-1 bg-green-500 rounded-full"></span>
                           OTISK
                         </span>
@@ -60,14 +60,14 @@
     </section>
 
     <section class="free-post">
-      <h2 class="mx-auto items-center text-center text-2xl mb-8 font-extrabold">Betonové ploty KLASIK</h2>
+      <h2 class="mx-auto items-center text-center text-2xl mb-8 font-extrabold dark:text-white">Betonové ploty KLASIK</h2>
       <div class="mx-auto items-center grid mb-2 max-w-6xl md:mb-8 md:grid-cols-3 md:gap-3">
       @foreach($products_plot_klasik as $prod)
                   <div key={{ $prod->id }}>
                     <figure class="flex h-52 flex-col rounded-md shadow-md bg-gray-50 border border-gray-300">
                      
                       <div class="h-6">
-                      <h3 class="text-lg font-semibold items-center justify-center text-center text-gray-900">{{ $prod->name }}
+                      <h3 class="text-lg font-semibold items-center justify-center text-center text-gray-900 dark:text-white">{{ $prod->name }}
                        
                       </h3>
                       </div>
@@ -79,14 +79,14 @@
                       </div>
                       <div class="h-16 text-right bg-gray-200 right-0">
                       @if ($prod->top == 'Ano')
-                        <span class="inline-flex items-center bg-blue-100 text-blue-800 text-xs font-medium px-2.5 py-0.5 rounded-full">
+                        <span class="items-center bg-blue-100 text-blue-800 text-xs font-medium px-2.5 py-0.5 rounded-full">
                           <span class="w-2 h-2 me-1 bg-blue-500 rounded-full"></span>
                           TOP
                         </span>
                       @endif
                       
                       @if ($prod->label == 'Ano')
-                        <span class="inline-flex items-center bg-green-100 text-green-800 text-xs font-medium px-2.5 py-0.5 rounded-full">
+                        <span class="items-center bg-green-100 text-green-800 text-xs font-medium px-2.5 py-0.5 rounded-full dark:bg-green-900 dark:text-green-300">
                           <span class="w-2 h-2 me-1 bg-green-500 rounded-full"></span>
                           OTISK
                         </span>
@@ -102,12 +102,12 @@
     </section>
 
     <section class="free-post">
-      <h2 class="mx-auto items-center text-center text-2xl mb-8 font-extrabold">Betonové sloupky</h2>
+      <h2 class="mx-auto items-center text-center text-2xl mb-8 font-extrabold dark:text-white">Betonové sloupky</h2>
       <div class="mx-auto items-center max-w-6xl md:mb-8">
 
 <div class="relative overflow-x-auto">
-  <table class="w-full text-sm text-left rtl:text-right text-gray-500">
-      <thead class="text-xs text-gray-700 uppercase bg-gray-50">
+  <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+      <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
        <tr>
           <th scope="col" colspan="7" class="text-center px-6 py-3 text-lg font-extrabold">
             HLADKÉ
@@ -150,7 +150,7 @@
 
         @foreach($products_sloupek_hladke as $vyska => $skupiny)
           <div>
-            <tr class="bg-white border-b">
+            <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
               <th class="px-6 py-4">
                 {{ $vyska }}
               </th>
@@ -172,8 +172,8 @@
 </div>
 
 <div class="relative overflow-x-auto mt-8">
-  <table class="w-full text-sm text-left rtl:text-right text-gray-500">
-      <thead class="text-xs text-gray-700 uppercase bg-gray-50">
+  <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+      <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
         <tr>
           <th scope="col" colspan="5" class="text-center px-6 py-3 text-lg font-extrabold">
             CIHLIČKA
@@ -211,7 +211,7 @@
         
         @foreach($products_sloupek_cihlicka as $vyska => $skupiny)
           <div>
-            <tr class="bg-white border-b">
+            <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
               <th class="px-6 py-4">
                 {{ $vyska }}
               </th>
@@ -231,8 +231,8 @@
   </table>
 </div>
 <div class="relative overflow-x-auto mt-8">
-  <table class="w-full text-sm text-left rtl:text-right text-gray-500">
-      <thead class="text-xs text-gray-700 uppercase bg-gray-50">
+  <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+      <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
         <tr>
           <th scope="col" colspan="5" class="text-center px-6 py-3 text-lg font-extrabold">
             ŠTÍPANÝ KÁMEN
@@ -270,7 +270,7 @@
 
         @foreach($products_sloupek_stip_kamen as $vyska => $skupiny)
           <div>
-            <tr class="bg-white border-b">
+            <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
               <th class="px-6 py-4">
                 {{ $vyska }}
               </th>
@@ -292,14 +292,14 @@
         </div>
     </section>
     <section class="free-post">
-      <h2 class="mx-auto items-center text-center text-2xl mb-8 font-extrabold">Otisky na ploty KLASIK</h2>
+      <h2 class="mx-auto items-center text-center text-2xl mb-8 font-extrabold dark:text-white">Otisky na ploty KLASIK</h2>
       <div class="mx-auto items-center grid mb-2 max-w-6xl md:mb-8 md:grid-cols-3 md:gap-3">
       @foreach($products_otisk as $otisk)
                   <div key={{ $otisk->id }}>
                     <figure class="flex h-52 flex-col rounded-md shadow-md bg-gray-50 border border-gray-300">
                      
                       <div class="h-6">
-                      <h3 class="text-lg font-semibold items-center justify-center text-center text-gray-900">{{ $otisk->name }}
+                      <h3 class="text-lg font-semibold items-center justify-center text-center text-gray-900 dark:text-white">{{ $otisk->name }}
                        
                       </h3>
                       </div>
@@ -319,7 +319,7 @@
                         @endif
                         
                         @if ($otisk->label == 'Ano')
-                          <span class="inline-flex items-center bg-green-100 text-green-800 text-xs font-medium px-2.5 py-0.5 rounded-full">
+                          <span class="inline-flex items-center bg-green-100 text-green-800 text-xs font-medium px-2.5 py-0.5 rounded-full dark:bg-green-900 dark:text-green-300">
                             <span class="w-2 h-2 me-1 bg-green-500 rounded-full"></span>
                             OTISK
                           </span>

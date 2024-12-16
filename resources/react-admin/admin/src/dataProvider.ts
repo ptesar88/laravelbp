@@ -48,8 +48,29 @@ type DemandParams = {
     company: string;
     phone: string;
     email: string;
+    localisation: string;
+    doprava: string;
+    montaz: string;
     body: string;
 };
+const updateDemandsFormData = (
+    params: UpdateParams<DemandParams>
+) => {
+    const formData = new FormData();
+
+    params.data.firstname && formData.append("firstname", params.data.firstname);
+    params.data.lastname && formData.append("lastname", params.data.lastname);
+    params.data.company && formData.append("company", params.data.company);
+    params.data.phone && formData.append("phone", params.data.phone);
+    params.data.email && formData.append("email", params.data.email);
+    params.data.localisation && formData.append("localisation", params.data.localisation);
+    params.data.doprava && formData.append("doprava", params.data.doprava);
+    params.data.montaz && formData.append("montaz", params.data.montaz);
+    params.data.body && formData.append("body", params.data.body);
+
+    return formData;
+};
+
 
 const createDemandFormData = (
     params: CreateParams<DemandParams>
@@ -206,6 +227,14 @@ export const dataProvider: DataProvider = {
                 .then(({ json }) => ({ data: json }));
         }else if (resource === "assemblies") {  
             const formData = updateAssemblyFormData(params);
+            return fetchUtils
+                .fetchJson(`${endpoint}/${resource}/${params.id}`, {
+                    method: "POST",
+                    body: formData,
+                })
+                .then(({ json }) => ({ data: json }));
+        }else if (resource === "demand") {
+            const formData = updateDemandsFormData(params);
             return fetchUtils
                 .fetchJson(`${endpoint}/${resource}/${params.id}`, {
                     method: "POST",

@@ -8,9 +8,9 @@
           <div class="max-w-6xl mx-auto mt-8 mb-8">
             <div class="py-2 px-2 mx-auto max-w-6xl">
               <div class="mx-auto max-w-screen-sm text-center lg:mb-8 mb-8">
-                <h1 class="hidden mx-auto items-center text-center text-2xl mb-8 font-extrabold">Betonové ploty Jaroslav Cipra</h1>
+                <h1 class="hidden mx-auto items-center text-center text-2xl mb-8 font-extrabold dark:text-white">Betonové ploty Jaroslav Cipra</h1>
                 <h2 class="mb-4 text-3xl lg:text-4xl tracking-tight font-extrabold text-pink-950">Široký výběr designu a barev</h2>
-                <p class="font-normal text-gray-600 sm:text-xl">Nabízíme Vám více jak 30 druhu plotů různého dekoru či barvy, jednotlivé bloky lze mezi sebou libovolně kombinovat, finální počet kombinací, tak nelze plně určit, vše je pouze na vaší fantazii.</p>
+                <p class="font-normal text-gray-600 sm:text-xl dark:text-gray-400">Nabízíme Vám více jak 30 druhu plotů různého dekoru či barvy, jednotlivé bloky lze mezi sebou libovolně kombinovat, finální počet kombinací, tak nelze plně určit, vše je pouze na vaší fantazii.</p>
               </div>
             </div>
         </div>
@@ -20,14 +20,14 @@
 @section('page-main-products')
 
 <section class="free-post">
-  <h2 class="mx-auto items-center text-center text-2xl mb-8 font-extrabold">Nejprodávanější</h2>
+  <h2 class="mx-auto items-center text-center text-2xl mb-8 font-extrabold dark:text-white">Nejprodávanější</h2>
   <div class="mx-auto items-center grid mb-2 max-w-6xl md:mb-8 md:grid-cols-3 md:gap-3">
   @foreach($products as $prod)
               <div key={{ $prod->id }}>
                 <figure class="flex h-52 flex-col rounded-md shadow-md bg-gray-50 border border-gray-300">
                  
                   <div class="h-6">
-                  <h3 class="text-lg font-semibold items-center justify-center text-center text-gray-900">{{ $prod->name }}
+                  <h3 class="text-lg font-semibold items-center justify-center text-center text-gray-900 dark:text-white">{{ $prod->name }}
                    
                   </h3>
                   </div>
@@ -39,14 +39,14 @@
                   </div>
                   <div class="h-16 text-right bg-gray-200 right-0">
                   @if ($prod->top == 'Ano')
-                    <span class="inline-flex items-center bg-blue-100 text-blue-800 text-xs font-medium px-2.5 py-0.5 rounded-full">
+                    <span class="items-center bg-blue-100 text-blue-800 text-xs font-medium px-2.5 py-0.5 rounded-full">
                       <span class="w-2 h-2 me-1 bg-blue-500 rounded-full"></span>
                       TOP
                     </span>
                   @endif
                   
                   @if ($prod->label == 'Ano')
-                    <span class="inline-flex items-center bg-green-100 text-green-800 text-xs font-medium px-2.5 py-0.5 rounded-full">
+                    <span class="items-center bg-green-100 text-green-800 text-xs font-medium px-2.5 py-0.5 rounded-full dark:bg-green-900 dark:text-green-300">
                       <span class="w-2 h-2 me-1 bg-green-500 rounded-full"></span>
                       OTISK
                     </span>
@@ -72,7 +72,7 @@
 @section('page-owner')
     <section class="free-post">
         <figure class="max-w-6xl mx-auto text-center py-8">
-            <svg class="w-6 h-6 mx-auto text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 18 14">
+            <svg class="w-6 h-6 mx-auto mb-3 text-gray-400 dark:text-gray-600" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 18 14">
               <path d="M6 0H2a2 2 0 0 0-2 2v4a2 2 0 0 0 2 2h4v1a3 3 0 0 1-3 3H2a1 1 0 0 0 0 2h1a5.006 5.006 0 0 0 5-5V2a2 2 0 0 0-2-2Zm10 0h-4a2 2 0 0 0-2 2v4a2 2 0 0 0 2 2h4v1a3 3 0 0 1-3 3h-1a1 1 0 0 0 0 2h1a5.006 5.006 0 0 0 5-5V2a2 2 0 0 0-2-2Z" />
             </svg>
             <blockquote>
@@ -80,10 +80,10 @@
                 "Oslovte nás Vaši poptávkou, budete mile překvapeni naší nabídkou!"</p>
             </blockquote>
             <figcaption class="flex items-center justify-center mt-6 mb-6 space-x-3 rtl:space-x-reverse">
-              <img class="w-6 h-6 rounded-full" src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/avatars/michael-gouch.png" alt="profile picture" />
-              <div class="flex items-center divide-x-2 rtl:divide-x-reverse divide-gray-500">
-                <cite class="pe-3 font-medium text-gray-900">Jaroslav Cipra</cite>
-                <cite class="ps-3 text-sm text-gray-500">Jednatel</cite>
+              <img class="w-6 h-6 rounded-full" src="avatar1.JPG" alt="profile picture" />
+              <div class="flex items-center divide-x-2 rtl:divide-x-reverse divide-gray-500 dark:divide-gray-700">
+                <cite class="pe-3 font-medium text-gray-900 dark:text-white">Jaroslav Cipra</cite>
+                <cite class="ps-3 text-sm text-gray-500 dark:text-gray-400">Jednatel</cite>
               </div>
             </figcaption>
           </figure>
@@ -91,6 +91,57 @@
 @endsection
 
 @section('page-gallery')
+<section class="free-post">
+  <div class="max-w-6xl mx-auto mb-3 grid grid-cols-1 md:grid-cols-3 gap-4">
+    <div class="h-72">
+        <h2 class="text-2xl items-center text-center font-bold text-pink-950 mt-2">Betonové záhony</h2>
+        <h3 class="text-xl items-center text-center font-light text-pink-950 mt-2">- krása, která vydrží věčnost -</h3>
+        <div class="h-2"></div>
+        <div class="text-sm text-gray-900 p-2 font-normal justify-between">Naše betonové záhony v sobě spojují moderní design s výjimečnou odolností. <br>Zkrášlete svou zahradu prvky, které vydrží i nejnáročnější podmínky.
+          <br><div class="text-base text-gray-900 font-bold items-center text-center p-4">praktické estetické dlouhotrvající</div>Záhony z betonu jsou ideální volbou pro každého, kdo hledá spojení kvality a moderního vzhledu.
+        </div>
+    </div>
+    <div class="md:m-0 m-2">
+        <img class="h-72 w-full rounded-lg" src="4.jpeg" alt="">
+    </div>
+    <div class="md:m-0 m-2">
+      <img class="h-72 w-full rounded-lg" src="5.jpeg" alt="">
+  </div>
+
+  
+    
+  </div>
+  </section>
+
+@endsection
+
+@section('page-benefits')
+    <section class="free-post">
+            <div class="mx-auto max-w-6xl">
+  
+              <div class="grid gap-3 lg:grid-cols-2">
+                @foreach($advantages as $adv)
+                 <article class="md:p-6 p-2 bg-white rounded-lg md:m-0 m-2 border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700" key={keyF.id}>
+                  <div class="flex justify-between items-center mb-5 text-gray-500">
+                    <span class="bg-primary-100 text-primary-800 text-sm font-medium inline-flex items-center px-2.5 py-0.5 rounded dark:bg-primary-200 dark:text-primary-800">
+                      {!! $adv->icon !!}
+                      &nbsp;
+                        {{ strtoupper($adv->title) }}
+                    </span>
+                    <span class="text-sm text-blue-700 shadow font-semibold">{{ strtoupper($adv->motto) }}</span>
+                  </div>
+                  <h2 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{{ $adv->name }}</h2>
+                  <p class="mb-5 font-normal text-pink-950">{!! $adv->body !!}</p>
+                  <div class="flex justify-between items-center">
+                  </div>
+                </article>
+                @endforeach
+                </div>
+            </div>
+    </section>
+@endsection
+
+@section('page-gallery-1')
     <section class="free-post">
 <div class="max-w-6xl mx-auto text-center mb-8  grid grid-cols-1 md:grid-cols-3 gap-4">
   <div class="md:m-0 m-2">
@@ -106,32 +157,6 @@
   
 </div>
 </section>
-@endsection
-
-@section('page-benefits')
-    <section class="free-post">
-            <div class="mx-auto max-w-6xl">
-  
-              <div class="grid gap-3 lg:grid-cols-2">
-                @foreach($advantages as $adv)
-                 <article class="md:p-6 p-2 bg-white rounded-lg md:m-0 m-2 border border-gray-200 shadow-md" key={keyF.id}>
-                  <div class="flex justify-between items-center mb-5 text-gray-500">
-                    <span class="bg-primary-100 text-primary-800 text-sm font-medium inline-flex items-center px-2.5 py-0.5 rounded">
-                      {!! $adv->icon !!}
-                      &nbsp;
-                        {{ strtoupper($adv->title) }}
-                    </span>
-                    <span class="text-sm text-blue-700 shadow font-semibold">{{ strtoupper($adv->motto) }}</span>
-                  </div>
-                  <h2 class="mb-2 text-2xl font-bold tracking-tight text-gray-900">{{ $adv->name }}</h2>
-                  <p class="mb-5 font-normal text-pink-950">{!! $adv->body !!}</p>
-                  <div class="flex justify-between items-center">
-                  </div>
-                </article>
-                @endforeach
-                </div>
-            </div>
-    </section>
 @endsection
 
 

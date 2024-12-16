@@ -77,6 +77,9 @@
                   <li>
                     <a href="{{ route("kontakt") }}" class="block py-2 px-3 text-white md:p-0" aria-current="page">KONTAKT</a>
                   </li>
+                  <li>
+                    <a href="{{ route("obchodni-podminky") }}" class="block py-2 px-3 text-white md:p-0" aria-current="page">OBCHODNÍ PODMÍNKY</a>
+                  </li>
                 </ul>
               </div>
               <div class="md:hidden flex items-center">
@@ -102,6 +105,7 @@
                 <a href="{{ route("specifikace") }}" class="block py-2 px-3 text-white md:p-0" aria-current="page">SPECIFIKACE</a>
                 <a href="{{ route("montaz") }}" class="block py-2 px-3 text-white md:p-0" aria-current="page">MONTÁŽ</a>
                 <a href="{{ route("kontakt") }}" class="block py-2 px-3 text-white md:p-0" aria-current="page">KONTAKT</a>
+                <a href="{{ route("obchodni-podminky") }}" class="block py-2 px-3 text-white md:p-0" aria-current="page">OBCHODNÍ PODMÍNKY</a>
             </div>
             </div>
             
@@ -114,9 +118,11 @@
        @yield('page-main-products')
        @yield('page-owner')
        @yield('page-gallery')
+       @yield('page-gallery-1')
        @yield('page-benefits')
        @yield('page-all-products')
        @yield('page-specifications')
+       @yield('obchodni-podminky')
     </main>
     <footer class="">
         <div class="relative z-10 mx-auto mt-8 w-full bg-gray-100 mb-0">

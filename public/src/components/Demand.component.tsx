@@ -1,3 +1,4 @@
+
 function Demand() {
     const initState = {
         company: '',
@@ -17,6 +18,8 @@ function Demand() {
     const [state, setState] = React.useState(initState);
     
     const [zobrazitPodminky, setZobrazitPodminky] = React.useState(false);
+
+    const [zobrazitObchodniPodminky, setZobrazitObchodniPodminky] = React.useState(false);
 
     const saveDemand = async (e: any) => {
 
@@ -65,7 +68,7 @@ function Demand() {
         <div>
             {zobrazitPodminky && (
 
-                <div id="default-modal" className="overflow-y-auto overflow-x-hidden fixed top-0 mx-auto z-50 bg-gray-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
+                <div id="default-modal" className="overflow-y-auto overflow-x-hidden fixed top-0 mx-auto z-50 bg-gray-50 justify-center items-center max-w-7xl md:inset-0 h-[calc(100%-1rem)] max-h-full">
                     <div className="relative w-4/5">
 
                         <div className="relative bg-white">
@@ -86,6 +89,30 @@ function Demand() {
                 </div>
 
             )}
+
+{zobrazitObchodniPodminky && (
+
+<div id="default-modal" className="overflow-y-auto overflow-x-hidden top-6 fixed p-4 mx-auto z-50 bg-gray-50 justify-center items-center max-w-6xl md:inset-0 h-[calc(100%-1rem)]">
+    <div className="relative max-w-6xl">
+
+        <div className="relative bg-white">
+
+            <div className="flex items-center p-4 md:p-5 border-t border-gray-200">
+                <button type="button" onClick={() => setZobrazitObchodniPodminky(false)} className="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 text-sm w-8 h-8 ms-auto justify-center items-center" data-modal-hide="default-modal">
+                    <svg className="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+                        <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
+                    </svg>
+                    <span className="sr-only">Close modal</span>
+                </button>
+            </div>
+            <TradeConditions />
+            <div className="flex items-center p-4 md:p-5 border-t border-gray-200">
+                <button type="button" data-modal-target="default-modal" data-modal-toggle="default-modal" className="text-blue-600 hover:underline" onClick={() => setZobrazitObchodniPodminky(false)}>Zavřít</button></div>
+            </div>
+        </div>
+</div>
+
+)}
 
             <div className="relative z-20 mx-auto max-w-6xl items-center p-2 my-4 text-base text-amber-800 rounded-lg bg-amber-50 border border-amber-500" role="alert">
                 <span className="font-medium">Poptávka</span>
@@ -166,7 +193,8 @@ function Demand() {
             <fieldset>
                 <div className="flex items-center mb-4">
                     <input id="checkbox" type="checkbox" name="checkbox" className="w-4 h-4 mt-8 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 focus:ring-2" required />
-                    <label className="ms-2 text-sm font-medium text-gray-900"><button type="button" data-modal-target="default-modal" data-modal-toggle="default-modal" onClick={() => setZobrazitPodminky(true)} className="mt-8 text-blue-600 hover:underline">Souhlasím se zpracováním osobních údajů</button>.</label>
+                        <label className="ms-2 text-sm font-medium text-gray-900">Souhlasím se <button type="button" data-modal-target="default-modal" data-modal-toggle="default-modal" onClick={() => setZobrazitPodminky(true)} className="mt-8 text-blue-600 hover:underline">zpracováním osobních údajů</button> a</label>
+                        <label className="ms-2 text-sm font-medium text-gray-900"><button type="button" data-modal-target="default-modal" data-modal-toggle="default-modal" onClick={() => setZobrazitObchodniPodminky(true)} className="mt-8 text-blue-600 hover:underline">obchodními podmínkami</button>.</label>
                 </div>
             </fieldset>
 

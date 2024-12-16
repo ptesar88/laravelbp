@@ -104,7 +104,7 @@ const FenceI = (props: {
             let priceUpPro = 0;
 
             if (barvaRes == true) {
-                priceUpPro = 1.45;
+                priceUpPro = 1.45;/*ToDo: cena za barvu v %, get from DB */
             } else {
                 priceUpPro = 1;
             }    

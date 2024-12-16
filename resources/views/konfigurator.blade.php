@@ -50,6 +50,7 @@
     <script type="text/babel" src="{{ asset('src/components/FenceU.component.tsx') }}"></script>
     <script type="text/babel" src="{{ asset('src/components/Demand.component.tsx') }}"></script>
     <script type="text/babel" src="{{ asset('src/components/Conditions.component.tsx') }}"></script>
+    <script type="text/babel" src="{{ asset('src/components/TradeConditions.component.tsx') }}"></script>
     
     <script type="text/babel" src="{{ asset('fencecalc.js') }}"></script>
 @endsection
