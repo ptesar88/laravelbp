@@ -14,7 +14,7 @@
     "ra-data-simple-rest": "^4.16.0",
     "ra-input-rich-text": "^4.16.14",
     "ra-language-czech": "^3.19.8",
-    "react": "^18.2.0",
+    "react": "^18.3.1",
     "react-admin": "^4.16.0",
     "react-dom": "^18.2.0"
   },
@@ -25,11 +25,15 @@
     "@typescript-eslint/eslint-plugin": "^5.60.1",
     "@typescript-eslint/parser": "^5.60.1",
     "@vitejs/plugin-react": "^4.0.1",
+    "autoprefixer": "^10.4.20",
+    "daisyui": "^4.12.23",
     "eslint": "^8.43.0",
     "eslint-config-prettier": "^8.8.0",
     "eslint-plugin-react": "^7.32.2",
     "eslint-plugin-react-hooks": "^4.6.0",
+    "postcss": "^8.5.1",
     "prettier": "^2.8.8",
+    "tailwindcss": "^3.4.17",
     "typescript": "^5.1.6",
     "vite": "^4.3.9"
   }

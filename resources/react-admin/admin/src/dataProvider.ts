@@ -33,16 +33,16 @@ type AdvantageParams = {
     motto: string;
 };
 type SpecificationParams = {
-    id: number; // Add the 'id' property to satisfy the 'RaRecord<Identifier>' constraint
+    id: number; 
     body: string;
 };
 type AssemblyParams = {
-    id: number; // Add the 'id' property to satisfy the 'RaRecord<Identifier>' constraint
+    id: number; 
     body: string;
 };
 
 type DemandParams = {
-    id: number; // Add the 'id' property to satisfy the 'RaRecord<Identifier>' constraint
+    id: number; 
     firstname: string;
     lastname: string;
     company: string;
@@ -51,6 +51,7 @@ type DemandParams = {
     localisation: string;
     doprava: string;
     montaz: string;
+    totalPrice: string;
     body: string;
 };
 const updateDemandsFormData = (
@@ -66,6 +67,7 @@ const updateDemandsFormData = (
     params.data.localisation && formData.append("localisation", params.data.localisation);
     params.data.doprava && formData.append("doprava", params.data.doprava);
     params.data.montaz && formData.append("montaz", params.data.montaz);
+    params.data.totalPrice && formData.append("totalPrice", params.data.totalPrice);
     params.data.body && formData.append("body", params.data.body);
 
     return formData;
@@ -82,6 +84,10 @@ const createDemandFormData = (
     params.data.company && formData.append("company", params.data.company);
     params.data.phone && formData.append("phone", params.data.phone);
     params.data.email && formData.append("email", params.data.email);
+    params.data.localisation && formData.append("localisation", params.data.localisation);
+    params.data.doprava && formData.append("doprava", params.data.doprava);
+    params.data.montaz && formData.append("montaz", params.data.montaz);
+    params.data.totalPrice && formData.append("totalPrice", params.data.totalPrice);
     params.data.body && formData.append("body", params.data.body);
 
     return formData;
@@ -201,6 +207,8 @@ export const dataProvider: DataProvider = {
         return baseDataProvider.create(resource, params);
     },
     update: (resource: string, params: any) => {
+        console.log(resource, params);
+
         if (resource === "products") {
             const formData = updateProductsFormData(params);
             return fetchUtils

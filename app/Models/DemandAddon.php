@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class Demand extends Model
+class DemandAddon extends Model
 {
 
     const CREATED_AT = null;
@@ -19,16 +19,10 @@ class Demand extends Model
      * @var array<int, string>
      */
     protected $fillable = [
-        'firstname',
-        'lastname',
-        'email',
-        'phone',
-        'company',
-        'localisation',
-        'montazq',
-        'dopravaq',
-        'totalPrice',
-        'body', 
+        'name',
+        'price',
+        'unit',
+ 
     ];
 
     /**

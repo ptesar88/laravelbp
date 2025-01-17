@@ -26,10 +26,157 @@ import {
 import { dataProvider } from "./dataProvider";
 import { authProvider } from "./authProvider";
 import { RichTextInput, RichTextInputToolbar } from "ra-input-rich-text";
-import czechMessages from 'ra-language-czech';
 import polyglotI18nProvider from 'ra-i18n-polyglot';
 import { ReactNode } from "react";
-import AddOnDemand from "./addOnDemand";
+import { AddOnDemand } from "./addOnDemand";
+
+const czechMessages = {
+    ra: {
+        action: {
+            add: 'Přidat',
+            add_filter: 'Přidat filtr',
+            back: 'Jít zpět',
+            bulk_actions: '%{smart_count} vybráno',
+            cancel: 'Zrušit',
+            clear_input_value: 'Smazat hodnotu',
+            clone: 'Klonovat',
+            close: 'Zavřít',
+            close_menu: 'Zavřít menu',
+            confirm: 'Potvrdit',
+            create: 'Vytvořit',
+            create_item: "Vytvořit",
+            delete: 'Smazat',
+            edit: 'Upravit',
+            expand: 'Rozbalit',
+            export: 'Exportovat',
+            list: 'Listovat',
+            move_down: "Dolů",
+            move_up: "Nahoru",
+            open_menu: 'Otevřít menu',
+            refresh: 'Obnovit',
+            remove: 'Odstranit',
+            remove_filter: 'Odstranit filtr',
+            save: 'Uložit',
+            search: 'Hledat',
+            select_all: "Vybrat vše",
+            select_row: "Vybrat řádek",
+            show: 'Zobrazit',
+            sort: 'Seřadit',
+            undo: 'Vrátit',
+            unselect: 'Zrušit výběr',
+            update: "Aktualizovat",
+            clear_array_input: 'Opravdu chcete smazat všechny položky?',
+        },
+        auth: {
+            auth_check_error: "Pro pokračování se prosím přihlaste",
+            logout: 'Odhlásit se',
+            password: 'Heslo',
+            sign_in: 'Přihlásit se',
+            sign_in_error: 'Ověření selhalo, zkuste to znovu',
+            user_menu: "Profil",
+            username: 'Uživatelské jméno',
+        },
+        boolean: {
+            false: 'Ne',
+            null: ' ',
+            true: 'Ano',
+        },
+        input: {
+            file: {
+                upload_several: 'Přetáhněte soubory pro nahrání nebo klikněte pro výběr',
+                upload_single: 'Přetáhněte soubor pro nahrání nebo klikněte pro jeho výběr',
+            },
+            image: {
+                upload_several: 'Přetáhněte obrázky pro nahrání nebo klikněte pro výběr',
+                upload_single: 'Přetáhněte obrázek pro nahrání nebo klikněte pro jeho výběr',
+            },
+            password: {
+                toggle_hidden: 'Zobrazit heslo',
+                toggle_visible: 'Skrýt heslo',
+            },
+            references: {
+                all_missing: 'Nelze nalézt referencovaná data',
+                many_missing: 'Minimálně jedna z referencí se nezdá býti nadále dostupná',
+                single_missing: 'Reference se nezdá býti nadále dostupná.',
+            },
+        },
+        message: {
+            about: 'O',
+            are_you_sure: 'Jste si jistý?',
+            bulk_delete_content: 'Jste si jistý, že chcete smazat %{name}? |||| Jste si jistý, že chcete smazat těchto %{smart_count} položek?',
+            bulk_delete_title: 'Smazat %{name} |||| Smazat %{smart_count} %{name} položek',
+            bulk_update_content: "Hromadně změnit obsah",
+            bulk_update_title: "Hromadně změnit titulek",
+            delete_content: 'Jste si jistý, že chcete smazat tuto položku?',
+            delete_title: 'Smazat %{name} #%{id}',
+            details: 'Podrobnosti',
+            error: 'Nastala chyba a váš požadavek nemohl být zpracován.',
+            invalid_form: 'Formulář není validní. Prosím zkontrolujte chyby.',
+            loading: 'Stránka se načítá, prosím strpení',
+            no: 'Ne',
+            not_found: 'Nic nebylo nalezeno.',
+            unsaved_changes: 'Některé změny nebyly uloženy. Chcete je ignorovat?',
+            yes: 'Ano',
+            clear_array_input: 'Opravdu chcete smazat všechny položky?',    
+        },
+        navigation: {
+            next: 'Další',
+            no_more_results: 'Stránka číslo %{page} je mimo rozsah. Zkuste předchozí.',
+            no_results: 'Žádné výsledky nenalezeny',
+            page_out_from_begin: 'Nelze se přepnout před stranu 1',
+            page_out_from_end: 'Nelze se přepnout za poslední stranou',
+            page_out_of_boundaries: 'Stránka číslo %{page} je mimo rozsah',
+            page_range_info: '%{offsetBegin}-%{offsetEnd} z %{total}',
+            page_rows_per_page: 'Záznamů na stránku: ',
+            prev: 'Předchozí',
+            skip_nav: 'Přeskočit na obsah',
+        },
+        notification: {
+            bad_item: 'Špatný prvek',
+            canceled: 'Akce zrušena',
+            created: 'Prvek vytvořen',
+            data_provider_error: 'dataProvider chyba. Pro více detailů zkontrolujte konzoli prohlížeče.',
+            deleted: 'Prvek smazán |||| %{smart_count} prvků smazáno',
+            http_error: 'Chyba komunikace serveru',
+            i18n_error: 'Nelze načíst překlady pro vybraný jazyk',
+            item_doesnt_exist: 'Prvek neexistuje',
+            logged_out: 'Relace ukončena',
+            not_authorized: 'Nemáte oprávnění k přístupu.',
+            updated: 'Prvek aktualizován |||| %{smart_count} prvků aktualizováno',
+        },
+        page: {
+            create: 'Vytvořit %{name}',
+            dashboard: 'Dashboard',
+            edit: '%{name} #%{id}',
+            empty: 'Zatím žádný %{name}',
+            error: 'Něco se pokazilo',
+            invite: 'Chcete přidat?',
+            list: '%{name}',
+            loading: 'Načítání',
+            not_found: 'Nenalezeno',
+            show: '%{name} #%{id}',
+        },
+        sort: {
+            ASC: "vzestupně",
+            DESC: "sestupně",
+            sort_by: "Seřadit podle %{field} %{order}",
+        },
+        validation: {
+            email: 'Musí být validní emailová adresa',
+            maxLength: 'Může obsahovat maximálně %{max} znaků',
+            maxValue: 'Múže být maximálně %{max}',
+            minLength: 'Musí obsahovat nejméně %{min} znaků',
+            minValue: 'Musí být minimálně %{min}',
+            number: 'Musí být číslo',
+            oneOf: 'Musí splňovat jedno z: %{options}',
+            regex: 'Musí být ve specifickém formátu (regexp): %{pattern}',
+            required: 'Povinné pole',
+        },
+        configurable: {
+            customize: 'Přizpůsobit',
+        },
+    }
+};
 
 const DemandCreate = () => (
     <Create>
@@ -55,7 +202,19 @@ const DemandShow = () => (
             <TextField source="localisation" label="Místo realizace" />
             <TextField source="doprava" label="Doprava" />
             <TextField source="montaz" label="Montáž" />
+            <TextField source="totalPrice" label="Cena" />
             <RichTextField source="body" fullWidth label="Obsah" />
+            <TextField source="id" label="ID" />
+        </SimpleShowLayout>
+    </Show>
+);
+
+const DemandAddonShow = () => (
+    <Show>
+        <SimpleShowLayout>
+            <TextField source="name" label="Název" />
+            <TextField source="unit" label="Jednotka" />
+            <TextField source="price" label="Cena" />
             <TextField source="id" label="ID" />
         </SimpleShowLayout>
     </Show>
@@ -133,6 +292,7 @@ const DemandEdit = () => (
             <TextInput source="localisation" fullWidth label="Místo realizace" />
             <TextInput source="doprava" fullWidth label="Doprava" />
             <TextInput source="montaz" fullWidth label="Montáž" />
+            <TextInput source="totalPrice" validate={[required()]} fullWidth label="Cena" />
             <RichTextInput source="body" toolbar={<RichTextInputToolbar size="large" />} fullWidth label="Obsah" />
             <AddOnDemand />
         </SimpleForm>
@@ -276,10 +436,26 @@ const DemandList = () => (
             <TextField source="company" label="Společnost" />
             <TextField source="phone" label="Telefon" />
             <TextField source="email" label="Email" />
+            <TextField source="localisation" label="Místo realizace" />
+            <TextField source="doprava" label="Doprava" />
+            <TextField source="montaz" label="Montáž" />
+            <TextField source="totalPrice" label="Cena" />
             <TextField source="body" label="Obsah" />
         </Datagrid>
     </List>
 );
+
+const DemandAddonList = () => (
+    <List>
+        <Datagrid rowClick="show">
+            <TextField source="id" label="Id" />
+            <TextField source="name" label="Název" />
+            <TextField source="price" label="Cena" />
+            <TextField source="unit" label="Jednotka"/>
+        </Datagrid>
+    </List>
+);
+
 interface MyLayoutProps {
     children: ReactNode;
 }
@@ -288,6 +464,7 @@ const MyMenu = () => (
     <Menu>
         <Menu.DashboardItem />
         <Menu.ResourceItem name="demands" />
+        <Menu.ResourceItem name="demand_addon" />
         <Menu.ResourceItem name="products"/>
         <Menu.ResourceItem name="product_types" />
         <Menu.ResourceItem name="types" />

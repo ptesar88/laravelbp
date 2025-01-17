@@ -9,12 +9,26 @@ use App\Models\Type;
 use App\Models\Category;
 use App\Models\CategoryType;
 use App\Models\Demand;
+use App\Models\DemandAddon;
 use App\Models\Color;
 use App\Http\Controllers\FormController;
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Route;
 
+
+// list
+Route::any('/api/demand_addons', function () {
+    header("Access-Control-Expose-Headers: Content-Range");
+    header("Content-Range: " . DemandAddon::count());
+
+    return DemandAddon::all();
+});
+
+// get
+Route::get('/api/demand_addons/{id}', function ($id) {
+    return DemandAddon::find($id);
+});
 
 // list
 Route::any('/api/demands', function () {
@@ -486,6 +500,7 @@ Route::post('/product/{id}', function ($id) {
         "notes" => $data["notes"],
         "montaz" => $data["montazq"],
         "doprava" => $data["dopravaq"],
+        "totalPrice" => $data["totalPrice"],
         "localisation" => $data["localisation"],
         "body" => $body,
     ]);

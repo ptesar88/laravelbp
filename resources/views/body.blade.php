@@ -43,9 +43,6 @@
         Cena/ks: {{ $produkt->price }} Kč
     </li>
     <li>
-        Otisk: {{ $data['otiskq'] }}
-    </li>
-    <li>
         Typ otisku: {{ $otisk == null  ? "Není vybrán" : $otisk->name}}
     </li>
     <li>
@@ -98,9 +95,6 @@
     </li>
     <li>
         Cena/ks: {{ $produkt->price }} Kč
-    </li>
-    <li>
-        Otisk: {{ $data['otiskq'] }}
     </li>
     <li>
         Typ otisku: {{ $otisk == null  ? "Není vybrán" : $otisk->name}}
@@ -188,9 +182,6 @@
     </li>
     <li>
         Cena/ks: {{ $produkt->price }} Kč
-    </li>
-    <li>
-        Otisk: {{ $data['otiskq'] }}
     </li>
     <li>
         Typ otisku: {{ $otisk == null  ? "Není vybrán" : $otisk->name}}
