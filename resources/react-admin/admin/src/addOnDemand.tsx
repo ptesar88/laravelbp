@@ -20,23 +20,22 @@ function DemandForm(props: { index: number }) {
     const { control } = useFormContext();
     const [unitPrice, setUnitPrice] = React.useState(0);
 
-    const watchName = useWatch({ control, name: `demand_addons_name[${props.index}]` }) || 0;
+    const watchName = useWatch({ control, name: `demand_addons_name[${props.index}]` }) || "";
     const watchCount = useWatch({ control, name: `demand_addons_count[${props.index}]` }) || 0;
     const watchPrice = useWatch({ control, name: `demand_addons_price[${props.index}]` }) || 0;
-    const totalPrice = Number(watchCount) * Number(unitPrice);
+    let totalPrice = 0;
+    if (watchName === "Montáž") {
+        totalPrice = (Number(watchCount) * Number(unitPrice)) - (Number(watchCount) * Number(unitPrice))*0.1;
+    }else{
+        totalPrice = Number(watchCount) * Number(unitPrice);
+    }
+
     if (totalPrice !== Number(watchPrice)) {
         setValue(`demand_addons_price[${props.index}]`, totalPrice);
     }
 
     let setVisibleOfDiscount = false;
     let formattedTotalPrice = totalPrice.toLocaleString();
-    if (watchName === "Montáž") {
-        setVisibleOfDiscount = true;
-        formattedTotalPrice = (watchPrice - Number(totalPrice * 0.1)).toLocaleString();
-    }else{
-        setVisibleOfDiscount = false;
-
-    }
 
 	return (
         <>
