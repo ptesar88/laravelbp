@@ -43,6 +43,9 @@
         Cena/ks: {{ $produkt->price }} Kč
     </li>
     <li>
+        Otisk: {{ $otisk == null  ? "NE" : $data['otisk'] }}
+    </li>
+    <li>
         Typ otisku: {{ $otisk == null  ? "Není vybrán" : $otisk->name}}
     </li>
     <li>
@@ -95,6 +98,9 @@
     </li>
     <li>
         Cena/ks: {{ $produkt->price }} Kč
+    </li>
+    <li>
+        Otisk: {{ $otisk == null  ? "NE" : $data['otisk'] }}
     </li>
     <li>
         Typ otisku: {{ $otisk == null  ? "Není vybrán" : $otisk->name}}
@@ -182,6 +188,9 @@
     </li>
     <li>
         Cena/ks: {{ $produkt->price }} Kč
+    </li>
+    <li>
+        Otisk: {{ $otisk == null  ? "NE" : $data['otisk'] }}
     </li>
     <li>
         Typ otisku: {{ $otisk == null  ? "Není vybrán" : $otisk->name}}
@@ -277,7 +286,7 @@
 </p>
 @endif
 
-<b>Orientační cena celkem bude upravena podle místa realizace zakázky a bude přičtena cena za montáž a dopravu.</b>
+<b>Orientační cena celkem bude upravena podle místa realizace zakázky a bude přičtena cena za montáž a dopravu. </b>
 <b>Uvedené ceny jsou bez DPH.</b>
 <br><br>
 S pozdravem<br>

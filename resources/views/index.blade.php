@@ -97,7 +97,7 @@
         <h2 class="text-2xl items-center text-center font-bold text-pink-950 mt-2">Betonové záhony</h2>
         <h3 class="text-xl items-center text-center font-light text-pink-950 mt-2">- krása, která vydrží věčnost -</h3>
         <div class="h-2"></div>
-        <div class="text-sm text-gray-900 p-2 font-normal justify-between">Naše betonové záhony v sobě spojují moderní design s výjimečnou odolností. <br>Zkrášlete svou zahradu prvky, které vydrží i nejnáročnější podmínky.
+        <div class="text-sm text-gray-900 p-2 font-normal justify-between">Betonové záhony v sobě spojují moderní design s výjimečnou odolností. <br>Zkrášlete svou zahradu prvky, které vydrží i nejnáročnější podmínky.
           <br><div class="text-base text-gray-900 font-bold items-center text-center p-4">praktické estetické dlouhotrvající</div>Záhony z betonu jsou ideální volbou pro každého, kdo hledá spojení kvality a moderního vzhledu.
         </div>
     </div>
@@ -111,6 +111,11 @@
   
     
   </div>
+  <div class="mx-auto max-w-6xl">
+    <div class="mx-auto max-w-6xl items-center my-8">
+      <button onclick="window.location='{{ url("kompletni-nabidka-zahonu") }}'" class="text-center items-center mx-auto text-sm font-semibold p-4 shadow-md rounded-md text-white bg-pink-950 border border-pink-950">Kompletní nabídka záhonů</button>
+    </div>
+  </div> 
   </section>
 
 @endsection

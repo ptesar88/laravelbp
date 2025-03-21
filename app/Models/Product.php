@@ -9,6 +9,8 @@ class Product extends Model
     CONST PRODUCT_PREMIUM = 1;
     CONST PRODUCT_KLASIK = 2;
 
+    CONST PRODUCT_BED = 1;
+
     const CREATED_AT = null;
     const UPDATED_AT = null;
 
@@ -30,6 +32,8 @@ class Product extends Model
         'category',
         'top',
         'category_type',
+        'category_bed',
+        'color_bed',
     ];
 
     /**
@@ -92,5 +96,25 @@ class Product extends Model
     {
         return $this->type->name;
     }
+    public function CategoryBed()
+    {
+        return $this->belongsTo(CategoryBed::class, 'category_bed', 'id');
+    }
+    public function getCategoryBedNameAttribute()
+    {
+        return $this->type->name;
+        
+    }
+    public function ColorBed()
+    {
+        return $this->belongsTo(ColorBed::class, 'color_bed', 'id');
+    }
+    public function getColorBedNameAttribute()
+    {
+        return $this->type->name;
+    }
+
+    
+   
 
 }

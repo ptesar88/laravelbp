@@ -41,6 +41,11 @@ class ProductType extends Model
      *
      * @return array|null
      */
+
+     public static function getNameById($id) {
+        $productType = ProductType::find($id);
+        return $productType ? $productType->name : "-";
+     }
    
 }
 

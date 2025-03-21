@@ -7,8 +7,5 @@
   <div style="top: -12px" class="relative z-20 mx-auto max-w-6xl items-center p-2 text-sm sm:text-sm md:text-md lg:text-base xl:text-base shadow text-green-800 bg-green-50 border border-green-200" role="alert">
     <span class="font-medium">Sleva 10% na montáž!</span> <span class="text-sm sm:text-sm md:text-md lg:text-base xl:text-base">Při objednávce betonových plotů včetně montáže.</span>
   </div>
-  <div style="top: 0px" class="relative z-20 mx-auto max-w-6xl items-center p-2 text-sm sm:text-sm md:text-md lg:text-base xl:text-base shadow text-blue-800 bg-blue-50 border border-blue-200" role="alert">
-    <span class="font-medium">Zavřeno</span> <span class="text-sm sm:text-sm md:text-md lg:text-base xl:text-base">23.12.2024 - 3.1.2025</span>
-  </div>
 </section>  
 @endsection

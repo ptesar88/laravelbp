@@ -23,6 +23,7 @@ type ProductParams = {
     category: string;
     category_type: string;
     product_type: string;
+    category_desk: string;
 };
 type AdvantageParams = {
     id: number; // Add the 'id' property to satisfy the 'RaRecord<Identifier>' constraint
@@ -41,6 +42,13 @@ type AssemblyParams = {
     body: string;
 };
 
+type demandAddOnParams = {
+    id: number; 
+    name: string;
+    unit: string;
+    price: string;
+};
+
 type DemandParams = {
     id: number; 
     firstname: string;
@@ -53,22 +61,64 @@ type DemandParams = {
     montaz: string;
     totalPrice: string;
     body: string;
+    demand_addons_id: Array<string>;
+    demand_addons_name: Array<string>;
+    demand_addons_unit: Array<string>;
+    demand_addons_count: Array<string>;
+    demand_addons_price: Array<string>;
 };
+
+const updateDemandsAddOnFormData = (
+    params: UpdateParams<demandAddOnParams>
+) => {
+    const formData = new FormData();
+
+    params.data.name && formData.append("name", params.data.name);
+    params.data.unit && formData.append("unit", params.data.unit);
+    params.data.price && formData.append("price", params.data.price);
+
+    return formData;
+};
+
+const createDemandAddOnFormData = (
+    params: CreateParams<demandAddOnParams>
+) => {
+    const formData = new FormData();
+
+    params.data.name && formData.append("name", params.data.name);
+    params.data.unit && formData.append("unit", params.data.unit);
+    params.data.price && formData.append("price", params.data.price);
+
+    return formData;
+};
+
 const updateDemandsFormData = (
     params: UpdateParams<DemandParams>
 ) => {
     const formData = new FormData();
 
-    params.data.firstname && formData.append("firstname", params.data.firstname);
-    params.data.lastname && formData.append("lastname", params.data.lastname);
-    params.data.company && formData.append("company", params.data.company);
-    params.data.phone && formData.append("phone", params.data.phone);
-    params.data.email && formData.append("email", params.data.email);
-    params.data.localisation && formData.append("localisation", params.data.localisation);
-    params.data.doprava && formData.append("doprava", params.data.doprava);
-    params.data.montaz && formData.append("montaz", params.data.montaz);
-    params.data.totalPrice && formData.append("totalPrice", params.data.totalPrice);
-    params.data.body && formData.append("body", params.data.body);
+    if (params.data.firstname)  formData.append("firstname", params.data.firstname);
+    if (params.data.lastname)  formData.append("lastname", params.data.lastname);
+    if (params.data.company)  formData.append("company", params.data.company);
+    if (params.data.phone)  formData.append("phone", params.data.phone);
+    if (params.data.email)  formData.append("email", params.data.email);
+    if (params.data.localisation)  formData.append("localisation", params.data.localisation);
+    if (params.data.doprava)  formData.append("doprava", params.data.doprava);
+    if (params.data.montaz)  formData.append("montaz", params.data.montaz);
+    if (params.data.totalPrice)  formData.append("totalPrice", params.data.totalPrice);
+    if (params.data.body)  formData.append("body", params.data.body);
+    
+    const addons = [];
+    for (let i = 0; i < (params.data.demand_addons_price ?? []).length; i++) {
+        const addon = {
+            price: params.data.demand_addons_price?.[i],
+            name: params.data.demand_addons_name?.[i],
+            unit: params.data.demand_addons_unit?.[i],
+            count: params.data.demand_addons_count?.[i],
+        };
+        addons.push(addon);
+    }
+    formData.append("demand_addons", JSON.stringify(addons)); 
 
     return formData;
 };
@@ -194,8 +244,24 @@ export const dataProvider: DataProvider = {
                     body: formData,
                 })
                 .then(({ json }) => ({ data: json }));
-        }else if (resource === "demand") {  
+        }else if (resource === "demands") {  
             const formData = createDemandFormData(params);
+            return fetchUtils
+                .fetchJson(`${endpoint}/${resource}`, {
+                    method: "POST",
+                    body: formData,
+                })
+                .then(({ json }) => ({ data: json }));
+        }else if (resource === "demand_addons") {
+            const formData = createDemandAddOnFormData(params);
+            return fetchUtils
+                .fetchJson(`${endpoint}/${resource}`, {
+                    method: "POST",
+                    body: formData,
+                })
+                .then(({ json }) => ({ data: json }));
+        }else if (resource === "product_desks") {
+            const formData = createProductsFormData(params);
             return fetchUtils
                 .fetchJson(`${endpoint}/${resource}`, {
                     method: "POST",
@@ -241,8 +307,24 @@ export const dataProvider: DataProvider = {
                     body: formData,
                 })
                 .then(({ json }) => ({ data: json }));
-        }else if (resource === "demand") {
+        }else if (resource === "demands") {
             const formData = updateDemandsFormData(params);
+            return fetchUtils
+                .fetchJson(`${endpoint}/${resource}/${params.id}`, {
+                    method: "POST",
+                    body: formData,
+                })
+                .then(({ json }) => ({ data: json }));
+        }else if (resource === "demand_addons") {
+            const formData = updateDemandsAddOnFormData(params);
+            return fetchUtils
+                .fetchJson(`${endpoint}/${resource}/${params.id}`, {
+                    method: "POST",
+                    body: formData,
+                })
+                .then(({ json }) => ({ data: json }));
+        }else if (resource === "product_desks") {
+            const formData = updateProductsFormData(params);
             return fetchUtils
                 .fetchJson(`${endpoint}/${resource}/${params.id}`, {
                     method: "POST",

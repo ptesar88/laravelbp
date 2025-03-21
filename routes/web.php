@@ -8,14 +8,25 @@ use App\Models\Assembly;
 use App\Models\Type;
 use App\Models\Category;
 use App\Models\CategoryType;
+use App\Models\CategoryBed;
 use App\Models\Demand;
 use App\Models\DemandAddon;
 use App\Models\Color;
+use App\Models\ColorBed;
 use App\Http\Controllers\FormController;
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Route;
+use Psy\Readline\Hoa\Console;
 
+//data Dashboard
+Route::any('/api/home_dashboard', function () {
+    header("Access-Control-Expose-Headers: Content-Range");
+    header("Content-Range: " . Demand::count());
+
+    return Demand::all();
+    
+});
 
 // list
 Route::any('/api/demand_addons', function () {
@@ -30,17 +41,85 @@ Route::get('/api/demand_addons/{id}', function ($id) {
     return DemandAddon::find($id);
 });
 
+// update
+Route::post('/api/demand_addons/{id}', function ($id) {
+    $request = request();
+
+    $demandaddon = DemandAddon::find($id);
+    $demandaddon->update($request->all());
+    $demandaddon->save();
+
+    return DemandAddon::find($id);
+});
+
+// create
+Route::post('/api/demand_addons', function () {
+    $request = request();
+    
+    $demandaddon = DemandAddon::create($request->all());
+    $demandaddon->save();
+
+    return $demandaddon;
+});
+
 // list
 Route::any('/api/demands', function () {
+    $request = request();
+
+    $range = $request->get('range');
+    $rangeItems = json_decode($range, true);
+    $range0 = $rangeItems[0];
+    $range1 = $rangeItems[1];
+
+    $sort = $request->get('sort');
+    $sortItems = json_decode($sort, true);
+    $sort0 = $sortItems[0];
+    $sort1 = $sortItems[1];
+    
     header("Access-Control-Expose-Headers: Content-Range");
     header("Content-Range: " . Demand::count());
 
-    return Demand::all();
+    $demands = Demand::where('customized', 0)->limit($range1 - $range0 + 1)->offset($range0)->orderBy($sort0, $sort1)->get();
+    return $demands;
+});
+
+Route::any('/api/demands_updated', function () {
+    $request = request();
+
+    $range = $request->get('range');
+    $rangeItems = json_decode($range, true);
+    $range0 = $rangeItems[0];
+    $range1 = $rangeItems[1];
+
+    $sort = $request->get('sort');
+    $sortItems = json_decode($sort, true);
+    $sort0 = $sortItems[0];
+    $sort1 = $sortItems[1];
+    
+    header("Access-Control-Expose-Headers: Content-Range");
+    header("Content-Range: " . Demand::count());
+
+    $demands = Demand::where('customized', 1)->limit($range1 - $range0 + 1)->offset($range0)->orderBy($sort0, $sort1)->get();
+    return $demands;
+});
+
+
+// get
+Route::get('/api/demands_updated/{id}', function ($id) {
+    $demand = Demand::find($id);
+    if ($demand) {
+        $demand->related_demands = Demand::where('original_demand_id', $id)->get();
+    }
+    return $demand;
 });
 
 // get
 Route::get('/api/demands/{id}', function ($id) {
-    return Demand::find($id);
+    $demand = Demand::find($id);
+    if ($demand) {
+        $demand->related_demands = Demand::where('original_demand_id', $id)->get();
+    }
+    return $demand;
 });
 
 // delete
@@ -52,11 +131,26 @@ Route::delete('/api/demands/{id}', function ($id) {
 Route::post('/api/demands/{id}', function ($id) {
     $request = request();
 
-    $demand = Demand::find($id);
-    $demand->update($request->all());
-    $demand->save();
+    $data = $request->all();
 
-    return Demand::find($id);
+    $addonsJson = $data["demand_addons"];
+    $addons = json_decode($addonsJson, true);
+    $totalAddonPrice = array_sum(array_column($addons, 'price'));
+
+    $addonsJson = $data["demand_addons"];
+    unset($data["demand_addons"]);
+    $data["demand_addons_body"] = $addonsJson;
+
+    unset($data["id"]);
+    $data["original_demand_id"] = $id;
+    $data["customized"] = 1;
+    $data["totalPrice"] = $totalAddonPrice + $data["totalPrice"];
+  
+    $addons = json_decode($addonsJson, true);
+
+    $demand = Demand::create($data);
+
+    return $demand;
 });
 
 // create
@@ -67,6 +161,37 @@ Route::post('/api/demands', function () {
     $demand->save();
 
     return $demand;
+});
+
+//list
+Route::any('/api/color_beds', function () {
+    header("Access-Control-Expose-Headers: Content-Range");
+    header("Content-Range: " . ColorBed::count());
+
+    return ColorBed::all();
+});
+
+//get
+Route::get('/api/color_beds/{id}', function ($id) {
+    return ColorBed::find($id);
+});
+
+//delete
+
+Route::delete('/api/color_beds/{id}', function ($id) {
+    return ColorBed::find($id)->delete();
+});
+
+//update
+
+Route::post('/api/color_beds/{id}', function ($id) {
+    $request = request();
+
+    $color_bed = ColorBed::find($id);
+    $color_bed->update($request->all());
+    $color_bed->save();
+
+    return ColorBed::find($id);
 });
 
 // list
@@ -108,6 +233,36 @@ Route::post('/api/product_types', function () {
     return $product_type;
 });
 
+// list
+Route::any('/api/category_beds', function () {
+    header("Access-Control-Expose-Headers: Content-Range");
+    header("Content-Range: " . CategoryBed::count());
+
+    return CategoryBed::all();
+});
+
+// get
+Route::get('/api/category_beds/{id}', function ($id) {
+    return CategoryBed::find($id);
+});
+
+// delete
+
+Route::delete('/api/category_beds/{id}', function ($id) {
+    return CategoryBed::find($id)->delete();
+});
+
+// update
+
+Route::post('/api/category_beds/{id}', function ($id) {
+    $request = request();
+
+    $bed_type = CategoryBed::find($id);
+    $bed_type->update($request->all());
+    $bed_type->save();
+
+    return CategoryBed::find($id);
+});
 
 // list
 Route::any('/api/category_types', function () {
@@ -235,11 +390,23 @@ Route::post('/api/types', function () {
 
 Route::any('/api/products', function () {
 
+    $request = request();
+
+    $range = $request->get('range');
+    $rangeItems = json_decode($range, true);
+    $range0 = $rangeItems[0];
+    $range1 = $rangeItems[1];
+
+    $sort = $request->get('sort');
+    $sortItems = json_decode($sort, true);
+    $sort0 = $sortItems[0];
+    $sort1 = $sortItems[1];
     
     header("Access-Control-Expose-Headers: Content-Range");
     header("Content-Range: " . Product::count());
 
-    return Product::with('Type', 'Category', 'CategoryType')->orderBy('id', 'desc')->get();
+    $products = Product::with('Type', 'Category', 'CategoryType', 'CategoryBed', 'ColorBed')->limit($range1 - $range0 + 1)->offset($range0)->orderBy($sort0, $sort1)->get();
+    return $products;
 
 });
 
@@ -385,10 +552,93 @@ Route::post('/api/assemblies/{id}', function ($id) {
 });
 
 Route::get('/', function () {
-    $products = Product::where('top', 'Ano')->take(6)->orderBy('id','desc')->get();
+    $products = Product::where('top', 'Ano')->where('type', 1)->take(6)->orderBy('id','desc')->get();
     $advantages = Advantage::all();
     return view('index', compact('products'), compact('advantages'));
 })->name("index");
+
+Route::get('kompletni-nabidka-zahonu', function () {
+    $products_zahon = Product::where('type', Type::TYPE_ZAHON)
+        ->join('category_beds', 'products.category_bed', '=', 'category_beds.id') 
+        ->select('products.*', 'category_beds.name as category_bed') 
+        ->groupBy('category_bed', 'height', 'width') 
+        ->orderBy('price', 'ASC')
+        ->get();
+
+    return view('zahony', compact('products_zahon'));
+})->name("kompletni-nabidka-zahonu");
+
+Route::get('/product-bed/{id}', function ($id) {
+    $showDivField = false;
+    $products_detail = Product::find($id);
+    $products_types = Product::where('product_type', ProductType::TYPE_PREMIUM)->get();
+    $products_sloupek_premium = Category::where('type', 1)->get();// 1 = premium vyresit dynamicky Todo Petr
+    $products_sloupek_klasik = Category::where('type', 2)->get();// 2 = klasik vyresit dynamicky Todo Petr
+    $products_sloupek = Category::all();
+    $products_otisk = Product::where('type', Type::TYPE_OTISK)->get();
+    $products_sloupek_type_selected = Product::where('category', Type::TYPE_SLOUPEK)->get();
+    $products = Product::all();
+    $colors = ColorBed::all();
+    $prod = Product::where('id', $id)->first();
+    $category_bed = CategoryBed::where('id', $prod->category_bed)->first();
+    $beds = Product::where('height', $prod->height)
+        ->where('width', $prod->width)
+        ->where('depth', $prod->depth)
+        ->where('category_bed', $prod->category_bed)
+        ->join('color_beds', 'products.color_bed', '=', 'color_beds.id')
+        ->select('products.*', 'color_beds.name as color_name')
+        ->get();
+    return view('konfiguratorZahon', compact('id', 'products_detail', 'products_types', 'products_sloupek_premium', 'products_sloupek_klasik', 'products_sloupek', 'products_otisk', 'products_sloupek_type_selected','showDivField', 'products', 'colors', 'beds', 'category_bed'));
+})->name("product-bed");
+
+Route::post('/product-bed/{id}', function ($id) {
+    $request = request();
+    $data = $request->all();
+    //var_dump($data);
+
+    $otisk = array_key_exists('otisk_id', $data) ? Product::find($data["otisk_id"]) : null;
+    $barva = array_key_exists('barva_id', $data) ? Color::find($data["barva_id"]) : null;
+    $sloupek = array_key_exists('sloupek_id', $data) ? Category::find($data["sloupek_id"]) : null;
+    $produkt = Product::find($id);
+  
+    $body = view('bodyBed', [
+        "data" => $data,
+        "sloupek" => $sloupek,
+        "produkt" => $produkt,
+        "otisk" => $otisk,
+        "barva" => $barva,
+    ])->render();
+
+    $demand = Demand::create([
+        "firstname" => $data["firstname"],
+        "lastname" => $data["lastname"],
+        "email" => $data["email"],
+        "phone" => $data["phone"],
+        "company" => $data["company"],
+        "notes" => $data["notes"],
+        "doprava" => $data["doprava"],
+        "totalPrice" => $data["totalPrice"],
+        "localisation" => $data["localisation"],
+        "customized" => 0,
+        "body" => $body,
+    ]);
+
+    if ($demand['company'] == null) {
+        $demand['company'] = "";
+    }else{
+        $demand['company'] = " / ".$demand['company'];
+    }
+
+    Mail::send([], [], function ($message) use ($demand) {
+        $message
+            ->to('info@pcservispt.cz')
+            ->cc($demand['email'])
+            ->subject('Nová poptávka - '.$demand['firstname'].' '.$demand['lastname'].' '.$demand['company'] )
+            ->html($demand->body);
+    });
+
+    return redirect()->route("dekujeme");
+})->name("product-bed.save");
 
 Route::get('kompletni-nabidka-plotu', function () {
     $products_plot_klasik = Product::where('type', Type::TYPE_PLOT)->where('product_type', ProductType::TYPE_KLASIK)->get();
@@ -479,8 +729,7 @@ Route::post('/product/{id}', function ($id) {
 
     $otisk = array_key_exists('otisk_id', $data) ? Product::find($data["otisk_id"]) : null;
     $barva = array_key_exists('barva_id', $data) ? Color::find($data["barva_id"]) : null;
-
-    $sloupek = Category::find($data["sloupek_id"]);
+    $sloupek = array_key_exists('sloupek_id', $data) ? Category::find($data["sloupek_id"]) : null;
     $produkt = Product::find($id);
   
     $body = view('body', [
@@ -502,6 +751,7 @@ Route::post('/product/{id}', function ($id) {
         "doprava" => $data["dopravaq"],
         "totalPrice" => $data["totalPrice"],
         "localisation" => $data["localisation"],
+        "customized" => 0,
         "body" => $body,
     ]);
 
@@ -521,6 +771,195 @@ Route::post('/product/{id}', function ($id) {
 
     return redirect()->route("dekujeme");
 })->name("product.save");
+
+//list
+Route::any('/api/product_desks', function () {
+    $request = request();
+
+    $range = $request->get('range');
+    $rangeItems = json_decode($range, true);
+    $range0 = $rangeItems[0];
+    $range1 = $rangeItems[1];
+
+    $sort = $request->get('sort');
+    $sortItems = json_decode($sort, true);
+    $sort0 = $sortItems[0];
+    $sort1 = $sortItems[1];
+    
+    header("Access-Control-Expose-Headers: Content-Range");
+    header("Content-Range: " . Product::where('type', 4)->count());
+
+    $product = Product::with('Type', 'Category', 'CategoryType', 'CategoryBed', 'ColorBed')->where('type', 4)->limit($range1 - $range0 + 1)->offset($range0)->orderBy($sort0, $sort1)->get();
+    return $product;
+});
+//get
+Route::get('/api/product_desks/{id}', function ($id) {
+    return Product::find($id);
+});
+//delete
+Route::delete('/api/product_desks/{id}', function ($id) {
+    return Product::find($id)->delete();
+});
+//update
+Route::post('/api/product_desks/{id}', function ($id) {
+    $request = request();
+
+    $product = Product::find($id);
+    foreach($request->all() as $key => $value) {
+        if ($value) {
+            $product->$key = $value;
+        }
+    }
+    $product->save();
+
+    if ($request->file('thumbnail')) {
+        $request->file('thumbnail')->move(public_path('attachments'), $product->thumbnail);
+    }
+
+    $product = Product::find($id);
+
+    return $product;
+});
+
+//list
+Route::any('/api/product_panels', function () {
+    $request = request();
+
+    $range = $request->get('range');
+    $rangeItems = json_decode($range, true);
+    $range0 = $rangeItems[0];
+    $range1 = $rangeItems[1];
+
+    $sort = $request->get('sort');
+    $sortItems = json_decode($sort, true);
+    $sort0 = $sortItems[0];
+    $sort1 = $sortItems[1];
+    
+    header("Access-Control-Expose-Headers: Content-Range");
+    header("Content-Range: " . Product::where('type', 1)->count());
+
+    $product = Product::with('Type', 'Category', 'CategoryType', 'CategoryBed', 'ColorBed')->where('type', 1)->limit($range1 - $range0 + 1)->offset($range0)->orderBy($sort0, $sort1)->get();
+    return $product;
+});
+
+//get
+Route::get('/api/product_panels/{id}', function ($id) {
+    return Product::find($id);
+});
+
+//delete
+Route::delete('/api/product_panels/{id}', function ($id) {
+    return Product::find($id)->delete();
+});
+
+//update
+
+Route::post('/api/product_panels/{id}', function ($id) {
+    $request = request();
+
+    $product = Product::find($id);
+    foreach($request->all() as $key => $value) {
+        if ($value) {
+            $product->$key = $value;
+        }
+    }
+    $product->save();
+
+    if ($request->file('thumbnail')) {
+        $request->file('thumbnail')->move(public_path('attachments'), $product->thumbnail);
+    }
+
+    $product = Product::find($id);
+
+    return $product;
+});
+
+//create
+Route::post('/api/product_panels', function () {
+    $request = request();
+    
+    $product = Product::create($request->all());
+    $product->thumbnail = null;
+    
+    if ($request->file('thumbnail')) {
+        $product->thumbnail = $product->id . '-thumbnail.jpg';
+        $request->file('thumbnail')->move(public_path('attachments'), $product->thumbnail);
+    }
+
+    $product->save();
+
+    return $product;
+});
+
+//list
+Route::any('/api/product_columns', function () {
+    $request = request();
+
+    $range = $request->get('range');
+    $rangeItems = json_decode($range, true);
+    $range0 = $rangeItems[0];
+    $range1 = $rangeItems[1];
+
+    $sort = $request->get('sort');
+    $sortItems = json_decode($sort, true);
+    $sort0 = $sortItems[0];
+    $sort1 = $sortItems[1];
+    
+    header("Access-Control-Expose-Headers: Content-Range");
+    header("Content-Range: " . Product::where('type', 2)->count());
+
+    $product = Product::with('Type', 'Category', 'CategoryType', 'CategoryBed', 'ColorBed')->where('type', 2)->limit($range1 - $range0 + 1)->offset($range0)->orderBy($sort0, $sort1)->get();
+    return $product;
+});
+
+//get
+Route::get('/api/product_columns/{id}', function ($id) {
+    return Product::find($id);
+});
+
+//delete
+Route::delete('/api/product_columns/{id}', function ($id) {
+    return Product::find($id)->delete();
+});
+
+//update
+Route::post('/api/product_columns/{id}', function ($id) {
+    $request = request();
+
+    $product = Product::find($id);
+    foreach($request->all() as $key => $value) {
+        if ($value) {
+            $product->$key = $value;
+        }
+    }
+    $product->save();
+
+    if ($request->file('thumbnail')) {
+        $request->file('thumbnail')->move(public_path('attachments'), $product->thumbnail);
+    }
+
+    $product = Product::find($id);
+
+    return $product;
+});
+
+//create
+Route::post('/api/product_columns', function () {
+    $request = request();
+    
+    $product = Product::create($request->all());
+    $product->thumbnail = null;
+    
+    if ($request->file('thumbnail')) {
+        $product->thumbnail = $product->id . '-thumbnail.jpg';
+        $request->file('thumbnail')->move(public_path('attachments'), $product->thumbnail);
+    }
+
+    $product->save();
+
+    return $product;
+});
+
 
 Route::get('dekujeme', function () {
     return view('dekujeme');
@@ -548,7 +987,7 @@ Route::get('obchodni-podminky', function () {
 })->name("obchodni-podminky");
 
 Route::get('uvod', function () {
-    $products = Product::where('top', 'Ano')->take(6)->orderBy('id','desc')->get();
+    $products = Product::where('top', 'Ano')->where('type', '1')->take(6)->orderBy('id','desc')->get();
     $advantages = Advantage::all();
     return view('index', compact('products'), compact('advantages'));
 })->name("uvod");

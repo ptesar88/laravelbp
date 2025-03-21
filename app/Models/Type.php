@@ -10,6 +10,7 @@ class Type extends Model
     const TYPE_PLOT = 1;
     const TYPE_SLOUPEK = 2;
     const TYPE_OTISK = 3;
+    const TYPE_ZAHON = 4;
 
     const CREATED_AT = null;
     const UPDATED_AT = null;
@@ -43,5 +44,9 @@ class Type extends Model
      * @return array|null
      */
 
+     public static function getNameById($id) {
+        $type = Type::find($id);
+        return $type ? $type->name : "-";
+     }
 
 }

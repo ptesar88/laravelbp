@@ -19,16 +19,18 @@ import {
     ReferenceInput,
     Pagination,
     RichTextField,
-    Layout,
-    Menu,
-    radiantLightTheme as Nano,
+    useShowContext,
+    EditButton,
+    ShowButton,
+    useStore,
+    // Typography
 } from "react-admin";
 import { dataProvider } from "./dataProvider";
 import { authProvider } from "./authProvider";
 import { RichTextInput, RichTextInputToolbar } from "ra-input-rich-text";
 import polyglotI18nProvider from 'ra-i18n-polyglot';
-import { ReactNode } from "react";
-import { AddOnDemand } from "./addOnDemand";
+import { AddOnDemand } from "../assets/addOnDemand";
+import { ThemeName, themes } from './../themes/themes';
 
 const czechMessages = {
     ra: {
@@ -178,6 +180,10 @@ const czechMessages = {
     }
 };
 
+const postFilters = [
+    <TextInput key="q" label="Hledat" source="q" alwaysOn />,
+];
+
 const DemandCreate = () => (
     <Create>
         <SimpleForm>
@@ -191,8 +197,25 @@ const DemandCreate = () => (
     </Create>
 );
 
-const DemandShow = () => (
-    <Show>
+const DemandShowInner = () => {
+    const { record } = useShowContext();
+
+    const addons = [];
+    console.log(record);
+    if (record) {
+        const items = JSON.parse(record.demand_addons_body);
+        for (const item of Array.isArray(items) ? items : []) {
+            addons.push((
+                <div>
+                    <h3>{item.name}</h3>
+                    <p>{item.unit}</p>
+                    <p>{item.price}</p>
+                </div>
+            ));
+        }
+    }
+
+    return (
         <SimpleShowLayout>
             <TextField source="firstname" label="Jméno" />
             <TextField source="lastname" label="Příjmení" />
@@ -205,9 +228,27 @@ const DemandShow = () => (
             <TextField source="totalPrice" label="Cena" />
             <RichTextField source="body" fullWidth label="Obsah" />
             <TextField source="id" label="ID" />
+            {record && record.related_demands && (
+                record.related_demands.map((demand: { id: string }, index: number) => (
+                    <a key={index} href={`#/demands/${demand.id}/show`}>Poptávka {demand.id}</a>
+                ))
+            )}
+            {record && record.original_demand_id && <TextField source="original_demand_id" label="Původní poptávka" />}
+            {record && record.original_demand_id && (
+                <a href={`#/demands/${record.original_demand_id}/show`}>Původní poptávka</a>
+            )}
+            {addons}
         </SimpleShowLayout>
-    </Show>
-);
+    );
+}
+
+const DemandShow = () => {
+    return (
+        <Show>
+            <DemandShowInner />
+        </Show>
+    );
+}
 
 const DemandAddonShow = () => (
     <Show>
@@ -218,6 +259,26 @@ const DemandAddonShow = () => (
             <TextField source="id" label="ID" />
         </SimpleShowLayout>
     </Show>
+);
+
+const DemandAddonCreate = () => (
+    <Create>
+        <SimpleForm>
+            <TextInput source="name" validate={[required()]} fullWidth label="Název" />
+            <TextInput source="unit" validate={[required()]} fullWidth label="Jednotka" />
+            <TextInput source="price" validate={[required()]} fullWidth label="Cena" />
+        </SimpleForm>
+    </Create>
+);
+
+const DemandAddonEdit = () => (
+    <Edit>
+        <SimpleForm>
+            <TextInput source="name" validate={[required()]} fullWidth label="Název" />
+            <TextInput source="unit" validate={[required()]} fullWidth label="Jednotka" />
+            <TextInput source="price" validate={[required()]} fullWidth label="Cena" />
+        </SimpleForm>
+    </Edit>
 );
 
 const ProductCreate = () => (
@@ -235,7 +296,7 @@ const ProductCreate = () => (
 const TypeInput = () => (
     <ReferenceInput reference="types" source="type">
         <SelectInput
-            label="Type"
+            label="Typ"
             source="type"
             optionText="name"
         />
@@ -245,7 +306,7 @@ const TypeInput = () => (
 const CategoryInput = () => (
     <ReferenceInput reference="categories" source="category">
         <SelectInput
-            label="Category"
+            label="Kategorie"
             source="category"
             optionText="name"
         />
@@ -255,7 +316,7 @@ const CategoryInput = () => (
 const CategoryTypeInput = () => (
     <ReferenceInput reference="category_types" source="category_type">
         <SelectInput
-            label="Category Type"
+            label="Kategorie typ"
             source="category_type"
             optionText="name"
         />
@@ -265,12 +326,33 @@ const CategoryTypeInput = () => (
 const ProductTypeInput = () => (
     <ReferenceInput reference="product_types" source="product_type">
         <SelectInput
-            label="Product Type"
+            label="Produkt typ"
             source="product_type"
             optionText="name"
         />
     </ReferenceInput>
 );
+
+const BedTypeInput = () => (
+    <ReferenceInput reference="category_beds" source="category_bed">
+        <SelectInput
+            label="Kategorie záhonu"
+            source="category_bed"
+            optionText="name"
+        />
+    </ReferenceInput>
+);
+
+const ColorBedTypeInput = () => (
+    <ReferenceInput reference="color_beds" source="color_bed">
+        <SelectInput
+            label="Barva záhonu"
+            source="color_bed"
+            optionText="name"
+        />
+    </ReferenceInput>
+);
+
 
 const ProductTypeCreate = () => (
     <Create>
@@ -300,21 +382,46 @@ const DemandEdit = () => (
     </>
 );
 
+const BedEdit = () => (
+    <Edit>
+        <SimpleForm>
+            <TextInput disabled source="id" label="Id" />
+            <TextInput source="name" validate={[required()]} fullWidth label="Název" />
+            <FileInput source="thumbnail_file">
+                <FileField source="src" title="title" label="Soubor" />
+            </FileInput>
+            <ImageField source="thumbnail_url" title="thumbnail" label="Náhled" />
+            <TextInput source="width" fullWidth label="Šířka" />
+            <TextInput source="height" fullWidth label="Výška" />
+            <TextInput source="depth" fullWidth label="Hloubka" />
+            <TextInput source="weight" fullWidth label="Váha" />
+            <TextInput source="price" validate={[required()]} fullWidth label="Cena bez DPH" />
+            <TypeInput />
+            <SelectInput source="top" choices={[
+                { id: 'Ano', name: 'Ano' },
+                { id: 'Ne', name: 'Ne' },
+            ]} />
+            <BedTypeInput/>
+            <ColorBedTypeInput/>
+        </SimpleForm>
+    </Edit>
+);
+
 const ProductEdit = () => (
     <Edit>
         <SimpleForm>
-            <TextInput disabled source="id" label="a" />
-            <TextInput source="name" validate={[required()]} fullWidth label="a" />
+            <TextInput disabled source="id" label="Id" />
+            <TextInput source="name" validate={[required()]} fullWidth label="Název" />
             <FileInput source="thumbnail_file">
-                <FileField source="src" title="title" label="a" />
+                <FileField source="src" title="title" label="Soubor" />
             </FileInput>
-            <ImageField source="thumbnail_url" title="thumbnail" label="a" />
-            <TextInput source="width" fullWidth label="a" />
-            <TextInput source="height" fullWidth label="a" />
-            <TextInput source="depth" fullWidth label="a" />
-            <TextInput source="weight" fullWidth label="a" />
-            <TextInput source="price" validate={[required()]} fullWidth label="a" />
-            <TextInput source="label" fullWidth label="a" />
+            <ImageField source="thumbnail_url" title="thumbnail" label="Náhled" />
+            <TextInput source="width" fullWidth label="Šířka" />
+            <TextInput source="height" fullWidth label="Výška" />
+            <TextInput source="depth" fullWidth label="Hloubka" />
+            <TextInput source="weight" fullWidth label="Váha" />
+            <TextInput source="price" validate={[required()]} fullWidth label="Cena bez DPH" />
+            <TextInput source="label" fullWidth label="Otisk" />
             <TypeInput />
             <CategoryInput />
             <CategoryTypeInput />
@@ -330,9 +437,9 @@ const ProductEdit = () => (
 const ProductShow = () => (
     <Show>
         <SimpleShowLayout>
-            <TextField source="name" label="a" />
-            <TextField source="id" label="a" />
-            <ImageField source="thumbnail_url" title="thumbnail" label="a" />
+            <TextField source="name" label="Název" />
+            <TextField source="id" label="Id" />
+            <ImageField source="thumbnail_url" title="thumbnail" label="Foto" />
         </SimpleShowLayout>
     </Show>
 );
@@ -352,11 +459,11 @@ const AdvantageCreate = () => (
 const AdvantageEdit = () => (
     <Edit>
         <SimpleForm>
-            <TextInput source="name" validate={[required()]} fullWidth label="a" />
-            <RichTextInput source="body"  toolbar={<RichTextInputToolbar size="large" />} fullWidth label="a" />
-            <TextInput source="title" validate={[required()]} fullWidth label="a" />
-            <TextInput source="icon" validate={[required()]} fullWidth label="a" />
-            <TextInput source="motto" validate={[required()]} fullWidth label="a" />
+            <TextInput source="name" validate={[required()]} fullWidth label="Název" />
+            <RichTextInput source="body"  toolbar={<RichTextInputToolbar size="large" />} fullWidth label="Obsah" />
+            <TextInput source="title" validate={[required()]} fullWidth label="Titulek" />
+            <TextInput source="icon" validate={[required()]} fullWidth label="Ikona" />
+            <TextInput source="motto" validate={[required()]} fullWidth label="Motto" />
         </SimpleForm>
     </Edit>
 );
@@ -364,11 +471,11 @@ const AdvantageEdit = () => (
 const AdvantageShow = () => (
     <Show>
         <SimpleShowLayout>
-            <TextInput source="name" fullWidth label="a" />
-            <TextInput source="body" fullWidth label="a" />
-            <TextInput source="title" fullWidth label="a" />
-            <TextInput source="icon" fullWidth label="a" />
-            <TextInput source="motto" fullWidth label="a" />
+            <TextInput source="name" fullWidth label="Název" />
+            <TextInput source="body" fullWidth label="Obsah" />
+            <TextInput source="title" fullWidth label="Titulek" />
+            <TextInput source="icon" fullWidth label="Ikona" />
+            <TextInput source="motto" fullWidth label="Motto" />
         </SimpleShowLayout>
     </Show>
 );
@@ -376,7 +483,7 @@ const AdvantageShow = () => (
 const SpecificationShow = () => (
     <Show>
         <SimpleShowLayout>
-            <TextInput source="body" fullWidth label="a" />
+            <TextInput source="body" fullWidth label="Specifikace" />
         </SimpleShowLayout>
     </Show>
 );
@@ -384,7 +491,7 @@ const SpecificationShow = () => (
 const SpecificationEdit = () => (
     <Edit>
         <SimpleForm>
-            <RichTextInput source="body" toolbar={<RichTextInputToolbar size="large" />} fullWidth label="a" />
+            <RichTextInput source="body" toolbar={<RichTextInputToolbar size="large" />} fullWidth label="Specifikace - popis" />
         </SimpleForm>
     </Edit>
 );
@@ -392,18 +499,21 @@ const SpecificationEdit = () => (
 const AssemblyShow = () => (
     <Show>
         <SimpleShowLayout>
-            <TextInput source="body" fullWidth label="a"/>
+            <RichTextField source="body" fullWidth label="Montáž"/>
         </SimpleShowLayout>
     </Show>
 );
 
+
 const AssemblyEdit = () => (
-    <Edit>
+    <Edit mutationMode="undoable">
         <SimpleForm>
-            <RichTextInput source="body" toolbar={<RichTextInputToolbar size="large" />} fullWidth label="a" />
+            <RichTextInput source="body" toolbar={<RichTextInputToolbar size="large" /> } fullWidth label="Montáž - popis"/>
         </SimpleForm>
     </Edit>
 );
+
+
 
 const PostPagination = () => <Pagination rowsPerPageOptions={[10, 25, 50, 100]} />;
 
@@ -419,16 +529,42 @@ const ProductList = () => (
             <TextField source="weight" label="Váha" />
             <TextField source="price" label="Cena bez DPH" />
             <TextField source="label" label="Otisk" />
-            <TextField source="type.name" label="Typ název" />
+            <TextField source="type.name" label="Typ produktu" />
             <TextField source="category_type.name" label="Kategorie název" />
-            <TextField source="category.name" label="Název kategorie"/>
-            <TextField source="product_type" label="Produkt typ"/>
+            <TextField source="category.name" label="Provedení"/>
+            <TextField source="product_type.name" label="Produkt typ"/>
+            <>
+                <EditButton />
+                <ShowButton />
+            </>
+        </Datagrid>
+    </List>
+);
+
+const BedList = () => (
+    <List pagination={<PostPagination />}>
+        <Datagrid rowClick="show">
+            <TextField source="id" label="ID" />
+            <TextField source="name" label="Název" />
+            <ImageField source="thumbnail_url" title="thumbnail" label="Ikona" />
+            <TextField source="width" label="Šířka" />
+            <TextField source="height" label="Výška" />
+            <TextField source="depth" label="Hloubka" />
+            <TextField source="weight" label="Váha" />
+            <TextField source="price" label="Cena bez DPH" />
+            <TextField source="type.name" label="Typ produktu" />
+            <TextField source="color_bed.name" label="Barva záhonu"/>
+            <TextField source="category_bed.name" label="Kategorie záhonu" />
+            <>
+                <EditButton />
+                <ShowButton />
+            </>
         </Datagrid>
     </List>
 );
 
 const DemandList = () => (
-    <List pagination={<PostPagination /> } sort={{ field: 'id', order: 'DESC' }}>
+    <List pagination={<Pagination rowsPerPageOptions={[6, 12, 24, 36]} />} perPage={10} sort={{ field: 'id', order: 'DESC' }} filters={postFilters} >
         <Datagrid rowClick="show">
             <TextField source="id" label="Id" />
             <TextField source="firstname" label="Jméno" />
@@ -440,47 +576,57 @@ const DemandList = () => (
             <TextField source="doprava" label="Doprava" />
             <TextField source="montaz" label="Montáž" />
             <TextField source="totalPrice" label="Cena" />
-            <TextField source="body" label="Obsah" />
+            {/*<RichTextField source="body" label="Obsah" />*/}
+            <>
+                <EditButton />
+                <ShowButton />
+            </>
         </Datagrid>
     </List>
 );
+
+const AssemblyList = () => (
+    <List>
+        <Datagrid rowClick="edit">
+            <TextField source="id" label="Id" />
+            <RichTextField source="body" label="Montáž - popis" />
+            <>
+                <EditButton />
+                <ShowButton />
+            </>
+        </Datagrid>
+    </List>
+);
+
+const SpecificationList = () => (
+    <List>
+        <Datagrid rowClick="edit">
+            <TextField source="id" label="Id" />
+            <RichTextField source="body" label="Specifikace - popis" />
+            <>
+                <EditButton />
+                <ShowButton />
+            </>
+        </Datagrid>
+    </List>
+);
+
 
 const DemandAddonList = () => (
     <List>
-        <Datagrid rowClick="show">
+        <Datagrid rowClick="edit">
             <TextField source="id" label="Id" />
             <TextField source="name" label="Název" />
-            <TextField source="price" label="Cena" />
             <TextField source="unit" label="Jednotka"/>
+            <TextField source="price" label="Cena" />
+            <>
+                <EditButton />
+                <ShowButton />
+            </>
         </Datagrid>
     </List>
 );
 
-interface MyLayoutProps {
-    children: ReactNode;
-}
-
-const MyMenu = () => (
-    <Menu>
-        <Menu.DashboardItem />
-        <Menu.ResourceItem name="demands" />
-        <Menu.ResourceItem name="demand_addon" />
-        <Menu.ResourceItem name="products"/>
-        <Menu.ResourceItem name="product_types" />
-        <Menu.ResourceItem name="types" />
-        <Menu.ResourceItem name="categories" />
-        <Menu.ResourceItem name="category_types" />
-        <Menu.ResourceItem name="advantages" />
-        <Menu.ResourceItem name="specifications" />
-        <Menu.ResourceItem name="assemblies" />
-    </Menu>
-);
-
-const MyLayout = ({ children }: MyLayoutProps) => (
-    <Layout menu={MyMenu}>
-        { children }
-    </Layout>
-);
 
 export const App = () => {
     const messages: { [key: string]: any } = {
@@ -488,17 +634,34 @@ export const App = () => {
     };
  
     const i18nProvider = polyglotI18nProvider((locale:string) => messages[locale], 'cs');
+    const [themeName] = useStore<ThemeName>('themeName', 'soft');
+    const lightTheme = themes.find((theme: { name: string; light: any; dark: any }) => theme.name === themeName)?.light;
+    const darkTheme = themes.find((theme: { name: string; light: any; dark: any }) => theme.name === themeName)?.dark;
 
     return (
-    <Admin dataProvider={dataProvider} authProvider={authProvider} i18nProvider={i18nProvider} theme={Nano} >
-        <Resource name="demands" options={{ label: 'Poptávky' }} list={DemandList} show={DemandShow} create={DemandCreate} edit={DemandEdit}/>
+    <Admin 
+    dataProvider={dataProvider} 
+    authProvider={authProvider} 
+    i18nProvider={i18nProvider}
+    /*dashboard={Dashboard} */
+    lightTheme={lightTheme}
+    darkTheme={darkTheme}
+    defaultTheme="light">
+        <Resource name="demands" options={{ label: 'Přijaté poptávky' }} list={DemandList} show={DemandShow} create={DemandCreate} edit={DemandEdit}/>
+        <Resource name="demands_updated" options={{ label: 'Aktualizované poptávky' }} list={DemandList} show={DemandShow} create={DemandCreate} edit={DemandEdit}/>
+        <Resource name="demand_addons" options={{ label: 'Poptávky - doplňky' }} list={DemandAddonList} show={DemandAddonShow} create={DemandAddonCreate} edit={DemandAddonEdit}/>
+        <Resource name="product_panels" options={{ label: 'Betonové desky' }} list={ProductList} show={ProductShow} create={ProductCreate} edit={ProductEdit}/>
+        <Resource name="product_columns" options={{ label: 'Betonové sloupky' }} list={ProductList} show={ProductShow} create={ProductCreate} edit={ProductEdit}/>
+        <Resource name="product_desks" options={{ label: 'Betonové záhony' }} list={BedList} show={ProductShow} create={ProductCreate} edit={BedEdit}/>
+        <Resource name="product_labels" options={{ label: 'Otisky' }} list={ProductList} show={ProductShow} create={ProductCreate} edit={ProductEdit}/>
         <Resource name="products" options={{ label: 'Produkty' }} list={ProductList} show={ProductShow} edit={ProductEdit} create={ProductCreate} />
         <Resource name="product_types" options={{ label: 'Produkty kategorie' }} list={ListGuesser} show={ListGuesser} edit={ListGuesser} create={ProductTypeCreate} />
+        <Resource name="category_beds" options={{ label: 'Betonové záhony typy' }} list={ListGuesser} show={ListGuesser} edit={ListGuesser} />
         <Resource name="types" options={{ label: 'Produkty typy' }} list={ListGuesser} show={ListGuesser} edit={ListGuesser} />
         <Resource name="categories" options={{ label: 'Sloupky kategorie' }} list={ListGuesser} show={ListGuesser} edit={ListGuesser} />
         <Resource name="category_types" options={{ label: 'Sloupky tvary' }} list={ListGuesser} show={ListGuesser} edit={ListGuesser} />
         <Resource name="advantages" options={{ label: 'Výhody' }} list={ListGuesser} show={AdvantageShow} edit={AdvantageEdit} create={AdvantageCreate} />
-        <Resource name="specifications" options={{ label: 'Specifikace' }} list={ListGuesser} show={SpecificationShow} edit={SpecificationEdit} />
-        <Resource name="assemblies" options={{ label: 'Montáž' }} list={ListGuesser} show={AssemblyShow} edit={AssemblyEdit} />
+        <Resource name="specifications" options={{ label: 'Specifikace' }} list={SpecificationList} show={SpecificationShow} edit={SpecificationEdit} />
+        <Resource name="assemblies" options={{ label: 'Montáž' }} list={AssemblyList} show={AssemblyShow} edit={AssemblyEdit} />
     </Admin>
 )};

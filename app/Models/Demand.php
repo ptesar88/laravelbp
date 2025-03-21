@@ -5,6 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
+// STATUS
+// FROM_CUSTOMER
+// -> FROM_ADMIN
+// -> FROM_CUSTOMER_UPDATED
+
 class Demand extends Model
 {
 
@@ -19,19 +24,30 @@ class Demand extends Model
      * @var array<int, string>
      */
     protected $fillable = [
+        'status',
+        'original_demand_id',
+        'customized',
         'firstname',
         'lastname',
         'email',
         'phone',
         'company',
         'localisation',
-        'montazq',
-        'dopravaq',
+        'montaz',
+        'doprava',
         'totalPrice',
+        'updatedPrice',
+        'demand_addons_body',
+        'demand_addons_id',
+        'demand_addons_name',
+        'demand_addons_price',
+        'demand_addons_unit',
+        'demand_addons_array',
         'body', 
+               
     ];
 
-    /**
+      /**
      * The accessors to append to the model's array form.
      *
      * @var array<int, string>

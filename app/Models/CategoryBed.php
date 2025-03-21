@@ -3,15 +3,15 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class DemandAddon extends Model
+class CategoryBed extends Model
 {
+
+    const TYPE_KAMEN = 1;
+    const TYPE_CIHLA = 2;
 
     const CREATED_AT = null;
     const UPDATED_AT = null;
-
-    use HasFactory;
 
     /**
      * The attributes that are mass assignable.
@@ -20,10 +20,7 @@ class DemandAddon extends Model
      */
     protected $fillable = [
         'name',
-        'price',
-        'unit',
-      
- 
+        'thumbnail',    
     ];
 
     /**
@@ -31,14 +28,13 @@ class DemandAddon extends Model
      *
      * @var array<int, string>
      */
-    //protected $appends = ['thumbnail_url'];
+    protected $appends = ['thumbnail_url', 'thumbnail_file'];
 
     /**
      * Get the URL of the thumbnail.
      *
      * @return string|null
      */
-    /*
     public function getThumbnailUrlAttribute()
     {
         if ($this->thumbnail) {
@@ -47,5 +43,26 @@ class DemandAddon extends Model
         
         return null;
     }
-*/
+
+    /**
+     * Get the file of the thumbnail.
+     *
+     * @return array|null
+     */
+    public function getThumbnailFileAttribute() {
+        if ($this->thumbnail) {
+            return [
+                "file" => $this->thumbnail,
+            ];
+        }
+
+        return null;
+    }
+
+    public static function getNameById($id) {
+        $categoryBed = CategoryBed::find($id);
+        return $categoryBed ? $categoryBed->name : "-";
+     }
+
 }
+

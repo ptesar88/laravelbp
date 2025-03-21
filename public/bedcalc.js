@@ -1,0 +1,1 @@
+ReactDOM.render(<BedRoot produkt={produkt} beds={beds} sloupkyPremium={sloupkyPremium} sloupkyKlasik={sloupkyKlasik} sloupky={sloupky} otisky={otisky} produkty={produkty} colors={colors}/>, document.getElementById("bed-root"));

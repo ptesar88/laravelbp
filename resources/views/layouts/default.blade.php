@@ -69,6 +69,12 @@
                     <a href="{{ route("uvod") }}" class="block py-2 px-3 text-white md:p-0" aria-current="page">ÚVOD</a>
                   </li>
                   <li>
+                    <a href="{{ route("kompletni-nabidka-plotu") }}" class="block py-2 px-3 text-white md:p-0" aria-current="page">PLOTY</a>
+                  </li>
+                  <li>
+                    <a href="{{ route("kompletni-nabidka-zahonu") }}" class="block py-2 px-3 text-white md:p-0" aria-current="page">ZÁHONY</a>
+                  </li>
+                  <li>
                     <a href="{{ route("specifikace") }}" class="block py-2 px-3 text-white md:p-0" aria-current="page">SPECIFIKACE</a>
                   </li>
                   <li>
@@ -102,6 +108,8 @@
               <!-- mobile menu -->
               <div class="mobile-menu hidden md:hidden">
                 <a href="{{ route("uvod") }}" class="block py-2 px-3 text-sm text-white md:p-0" aria-current="page">ÚVOD</a>
+                <a href="{{ route("kompletni-nabidka-plotu") }}" class="block py-2 px-3 text-white md:p-0" aria-current="page">PLOTY</a>
+                <a href="{{ route("kompletni-nabidka-zahonu") }}" class="block py-2 px-3 text-white md:p-0" aria-current="page">ZÁHONY</a>
                 <a href="{{ route("specifikace") }}" class="block py-2 px-3 text-white md:p-0" aria-current="page">SPECIFIKACE</a>
                 <a href="{{ route("montaz") }}" class="block py-2 px-3 text-white md:p-0" aria-current="page">MONTÁŽ</a>
                 <a href="{{ route("kontakt") }}" class="block py-2 px-3 text-white md:p-0" aria-current="page">KONTAKT</a>
@@ -115,10 +123,10 @@
     <main>
        @yield('page-banner')
        @yield('page-content')
+       @yield('page-gallery-1')
        @yield('page-main-products')
        @yield('page-owner')
        @yield('page-gallery')
-       @yield('page-gallery-1')
        @yield('page-benefits')
        @yield('page-all-products')
        @yield('page-specifications')

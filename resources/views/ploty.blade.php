@@ -171,71 +171,13 @@
   </table>
 </div>
 
+
 <div class="relative overflow-x-auto mt-8">
   <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
       <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
         <tr>
           <th scope="col" colspan="5" class="text-center px-6 py-3 text-lg font-extrabold">
-            CIHLIČKA
-          </th>
-       </tr>
-        <tr>
-          <th scope="col" class="px-6 py-3">
-           
-        </th>
-          @foreach($products_sloupek_cat_types_others as $typ)
-            <th scope="col" colspan="2" class="px-6 py-3 items-center text-base font-extrabold text-center">
-             {{ App\Models\CategoryType::getNameById($typ) }}
-            </th>
-            @endforeach
-        </tr>
-          <tr>
-            <th scope="col" class="px-6 py-3">
-              Výška (cm)
-          </th>
-              <th scope="col" class="px-6 py-3">
-                  Váha (kg)
-              </th>
-              <th scope="col" class="px-6 py-3">
-                  Cena (bez DPH)
-              </th>
-            <th scope="col" class="px-6 py-3">
-                Váha (kg)
-            </th>
-            <th scope="col" class="px-6 py-3">
-                Cena (bez DPH)
-            </th>
-          </tr>
-      </thead>
-      <tbody>
-        
-        @foreach($products_sloupek_cihlicka as $vyska => $skupiny)
-          <div>
-            <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-              <th class="px-6 py-4">
-                {{ $vyska }}
-              </th>
-          @foreach($skupiny as $type => $sloup)
-          
-              <td class="px-6 py-4">
-                {{ $sloup->weight }}
-              </td>
-              <td class="px-6 py-4">
-                {{ $sloup->price }}
-              </td>
-              @endforeach
-          </tr>
-        </div>    
-        @endforeach
-      </tbody>
-  </table>
-</div>
-<div class="relative overflow-x-auto mt-8">
-  <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
-      <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-        <tr>
-          <th scope="col" colspan="5" class="text-center px-6 py-3 text-lg font-extrabold">
-            ŠTÍPANÝ KÁMEN
+            CIHLIČKA A ŠTÍPANÝ KÁMEN
           </th>
        </tr>
         <tr>
