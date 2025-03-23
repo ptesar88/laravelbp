@@ -15,13 +15,13 @@ function BedRoot(props: FenceRootProps) {
     const decor = props.decors.filter(decors => decors.id == produkt.category_bed);
     let decorName = decor[0].name;
 
-    let colorN = "";
-
     const { useState } = React;
 
     const [bedAmount, setFenceHeightOper] = useState(1);
 
     const [bedColor, setBedColor] = useState(0);
+
+    const [colorN, setBedColorName] = useState("Barva nevybrána");
 
     const handleColor = (e: any) => {
         const inputValue = e.target.value;
@@ -34,13 +34,13 @@ function BedRoot(props: FenceRootProps) {
 
         if (!isNaN(bedColor) && bedColor > 0) {
             setBedColor(bedColor);
+            setBedColorName(colorN);
             console.log("handleColor", bedColor, decorName, ", Id barvy:", colorSelectedId, colorN);
         } else {
             console.warn("Invalid input for bed color:", inputValue);
         }
     }
 
- 
     const handleHeightChange = (e: any) => {
         const inputValue = e.target.value;
         const bedAmount = parseInt(inputValue, 10);
