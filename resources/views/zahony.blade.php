@@ -26,7 +26,7 @@
                     <figure class="flex h-68 flex-col rounded-md shadow-md bg-white border border-gray-300 mb-4">
                      
                       <div class="h-6">
-                      <h3 class="text-lg font-semibold items-center justify-center text-center text-gray-900 dark:text-white">{{ $prod->name }}
+                      <h3 class="text-lg font-semibold items-center justify-center text-center text-gray-900 dark:text-white">{{ $prod->name }} {{ $prod->id }}
                        
                       </h3>
                       </div>
@@ -44,22 +44,22 @@
                         <div class="flex ml-2 h-8 w-8 bg-amber-800" title="Hnědá"></div>                                   
                         <div class="flex ml-2 h-8 w-8 bg-gray-600" title="Grafit"></div> 
                       </div>
-                      <div class="h-16 text-right bg-gray-200 right-0">
-                      @if ($prod->top == 'Ano')
-                        <span class="items-center bg-blue-100 text-blue-800 text-xs font-medium px-2.5 py-0.5 rounded-full">
-                          <span class="w-2 h-2 me-1 bg-blue-500 rounded-full"></span>
-                          TOP
-                        </span>
-                      @endif
-                      
-                      @if ($prod->label == 'Ano')
-                        <span class="items-center bg-green-100 text-green-800 text-xs font-medium px-2.5 py-0.5 rounded-full dark:bg-green-900 dark:text-green-300">
-                          <span class="w-2 h-2 me-1 bg-green-500 rounded-full"></span>
-                          OTISK
-                        </span>
-                      @endif
-                        <span class="text-sm font-semibold ml-2">cena od: {{ $prod->price }} Kč</span>
-                        <button onclick="window.location='{{ url("/product-bed/{$prod->id}") }}'" class="text-center text-sm m-2 p-2 mt-4 shadow-md rounded-md text-white bg-pink-950 border border-pink-950">Konfigurátor</button>
+                      <div class="h-16 text-center bg-gray-200 right-0">
+                        @if ($prod->top == 'Ano')
+                          <span class="items-center bg-blue-100 text-blue-800 text-xs font-medium px-2.5 py-0.5 rounded-full">
+                            <span class="w-2 h-2 me-1 bg-blue-500 rounded-full"></span>
+                            TOP
+                          </span>
+                        @endif
+                        
+                        @if ($prod->label == 'Ano')
+                          <span class="items-center bg-green-100 text-green-800 text-xs font-medium px-2.5 py-0.5 rounded-full dark:bg-green-900 dark:text-green-300">
+                            <span class="w-2 h-2 me-1 bg-green-500 rounded-full"></span>
+                            OTISK
+                          </span>
+                        @endif
+                          <span class="text-sm font-semibold ml-2">cena od: {{ $prod->price }} Kč</span>
+                          <button onclick="window.location='{{ url("/product-bed/{$prod->id}") }}'" class="text-center text-sm m-2 p-2 mt-4 shadow-md rounded-md text-white bg-pink-950 border border-pink-950">Konfigurátor</button>
                       </div>
                     </figure>
                   </div>    

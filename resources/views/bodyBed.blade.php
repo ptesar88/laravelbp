@@ -34,6 +34,12 @@
         Produkt: {{ $produkt->name }}
     </li>
     <li>
+        Barva: {{ $data['color'] }}
+    </li>
+    <li>
+        Dekor: {{ $data['decor'] }}
+    </li>
+    <li>
         Rozměry záhonu: {{ $produkt->width }}x{{ $produkt->depth }}x{{ $produkt->height }} cm
     </li>
     <li>
@@ -41,6 +47,9 @@
     </li>
     <li>
         Celkem kusů: {{ $data['bedAmount'] }}
+    <li>
+    <li>
+        Celková hmotnost: {{ $data['bedWeightAmount'] }}
     <li>
         ----------------------------------------------------------
     </li>

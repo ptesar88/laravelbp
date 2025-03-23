@@ -576,10 +576,7 @@ Route::get('kompletni-nabidka-zahonu', function () {
 
 Route::get('/product-bed/{id}', function ($id) {
     $showDivField = false;
-    $products_detail = Product::find($id)
-    ->join('category_beds', 'products.category_bed', '=', 'category_beds.id') 
-    ->select('products.*', 'category_beds.name as category_bed')
-    ->first(); 
+    $products_detail = Product::find($id);
     $products_types = Product::where('product_type', ProductType::TYPE_PREMIUM)->get();
     $products_sloupek_premium = Category::where('type', 1)->get();// 1 = premium vyresit dynamicky Todo Petr
     $products_sloupek_klasik = Category::where('type', 2)->get();// 2 = klasik vyresit dynamicky Todo Petr
@@ -588,6 +585,7 @@ Route::get('/product-bed/{id}', function ($id) {
     $products_sloupek_type_selected = Product::where('category', Type::TYPE_SLOUPEK)->get();
     $products = Product::all();
     $colors = ColorBed::all();
+    $decors = CategoryBed::all();
     $prod = Product::where('id', $id)->first();
     $category_bed = CategoryBed::where('id', $prod->category_bed)->first();
     $beds = Product::where('height', $prod->height)
@@ -595,9 +593,10 @@ Route::get('/product-bed/{id}', function ($id) {
         ->where('depth', $prod->depth)
         ->where('category_bed', $prod->category_bed)
         ->join('color_beds', 'products.color_bed', '=', 'color_beds.id')
-        ->select('products.*', 'color_beds.name as color_name')
+        ->join('category_beds', 'products.category_bed', '=', 'category_beds.id')
+        ->select('products.*', 'color_beds.name as color_name','category_beds.name as category_bed')
         ->get();
-    return view('konfiguratorZahon', compact('id', 'products_detail', 'products_types', 'products_sloupek_premium', 'products_sloupek_klasik', 'products_sloupek', 'products_otisk', 'products_sloupek_type_selected','showDivField', 'products', 'colors', 'beds', 'category_bed'));
+    return view('konfiguratorZahon', compact('id', 'products_detail', 'products_types', 'products_sloupek_premium', 'products_sloupek_klasik', 'products_sloupek', 'products_otisk', 'products_sloupek_type_selected','showDivField', 'products', 'colors', 'decors', 'beds', 'category_bed'));
 })->name("product-bed");
 
 Route::post('/product-bed/{id}', function ($id) {

@@ -15,6 +15,7 @@ function BedRoot(props: FenceRootProps) {
     const decor = props.decors.filter(decors => decors.id == produkt.category_bed);
     let decorName = decor[0].name;
 
+    let colorN = "";
 
     const { useState } = React;
 
@@ -24,16 +25,22 @@ function BedRoot(props: FenceRootProps) {
 
     const handleColor = (e: any) => {
         const inputValue = e.target.value;
+        const colorSelectedId = e.target.id;
         const bedColor = parseInt(inputValue, 10);
+
+        const colorId = colors.filter(colors => colors.id == colorSelectedId);
+        const colorN = colorId[0].name;
+
 
         if (!isNaN(bedColor) && bedColor > 0) {
             setBedColor(bedColor);
-            console.log("handleColor", bedColor, decorName);
+            console.log("handleColor", bedColor, decorName, ", Id barvy:", colorSelectedId, colorN);
         } else {
             console.warn("Invalid input for bed color:", inputValue);
         }
     }
 
+ 
     const handleHeightChange = (e: any) => {
         const inputValue = e.target.value;
         const bedAmount = parseInt(inputValue, 10);
@@ -57,7 +64,8 @@ function BedRoot(props: FenceRootProps) {
     };
 
     let bedColorSet = bedColor !== 0 ? true : false;
-    
+
+    let colorName = colorN;
     const totalPrice = bedAmount * bedColor;
     const bedWeightAmount = bedAmount * produkt.weight;
 
@@ -78,9 +86,9 @@ function BedRoot(props: FenceRootProps) {
                         <img className="mx-auto items-center" src={produkt.thumbnail_url} alt="" />
                     </div>
                     <div>
-                        <div className="mx-auto items-center">Rozměry: {produkt.width}x{produkt.depth}x{produkt.height}cm</div>
-                        <div className="mx-auto items-center">Dekor: {decorName}</div>
-                        <div className="mx-auto items-center">Cena od: {produkt.price} Kč</div>
+                        <div className="mx-auto items-center">Rozměry: <b>{produkt.width}x{produkt.depth}x{produkt.height}cm</b></div>
+                        <div className="mx-auto items-center">Dekor: <b>{decorName}</b></div>
+                        <div className="mx-auto items-center">Cena od: <b>{produkt.price} Kč bez DPH </b></div>
                     </div>
                 </div>
                 <div className="relative z-20 mx-auto max-w-6xl items-center p-2 my-4 text-base text-amber-800 rounded-lg bg-amber-50 border border-amber-500" role="alert">
@@ -104,7 +112,7 @@ function BedRoot(props: FenceRootProps) {
                                 <div key={bed.id}>
                                     <figure className="flex h-64 flex-col rounded-md shadow-md border border-gray-300">
                                         <div className="flex items-center ps-4 ">
-                                            <input id={"barva-" + bed.id} type="radio" value={bed.price} onChange={handleColor} name="barva_id" className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300" />
+                                            <input id={bed.color_bed} type="radio" key={bed.id} value={bed.price} onChange={handleColor} name="barva_id" className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300" />
                                             <label htmlFor={"barva-" + bed.id} className="w-full py-4 ms-2 text-sm font-medium text-gray-900">{bed.color_name}</label>
                                         </div>
                                         <div className="h-48">
@@ -160,10 +168,11 @@ function BedRoot(props: FenceRootProps) {
                 { bedColorSet &&
                     <ul className="max-w-md space-y-1 text-gray-500 list-none list-inside mt-2">
                         <li>
-                            <span className="text-sm font-medium text-gray-900">*Orientační cena celkem:  {totalPrice} Kč </span>
+                            <span className="text-sm font-medium text-gray-900">*Orientační cena celkem:  {totalPrice} Kč bez DPH</span>
                             <input type="hidden" id="totalPrice" name="totalPrice" value={totalPrice} />
                             <input type="hidden" id="panelCountTotalAll" name="panelCountTotalAll" value={bedAmount} />    
-                            <input type="hidden" id="decor" name="decor" value={decorName} />                       
+                            <input type="hidden" id="decor" name="decor" value={decorName} />
+                            <input type="hidden" id="color" name="color" value={colorName} />                       
                         </li>
                         <li>
                             <span className="text-sm font-medium text-gray-900">Položek celkem: {bedAmount} ks </span>

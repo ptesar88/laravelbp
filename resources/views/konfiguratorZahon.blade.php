@@ -42,6 +42,7 @@
         let produkty = JSON.parse('{!! $products->toJSON() !!}');
         let produkt = JSON.parse('{!! $products_detail->toJSON() !!}');
         let colors = JSON.parse('{!! $colors->toJSON() !!}');
+        let decors = JSON.parse('{!! $decors->toJSON() !!}');
         let beds = JSON.parse('{!! $beds->toJSON() !!}');
         
     </script>
