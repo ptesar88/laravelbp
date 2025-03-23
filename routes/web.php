@@ -552,12 +552,6 @@ Route::post('/api/assemblies/{id}', function ($id) {
 });
 
 Route::get('/', function () {
-    $products = Product::where('top', 'Ano')->where('type', 1)->take(6)->orderBy('id','desc')->get();
-    $advantages = Advantage::all();
-    return view('index', compact('products'), compact('advantages'));
-})->name("index");
-
-Route::get('kompletni-nabidka-zahonu', function () {
     $products_zahon = Product::where('type', Type::TYPE_ZAHON)
         ->join('category_beds', 'products.category_bed', '=', 'category_beds.id') 
         ->select('products.*', 'category_beds.name as category_bed') 
@@ -565,12 +559,27 @@ Route::get('kompletni-nabidka-zahonu', function () {
         ->orderBy('price', 'ASC')
         ->get();
 
+    $products = Product::where('top', 'Ano')->where('type', 1)->take(6)->orderBy('id','desc')->get();
+    $advantages = Advantage::all();
+    return view('index', compact('products_zahon', 'products','advantages'));
+})->name("index");
+
+Route::get('kompletni-nabidka-zahonu', function () {
+    $products_zahon = Product::where('type', Type::TYPE_ZAHON)
+        ->join('category_beds', 'products.category_bed', '=', 'category_beds.id') 
+        ->select('products.*', 'category_beds.name as category_bed') 
+        ->where('color_bed', 1)
+        ->get();
+
     return view('zahony', compact('products_zahon'));
 })->name("kompletni-nabidka-zahonu");
 
 Route::get('/product-bed/{id}', function ($id) {
     $showDivField = false;
-    $products_detail = Product::find($id);
+    $products_detail = Product::find($id)
+    ->join('category_beds', 'products.category_bed', '=', 'category_beds.id') 
+    ->select('products.*', 'category_beds.name as category_bed')
+    ->first(); 
     $products_types = Product::where('product_type', ProductType::TYPE_PREMIUM)->get();
     $products_sloupek_premium = Category::where('type', 1)->get();// 1 = premium vyresit dynamicky Todo Petr
     $products_sloupek_klasik = Category::where('type', 2)->get();// 2 = klasik vyresit dynamicky Todo Petr

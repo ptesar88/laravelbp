@@ -34,10 +34,10 @@
         Produkt: {{ $produkt->name }}
     </li>
     <li>
-        Rozměry záhonu: {{ $produkt->width }}x{{ $produkt->height }}x{{ $produkt->depth }} cm
+        Rozměry záhonu: {{ $produkt->width }}x{{ $produkt->depth }}x{{ $produkt->height }} cm
     </li>
     <li>
-        Cena/ks: {{ $produkt->price }} Kč
+        Cena/ks: {{ $produkt->price }} Kč bez DPH
     </li>
     <li>
         Celkem kusů: {{ $data['bedAmount'] }}
@@ -45,13 +45,13 @@
         ----------------------------------------------------------
     </li>
     <li>
-        Orientační cena celkem: {{ $data['totalPrice'] }} Kč
+        Orientační cena celkem: {{ $data['totalPrice'] }} Kč bez DPH
     </li>
 </ul>
 </p>
 
 
-<b>Orientační cena celkem bude upravena podle místa realizace zakázky a bude přičtena cena za montáž a dopravu. </b>
+<b>Orientační cena celkem bude upravena podle místa realizace zakázky a bude přičtena cena za dopravu. </b>
 <b>Uvedené ceny jsou bez DPH.</b>
 <br><br>
 S pozdravem<br>

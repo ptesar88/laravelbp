@@ -39,8 +39,6 @@
         let sloupkyKlasik = JSON.parse('{!! $products_sloupek_klasik->toJSON() !!}');
         let sloupkySelected = JSON.parse('{!! $products_sloupek_type_selected->toJSON() !!}'); 
         let otisky = JSON.parse('{!! $products_otisk->toJSON() !!}');
-
-
         let produkty = JSON.parse('{!! $products->toJSON() !!}');
         let produkt = JSON.parse('{!! $products_detail->toJSON() !!}');
         let colors = JSON.parse('{!! $colors->toJSON() !!}');
