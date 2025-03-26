@@ -170,6 +170,7 @@ function BedRoot(props: FenceRootProps) {
                         <li>
                             <span className="text-sm font-medium text-gray-900">*Orientační cena celkem:  {totalPrice} Kč bez DPH</span>
                             <input type="hidden" id="totalPrice" name="totalPrice" value={totalPrice} />
+                            <input type="hidden" id="pricePiece" name="pricePiece" value={bedColor} />  
                             <input type="hidden" id="panelCountTotalAll" name="panelCountTotalAll" value={bedAmount} />    
                             <input type="hidden" id="decor" name="decor" value={decorName} />
                             <input type="hidden" id="color" name="color" value={colorName} />                       

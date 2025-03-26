@@ -47,7 +47,7 @@
     </li>
 
     <li>
-        Cena/ks: {{ $produkt->price }} Kč bez DPH
+        Cena/ks: {{ $data['pricePiece'] }} Kč bez DPH
     </li>
 
     <li>
