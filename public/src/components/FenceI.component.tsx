@@ -18,12 +18,19 @@ const FenceI = (props: {
     let idPost = props.sloupek.id;
     let otiskRes = props.chciOtisk;
     let barvaRes = props.chciBarvu;
+    let stepValue = props.produkt.height / 100; // new krok pro výšku plotu 1.strana v metrech
+
+    const minHeight = props.produkty.filter(produkt => produkt.category == idPost);
+    const minHeightPost = Number(minHeight[0].height / 100); // new minimální výška sloupku 1.strana v metrech
+    
+    const maxHeight = props.produkty.filter(produkt => produkt.category == idPost);
+    const maxHeightPost = Number(maxHeight[maxHeight.length - 1].height / 100); // new maximální výška sloupku 1.strana v metrech
 
     const valuesElement = false;
     const { useState, useEffect, useRef } = React;
     const [valueSelectedS, setValue] = useState(0);
     const valueSelected = Number(valueSelectedS.toFixed(2));
-    const [fenceHeightR, setFenceHeightOper] = useState(0);
+    const [fenceHeightR, setFenceHeightOper] = useState(minHeightPost);
     const fenceHeight = Number(fenceHeightR.toFixed(2));
     //sirka
     const [fenceWidthR, setFenceWidthOper] = useState(0);
@@ -65,15 +72,15 @@ const FenceI = (props: {
     };
 
     const heightChangePlus = () => {
-        setFenceHeightOper(fenceHeightR + 0.25);
-        if (fenceHeightR > 3) {
-            setFenceHeightOper(3);
-            window.alert("Maximální výška plotu je 3m");
+        setFenceHeightOper(fenceHeightR + stepValue);
+        if (fenceHeightR >= maxHeightPost) {
+            setFenceHeightOper(maxHeightPost);
+            window.alert("Maximální výška plotu je " + maxHeightPost + " m");
         }
     };
 
     const heightChangeMinus = () => {
-        setFenceHeightOper(fenceHeightR - 0.25);
+        setFenceHeightOper(fenceHeightR - stepValue);
     };
     //zmena sirky 1.strana
     const handleWidthChange = (e) => {
@@ -158,8 +165,10 @@ const FenceI = (props: {
             let panelPriceColorHandle = barvaRes ? panelPriceAndPostWithColor : tempCalc; // cena panelu s barvou nebo bez barvy
             let labelPrice = Math.ceil(Number(panelCountTotalAll) * priceLabel); // cena za otisk
             let labelPriceHandle = props.otisk ? labelPrice : 0; // cena za otisk nebo bez otisku
-
+            
             console.log(
+                "minimální výška sloupku", minHeightPost,
+                "maximální výška sloupku", maxHeightPost,
                 panelCountTotalAll,
                 labelPriceHandle,
                 tempCalc,
@@ -206,7 +215,7 @@ const FenceI = (props: {
                         id="lengthInput"
                         value={fenceWidth}
                         min={0}
-                        step={0.25}
+                        step={stepValue}
                         max={150}
                         onChange={handleWidthChange}
                         className="bg-gray-50 border-x-0 border-gray-300 h-11 font-medium text-center text-gray-900 text-sm focus:ring-blue-500 focus:border-blue-500 block w-full pb-6"
@@ -239,7 +248,7 @@ const FenceI = (props: {
                         type="number"
                         id="quantity-input"
                         value={fenceHeight}
-                        min={0}
+                        min={minHeightPost}
                         step={0.25}
                         max={3}
                         onChange={handleHeightChange}
