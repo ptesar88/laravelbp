@@ -639,7 +639,7 @@ Route::post('/product-bed/{id}', function ($id) {
 
     Mail::send([], [], function ($message) use ($demand) {
         $message
-            ->to('info@pcservispt.cz')
+            ->to('betonoveplotykraluvdvur@seznam.cz')
             ->cc($demand['email'])
             ->subject('Nová poptávka - '.$demand['firstname'].' '.$demand['lastname'].' '.$demand['company'] )
             ->html($demand->body);
@@ -771,7 +771,7 @@ Route::post('/product/{id}', function ($id) {
 
     Mail::send([], [], function ($message) use ($demand) {
         $message
-            ->to('info@pcservispt.cz')
+            ->to('betonoveplotykraluvdvur@seznam.cz')
             ->cc($demand['email'])
             ->subject('Nová poptávka - '.$demand['firstname'].' '.$demand['lastname'].' '.$demand['company'] )
             ->html($demand->body);

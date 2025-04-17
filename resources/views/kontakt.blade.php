@@ -27,6 +27,13 @@
   <div class="mx-auto grid p-2 max-w-6xl md:mb-8 md:grid-cols-3 md:gap-3">
     <div>
       <figure class="flex flex-col h-32 rounded-md shadow-md p-2 m-2 bg-gray-50 border border-gray-300">
+      <span class="text-md font-bold mb-1">Otevírací doba</span>
+      <span class="text-md font-normal mt-1">Po-Pá 8:00-16:00</span>
+      <span class="text-md font-normal">So 8:00-12:00</span>
+      </figure>
+    </div>
+    <div>
+      <figure class="flex flex-col h-32 rounded-md shadow-md p-2 m-2 bg-gray-50 border border-gray-300">
       <span class="text-md font-bold mb-1">Fakturační adresa</span>
       <span class="text-md font-normal mt-1">Jaroslav Cipra</span>
       <span class="text-md font-normal">Preislerovo nám. 150, Králův Dvůr 267 01</span>
